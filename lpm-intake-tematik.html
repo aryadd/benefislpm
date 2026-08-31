@@ -1,0 +1,847 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input &amp; Survei Koordinator — Program Tematik | LPM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2B7F75',
+                        'primary-light': '#EAF4F1',
+                        'primary-dark': '#1E5C54',
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                }
+            }
+        }
+    </script>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .sidebar-link {
+            display: flex; align-items: center; gap: 0.5rem;
+            padding: 0.5rem 0.75rem; border-radius: 0.5rem;
+            font-size: 0.8125rem; font-weight: 500;
+            color: #475569; transition: all 0.15s; text-decoration: none;
+        }
+        .sidebar-link:hover { background: #EAF4F1; color: #2B7F75; }
+        .sidebar-link.active { background: #2B7F75; color: #fff; }
+        .sidebar-group-title {
+            font-size: 0.6875rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            color: #94a3b8; padding: 0.5rem 0.75rem 0.25rem;
+        }
+        .form-label {
+            display: block; font-size: 0.8125rem; font-weight: 600;
+            color: #334155; margin-bottom: 0.25rem;
+        }
+        .form-label .req { color: #ef4444; margin-left: 2px; }
+        .form-input, .form-select, .form-textarea {
+            width: 100%; padding: 0.5rem 0.75rem;
+            border: 1px solid #d1d5db; border-radius: 0.5rem;
+            font-size: 0.8125rem; color: #1e293b;
+            background: #fff; transition: border-color 0.15s;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none; border-color: #2B7F75;
+            box-shadow: 0 0 0 3px rgba(43,127,117,0.12);
+        }
+        .form-textarea { resize: vertical; min-height: 5rem; }
+        .section-card {
+            background: #fff; border: 1px solid #e2e8f0;
+            border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1rem;
+        }
+        .section-title {
+            font-size: 0.9375rem; font-weight: 700; color: #1e293b;
+            margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;
+        }
+        .section-title .icon {
+            width: 1.5rem; height: 1.5rem; border-radius: 0.375rem;
+            display: flex; align-items: center; justify-content: center; font-size: 0.75rem;
+        }
+        .table-header { background: #f8fafc; }
+        .table-header th {
+            font-size: 0.75rem; font-weight: 600; color: #475569;
+            padding: 0.5rem 0.625rem; text-align: left; border-bottom: 1px solid #e2e8f0;
+        }
+        .table-row td { padding: 0.375rem 0.5rem; vertical-align: middle; }
+        .table-row input, .table-row select { font-size: 0.8125rem; padding: 0.375rem 0.5rem; }
+        .badge { font-size: 0.6875rem; font-weight: 600; padding: 0.125rem 0.5rem; border-radius: 9999px; }
+        .badge-yatim { background: #fef3c7; color: #92400e; }
+        .badge-pmtu { background: #dbeafe; color: #1e40af; }
+        .badge-disabilitas { background: #ede9fe; color: #5b21b6; }
+        #toast {
+            position: fixed; bottom: 1.5rem; right: 1.5rem;
+            padding: 0.75rem 1.25rem; border-radius: 0.5rem;
+            color: #fff; font-size: 0.8125rem; font-weight: 600;
+            z-index: 9999; transform: translateY(120%); transition: transform 0.3s ease;
+        }
+        #toast.show { transform: translateY(0); }
+        .btn-primary {
+            background: #2B7F75; color: #fff; padding: 0.5rem 1.25rem;
+            border-radius: 0.5rem; font-size: 0.8125rem; font-weight: 600;
+            border: none; cursor: pointer; transition: background 0.15s;
+        }
+        .btn-primary:hover { background: #1E5C54; }
+        .btn-outline {
+            background: #fff; color: #2B7F75; padding: 0.5rem 1.25rem;
+            border-radius: 0.5rem; font-size: 0.8125rem; font-weight: 600;
+            border: 1.5px solid #2B7F75; cursor: pointer; transition: all 0.15s;
+        }
+        .btn-outline:hover { background: #EAF4F1; }
+        #pmTypeIndividu.active, #pmTypeKomunitas.active {
+            background: #2B7F75; color: #fff;
+        }
+        #pmTypeIndividu, #pmTypeKomunitas {
+            background: transparent; color: #475569;
+        }
+        #pmTypeIndividu:hover, #pmTypeKomunitas:hover { color: #2B7F75; }
+        .sidebar-scroll { max-height: calc(100vh - 4rem); overflow-y: auto; }
+        .sidebar-scroll::-webkit-scrollbar { width: 3px; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+<div id="toast"></div>
+<div class="flex min-h-screen">
+    <!-- SIDEBAR -->
+    <!-- SIDEBAR TEMATIK â€” untuk semua halaman Program Tematik -->
+<!-- SIDEBAR TEMATIK — untuk semua halaman Program Tematik -->
+<aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-[270px] border-r border-gray-100 bg-white flex flex-col transition-transform duration-200 max-lg:-translate-x-full max-lg:shadow-xl" data-sidebar>
+  <div class="px-6 py-5 border-b border-gray-100">
+    <div class="flex items-center gap-2">
+      <img src="../logo.webp" alt="Benefis" class="h-8 w-auto"/>
+      <span class="text-xl font-bold text-gray-900">Benefis</span>
+      <span class="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">DD</span>
+    </div>
+  </div>
+  <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+    <a href="index.html" class="sidebar-link">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Program Tematik</p>
+      <a href="lpm-program-tematik.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Daftar Program Tematik
+      </a>
+      <a href="lpm-intake-tematik.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+        Input & Survei Koordinator
+      </a>
+      <a href="lpm-approval-tematik.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Approval Manager
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Penerima Manfaat</p>
+      <a href="#" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        Program
+      </a>
+      <a href="#" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+        Entitas Pelaksanaan
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Laporan</p>
+      <a href="lpm-export-laporan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Export Laporan
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Master Data</p>
+      <a href="lpm-konfigurasi-lpm.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.756.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Konfigurasi LPM
+      </a>
+    </div>
+  </nav>
+  <div class="px-3 py-4 border-t border-gray-100">
+    <a href="#" class="sidebar-link" style="color:#F87171;">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+      Logout
+    </a>
+  </div>
+</aside>
+<div id="sidebarOverlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+<button id="hamburgerBtn" onclick="toggleSidebar()" class="fixed top-3 left-3 z-[55] lg:hidden bg-white rounded-lg shadow border border-gray-200 p-2 hover:bg-gray-50">
+  <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+</button>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 min-w-0">
+        <header class="bg-white border-b border-gray-200 px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <nav class="flex items-center gap-1.5 text-xs text-gray-400 mb-1">
+                        <span>Program Tematik</span>
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        <span class="text-gray-700 font-medium">Input &amp; Survei Koordinator</span>
+                    </nav>
+                    <h1 class="text-lg font-bold text-gray-800">Input &amp; Survei Koordinator</h1>
+                    <p class="text-xs text-gray-400 mt-0.5">Form input ajuan sekaligus survei/verifikasi lapangan — Koordinator merangkap</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="badge badge-yatim">Yatim</span>
+                    <span class="badge badge-pmtu">PMTU</span>
+                    <span class="badge badge-disabilitas">Disabilitas</span>
+                </div>
+            </div>
+        </header>
+        <div class="max-w-4xl mx-auto px-6 py-6">
+            <!-- SECTION 1: Program & Identitas -->
+            <div class="section-card">
+                <div class="section-title">
+                    <span class="icon bg-primary-light text-primary">1</span>
+                    Program &amp; Identitas Penerima Manfaat
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div class="md:col-span-3">
+                        <label class="form-label">Program Tematik <span class="req">*</span></label>
+                        <select id="programSelect" class="form-select" onchange="handleProgramChange()">
+                            <option value="">— Pilih Program —</option>
+                            <option value="yatim">Beasiswa Yatim</option>
+                            <option value="pmtu">PMTU</option>
+                            <option value="disabilitas">Disabilitas Mandiri</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Jenis Penerima Manfaat <span class="req">*</span></label>
+                    <div class="inline-flex rounded-lg border border-gray-200 bg-gray-50 p-1 gap-1">
+                        <button type="button" id="pmTypeIndividu" onclick="switchPmType('individu')" class="px-4 py-1.5 text-xs font-semibold rounded-md transition">Individu</button>
+                        <button type="button" id="pmTypeKomunitas" onclick="switchPmType('komunitas')" class="px-4 py-1.5 text-xs font-semibold rounded-md transition">Komunitas / Lembaga</button>
+                    </div>
+                    <p id="pmTypeHint" class="text-[11px] text-gray-400 mt-1.5">PMTU &amp; penyaluran via mitra/lembaga menggunakan data komunitas/kelompok.</p>
+                </div>
+                <div id="pm-individu">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">Nama Lengkap <span class="req">*</span></label>
+                            <input type="text" class="form-input" placeholder="Nama lengkap PM">
+                        </div>
+                        <div>
+                            <label class="form-label">Nama Panggilan</label>
+                            <input type="text" class="form-input" placeholder="Nama panggilan">
+                        </div>
+                        <div>
+                            <label class="form-label">Tempat Lahir</label>
+                            <input type="text" class="form-input" placeholder="Kota/kabupaten lahir">
+                        </div>
+                        <div>
+                            <label class="form-label">Tanggal Lahir</label>
+                            <input type="date" class="form-input">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="form-label">Alamat Lengkap <span class="req">*</span></label>
+                            <textarea class="form-textarea" rows="2" placeholder="Alamat lengkap (jalan, rt/rw, kelurahan, kecamatan, kota)"></textarea>
+                        </div>
+                        <div>
+                            <label class="form-label">No. Telepon</label>
+                            <input type="tel" class="form-input" placeholder="08xxxxxxxxxx">
+                        </div>
+                    </div>
+                </div>
+                <div id="pm-komunitas" class="hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="md:col-span-2">
+                            <label class="form-label">Nama Komunitas / Lembaga <span class="req">*</span></label>
+                            <input type="text" class="form-input" placeholder="Nama resmi komunitas / majelis taklim / lembaga">
+                        </div>
+                        <div>
+                            <label class="form-label">Nama Penanggung Jawab <span class="req">*</span></label>
+                            <input type="text" class="form-input" placeholder="Nama pj / ketua">
+                        </div>
+                        <div>
+                            <label class="form-label">No. KTP Penanggung Jawab <span class="req">*</span></label>
+                            <input type="text" class="form-input" placeholder="16 digit NIK">
+                        </div>
+                        <div>
+                            <label class="form-label">Jumlah Anggota / Kelompok</label>
+                            <input type="number" class="form-input" placeholder="Total anggota" min="1">
+                        </div>
+                        <div>
+                            <label class="form-label">No. Telepon Pj / Kontak</label>
+                            <input type="tel" class="form-input" placeholder="08xxxxxxxxxx">
+                        </div>
+                        <div>
+                            <label class="form-label">Tipe Komunitas</label>
+                            <select class="form-select">
+                                <option value="">— Pilih —</option>
+                                <option>Majelis Taklim</option>
+                                <option>Komunitas Usaha</option>
+                                <option>Panti / Yayasan</option>
+                                <option>Kelompok Tani</option>
+                                <option>Lainnya</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="form-label">Alamat Lengkap <span class="req">*</span></label>
+                            <textarea class="form-textarea" rows="2" placeholder="Alamat lengkap komunitas / lembaga"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- SECTION 2: Data Keluarga -->
+            <div class="section-card">
+                <div class="section-title">
+                    <span class="icon bg-primary-light text-primary">2</span>
+                    Data Keluarga
+                </div>
+                <div class="mb-4">
+                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Suami / Istri</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div>
+                            <label class="form-label">Nama</label>
+                            <input type="text" class="form-input" placeholder="Nama pasangan">
+                        </div>
+                        <div>
+                            <label class="form-label">Pekerjaan</label>
+                            <input type="text" class="form-input" placeholder="Pekerjaan">
+                        </div>
+                        <div>
+                            <label class="form-label">Pendapatan / Bulan (Rp)</label>
+                            <input type="text" class="form-input rp-input" placeholder="0">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Data Anak</h4>
+                        <button type="button" onclick="addAnak()" class="text-xs text-primary font-semibold hover:underline">+ Tambah Anak</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead class="table-header">
+                                <tr>
+                                    <th class="w-8">#</th>
+                                    <th>Nama Anak</th>
+                                    <th class="w-24">Usia</th>
+                                    <th>Sekolah / Pekerjaan</th>
+                                    <th class="w-10"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="anakTableBody">
+                                <tr class="table-row border-b border-gray-100">
+                                    <td class="text-xs text-gray-400">1</td>
+                                    <td><input type="text" class="form-input" placeholder="Nama anak"></td>
+                                    <td><input type="text" class="form-input" placeholder="Thn"></td>
+                                    <td><input type="text" class="form-input" placeholder="Sekolah / pekerjaan"></td>
+                                    <td><button type="button" onclick="removeRow(this)" class="text-red-400 hover:text-red-600 text-xs">&#10005;</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <label class="form-label">Jumlah Anggota Keluarga</label>
+                    <input type="number" class="form-input w-32" placeholder="0" min="1">
+                </div>
+            </div>
+            <!-- SECTION 3: Pendidikan Formal -->
+            <div class="section-card">
+                <div class="section-title">
+                    <span class="icon bg-primary-light text-primary">3</span>
+                    Pendidikan Formal
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead class="table-header">
+                            <tr>
+                                <th class="w-10">&#10003;</th>
+                                <th>Jenjang</th>
+                                <th>Nama Sekolah</th>
+                                <th>Kelas / Semester</th>
+                                <th class="w-32">Biaya / Tahun (Rp)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="table-row border-b border-gray-100">
+                                <td><input type="checkbox" class="rounded text-primary focus:ring-primary w-4 h-4" onchange="toggleRowInput(this)"></td>
+                                <td class="text-sm font-medium">SD / MI</td>
+                                <td><input type="text" class="form-input" placeholder="Nama sekolah" disabled></td>
+                                <td><input type="text" class="form-input" placeholder="Kelas" disabled></td>
+                                <td><input type="text" class="form-input rp-input" placeholder="0" disabled></td>
+                            </tr>
+                            <tr class="table-row border-b border-gray-100">
+                                <td><input type="checkbox" class="rounded text-primary focus:ring-primary w-4 h-4" onchange="toggleRowInput(this)"></td>
+                                <td class="text-sm font-medium">SMP / MTS</td>
+                                <td><input type="text" class="form-input" placeholder="Nama sekolah" disabled></td>
+                                <td><input type="text" class="form-input" placeholder="Kelas" disabled></td>
+                                <td><input type="text" class="form-input rp-input" placeholder="0" disabled></td>
+                            </tr>
+                            <tr class="table-row border-b border-gray-100">
+                                <td><input type="checkbox" class="rounded text-primary focus:ring-primary w-4 h-4" onchange="toggleRowInput(this)"></td>
+                                <td class="text-sm font-medium">SMA / Aliyah</td>
+                                <td><input type="text" class="form-input" placeholder="Nama sekolah" disabled></td>
+                                <td><input type="text" class="form-input" placeholder="Kelas" disabled></td>
+                                <td><input type="text" class="form-input rp-input" placeholder="0" disabled></td>
+                            </tr>
+                            <tr class="table-row border-b border-gray-100">
+                                <td><input type="checkbox" class="rounded text-primary focus:ring-primary w-4 h-4" onchange="toggleRowInput(this)"></td>
+                                <td class="text-sm font-medium">Perguruan Tinggi</td>
+                                <td><input type="text" class="form-input" placeholder="Nama universitas" disabled></td>
+                                <td><input type="text" class="form-input" placeholder="Semester" disabled></td>
+                                <td><input type="text" class="form-input rp-input" placeholder="0" disabled></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- SECTION 4: Pengeluaran Keluarga -->
+            <div class="section-card">
+                <div class="section-title">
+                    <span class="icon bg-primary-light text-primary">4</span>
+                    Pengeluaran Keluarga
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead class="table-header">
+                            <tr>
+                                <th>Keterangan</th>
+                                <th class="w-64">Narasi / Detail</th>
+                                <th class="w-40">Nominal (Rp)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pengeluaranBody">
+                            <tr class="table-row border-b border-gray-100">
+                                <td class="text-sm font-medium">Rumah Tangga</td>
+                                <td><input type="text" class="form-input" placeholder="Makan, listrik, air, dll"></td>
+                                <td><input type="text" class="form-input rp-input pengeluaran-nominal" placeholder="0"></td>
+                            </tr>
+                            <tr class="table-row border-b border-gray-100">
+                                <td class="text-sm font-medium">Sekolah</td>
+                                <td><input type="text" class="form-input" placeholder="SPP, buku, seragam, dll"></td>
+                                <td><input type="text" class="form-input rp-input pengeluaran-nominal" placeholder="0"></td>
+                            </tr>
+                            <tr class="table-row border-b border-gray-100">
+                                <td class="text-sm font-medium">Transportasi</td>
+                                <td><input type="text" class="form-input" placeholder="BBM, ongkos, dll"></td>
+                                <td><input type="text" class="form-input rp-input pengeluaran-nominal" placeholder="0"></td>
+                            </tr>
+                            <tr class="table-row border-b border-gray-100">
+                                <td class="text-sm font-medium">Kontrakan / Sewa</td>
+                                <td><input type="text" class="form-input" placeholder="Jika berlaku"></td>
+                                <td><input type="text" class="form-input rp-input pengeluaran-nominal" placeholder="0"></td>
+                            </tr>
+                            <tr class="table-row border-b border-gray-100">
+                                <td class="text-sm font-medium">Lain-lain</td>
+                                <td><input type="text" class="form-input" placeholder="Obat, cicilan, dll"></td>
+                                <td><input type="text" class="form-input rp-input pengeluaran-nominal" placeholder="0"></td>
+                            </tr>
+                            <tr class="table-row bg-gray-50 font-semibold">
+                                <td class="text-sm text-primary">TOTAL</td>
+                                <td></td>
+                                <td><input type="text" id="totalPengeluaran" class="form-input bg-primary-light font-bold text-primary" value="0" readonly></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- SECTION 5: Gambaran Usaha & Ketangguhan -->
+            <div class="section-card">
+                <div class="section-title">
+                    <span class="icon bg-primary-light text-primary">5</span>
+                    Gambaran Usaha &amp; Ketangguhan
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Jenis Usaha</label>
+                        <input type="text" class="form-input" placeholder="Contoh: Warung, jahit, dll">
+                    </div>
+                    <div>
+                        <label class="form-label">Lokasi Usaha</label>
+                        <input type="text" class="form-input" placeholder="Alamat lokasi usaha">
+                    </div>
+                    <div>
+                        <label class="form-label">Modal (Rp)</label>
+                        <input type="text" class="form-input rp-input" placeholder="0">
+                    </div>
+                    <div>
+                        <label class="form-label">Alat / Peralatan</label>
+                        <input type="text" class="form-input" placeholder="Alat yang dimiliki">
+                    </div>
+                    <div>
+                        <label class="form-label">Segmentasi Pembeli</label>
+                        <input type="text" class="form-input" placeholder="Siapa target pasar">
+                    </div>
+                    <div>
+                        <label class="form-label">Waktu Operasional</label>
+                        <input type="text" class="form-input" placeholder="Contoh: 06.00 - 14.00">
+                    </div>
+                    <div>
+                        <label class="form-label">Tingkatan Masalah</label>
+                        <select class="form-select">
+                            <option value="">— Pilih —</option>
+                            <option>Ringan</option>
+                            <option>Sedang</option>
+                            <option>Berat</option>
+                            <option>Sangat Berat</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Pendapatan / Bulan (Rp)</label>
+                        <input type="text" class="form-input rp-input" placeholder="0">
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <label class="form-label">Ketangguhan (Deskripsi Kualitatif)</label>
+                    <textarea class="form-textarea" rows="3" placeholder="Deskripsi ketangguhan mustahik dalam menghadapi permasalahan ekonomi..."></textarea>
+                </div>
+                <div class="mt-3">
+                    <label class="form-label">Rekomendasi Koordinator</label>
+                    <textarea class="form-textarea" rows="3" placeholder="Rekomendasi dari koordinator berdasarkan survei lapangan..."></textarea>
+                </div>
+            </div>
+            <!-- SECTION 6: Rencana Intervensi -->
+            <div class="section-card">
+                <div class="section-title">
+                    <span class="icon bg-primary-light text-primary">6</span>
+                    Rencana Intervensi
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="form-label">Permasalahan Mustahik / Keadaan Saat Ini</label>
+                        <textarea class="form-textarea" rows="3" placeholder="Deskripsi kondisi dan permasalahan yang dihadapi..."></textarea>
+                    </div>
+                    <div>
+                        <label class="form-label">Analisa Bantuan / Rencana Intervensi</label>
+                        <textarea class="form-textarea" rows="3" placeholder="Analisa kebutuhan dan rencana intervensi yang tepat..."></textarea>
+                    </div>
+                    <div>
+                        <label class="form-label">Rencana Intervensi Prioritas</label>
+                        <textarea class="form-textarea" rows="3" placeholder="Bentuk intervensi yang diprioritaskan..."></textarea>
+                    </div>
+                    <div>
+                        <label class="form-label">Tahapan Bantuan Mustahik</label>
+                        <textarea class="form-textarea" rows="3" placeholder="Tahapan-tahapan penyaluran bantuan..."></textarea>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">Keadaan yang Diinginkan — Jangka Pendek</label>
+                            <textarea class="form-textarea" rows="3" placeholder="Target kondisi dalam 3-6 bulan..."></textarea>
+                        </div>
+                        <div>
+                            <label class="form-label">Keadaan yang Diinginkan — Jangka Panjang</label>
+                            <textarea class="form-textarea" rows="3" placeholder="Target kondisi dalam 1-3 tahun..."></textarea>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="form-label">Rekomendasi LPM</label>
+                        <textarea class="form-textarea" rows="3" placeholder="Rekomendasi keputusan dari tim LPM..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <!-- SECTION 7: Usulan Bantuan -->
+            <div class="section-card">
+                <div class="section-title">
+                    <span class="icon bg-primary-light text-primary">7</span>
+                    Usulan Bantuan
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Bentuk Bantuan <span class="req">*</span></label>
+                        <select class="form-select">
+                            <option value="">— Pilih —</option>
+                            <option>Uang Tunai</option>
+                            <option>Barang</option>
+                            <option>Beasiswa</option>
+                            <option>Pemberdayaan</option>
+                            <option>Lainnya</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Sifat Bantuan <span class="req">*</span></label>
+                        <select class="form-select">
+                            <option value="">— Pilih —</option>
+                            <option>Rutin</option>
+                            <option>Insidental</option>
+                            <option>Pemberdayaan</option>
+                            <option>Biasa</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Nominal Diajukan (Rp) <span class="req">*</span></label>
+                        <input type="text" class="form-input rp-input" placeholder="0">
+                    </div>
+                    <div>
+                        <label class="form-label">Mekanisme Penyaluran</label>
+                        <select class="form-select">
+                            <option value="">— Pilih —</option>
+                            <option>Transfer</option>
+                            <option>Di LPM</option>
+                            <option>Ke Sekolah</option>
+                            <option>Ke Rumah</option>
+                            <option>Lainnya</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- YATIM: Data Siswa -->
+            <div id="sectionYatim" class="section-card hidden">
+                <div class="section-title">
+                    <span class="icon bg-yellow-100 text-yellow-700">Y</span>
+                    Data Siswa — Program Beasiswa Yatim
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="form-label">Nama Siswa</label>
+                        <input type="text" class="form-input" placeholder="Nama lengkap siswa">
+                    </div>
+                    <div>
+                        <label class="form-label">Kelas</label>
+                        <input type="text" class="form-input" placeholder="Contoh: VII-A">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="form-label">Nama Sekolah</label>
+                        <input type="text" class="form-input" placeholder="Nama sekolah">
+                    </div>
+                    <div>
+                        <label class="form-label">Alamat Sekolah</label>
+                        <input type="text" class="form-input" placeholder="Alamat sekolah">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Usaha Siswa Membantu Ekonomi Keluarga</label>
+                    <textarea class="form-textarea" rows="3" placeholder="Apakah siswa memiliki kegiatan/usaha yang membantu ekonomi keluarga?"></textarea>
+                </div>
+                <div class="border-t border-gray-200 pt-4 mt-4">
+                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Disabilitas (jika ada)</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">Jenis Disabilitas</label>
+                            <select class="form-select">
+                                <option value="">— Tidak Ada —</option>
+                                <option>Fisik</option>
+                                <option>Netra</option>
+                                <option>Tuli</option>
+                                <option>Wicara</option>
+                                <option>Intelektual</option>
+                                <option>Psikososial</option>
+                                <option>Lainnya</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">Kesulitan yang Dihadapi</label>
+                            <input type="text" class="form-input" placeholder="Deskripsi kesulitan akibat disabilitas">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PMTU: Gambaran Wilayah & Data Mitra -->
+            <div id="sectionPmtu" class="section-card hidden">
+                <div class="section-title">
+                    <span class="icon bg-blue-100 text-blue-700">P</span>
+                    Gambaran Umum Wilayah — Program PMTU
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div class="md:col-span-2">
+                        <label class="form-label">Alamat Wilayah</label>
+                        <input type="text" class="form-input" placeholder="Alamat lengkap wilayah binaan">
+                    </div>
+                    <div>
+                        <label class="form-label">Gambaran Umum Wilayah</label>
+                        <textarea class="form-textarea" rows="3" placeholder="Deskripsi kondisi umum wilayah..."></textarea>
+                    </div>
+                    <div>
+                        <label class="form-label">Identifikasi Masalah</label>
+                        <textarea class="form-textarea" rows="3" placeholder="Masalah utama yang diidentifikasi di wilayah..."></textarea>
+                    </div>
+                </div>
+                <div class="border-t border-gray-200 pt-4 mt-4">
+                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Data Mitra — Majelis Taklim</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">Nama Lembaga</label>
+                            <input type="text" class="form-input" placeholder="Nama majelis taklim / lembaga">
+                        </div>
+                        <div>
+                            <label class="form-label">Tanggal Berdiri</label>
+                            <input type="date" class="form-input">
+                        </div>
+                        <div>
+                            <label class="form-label">No. Izin</label>
+                            <input type="text" class="form-input" placeholder="Nomor izin operasional">
+                        </div>
+                        <div>
+                            <label class="form-label">Alamat Lembaga</label>
+                            <input type="text" class="form-input" placeholder="Alamat lengkap lembaga">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="form-label">Rekening Bank</label>
+                            <input type="text" class="form-input" placeholder="Nama bank + nomor rekening">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DISABILITAS MANDIRI: Kategori Disabilitas -->
+            <div id="sectionDisabilitas" class="section-card hidden">
+                <div class="section-title">
+                    <span class="icon bg-purple-100 text-purple-700">D</span>
+                    Kategori Disabilitas — Program Disabilitas Mandiri
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Jenis Disabilitas <span class="req">*</span></label>
+                        <select class="form-select">
+                            <option value="">— Pilih —</option>
+                            <option>Fisik</option>
+                            <option>Netra</option>
+                            <option>Tuli</option>
+                            <option>Wicara</option>
+                            <option>Intelektual</option>
+                            <option>Psikososial</option>
+                            <option>Lainnya</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Sebab Disabilitas <span class="req">*</span></label>
+                        <select class="form-select">
+                            <option value="">— Pilih —</option>
+                            <option>Bawaan Lahir</option>
+                            <option>Kecelakaan</option>
+                            <option>Penyakit</option>
+                            <option>Lainnya</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- ACTION BUTTONS -->
+            <div class="flex items-center justify-end gap-3 mt-6 mb-10">
+                <button type="button" class="btn-outline" onclick="showToast('Draft tersimpan', 'success')">
+                    <span class="flex items-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+                        Simpan Draft
+                    </span>
+                </button>
+                <button type="button" class="btn-primary" onclick="showToast('Usulan dikirim ke Manager', 'success')">
+                    <span class="flex items-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                        Kirim Usulan ke Manager
+                    </span>
+                </button>
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+    // === Program Switching ===
+    function handleProgramChange() {
+        var val = document.getElementById('programSelect').value;
+        document.getElementById('sectionYatim').classList.add('hidden');
+        document.getElementById('sectionPmtu').classList.add('hidden');
+        document.getElementById('sectionDisabilitas').classList.add('hidden');
+        if (val === 'yatim') document.getElementById('sectionYatim').classList.remove('hidden');
+        if (val === 'pmtu') document.getElementById('sectionPmtu').classList.remove('hidden');
+        if (val === 'disabilitas') document.getElementById('sectionDisabilitas').classList.remove('hidden');
+    }
+
+    // === Jenis Penerima Manfaat: Individu / Komunitas ===
+    function switchPmType(type) {
+        var isKom = type === 'komunitas';
+        document.getElementById('pm-individu').classList.toggle('hidden', isKom);
+        document.getElementById('pm-komunitas').classList.toggle('hidden', !isKom);
+        document.getElementById('pmTypeIndividu').classList.toggle('active', !isKom);
+        document.getElementById('pmTypeKomunitas').classList.toggle('active', isKom);
+        var hint = document.getElementById('pmTypeHint');
+        if (isKom) {
+            hint.textContent = 'Data keluarga & ketangguhan di bawah mengacu pada komunitas/lembaga sebagai PM.';
+        } else {
+            hint.textContent = 'PMTU & penyaluran via mitra/lembaga menggunakan data komunitas/kelompok.';
+        }
+    }
+    document.getElementById('pmTypeIndividu').classList.add('active');
+
+    // === Toggle Row Input (Pendidikan) ===
+    function toggleRowInput(checkbox) {
+        var row = checkbox.closest('tr');
+        var inputs = row.querySelectorAll('input[type="text"]');
+        inputs.forEach(function(inp) { inp.disabled = !checkbox.checked; });
+    }
+
+    // === Add Anak Row ===
+    var anakCounter = 1;
+    function addAnak() {
+        anakCounter++;
+        var tbody = document.getElementById('anakTableBody');
+        var tr = document.createElement('tr');
+        tr.className = 'table-row border-b border-gray-100';
+        tr.innerHTML = '<td class="text-xs text-gray-400">' + anakCounter + '</td>' +
+            '<td><input type="text" class="form-input" placeholder="Nama anak"></td>' +
+            '<td><input type="text" class="form-input" placeholder="Thn"></td>' +
+            '<td><input type="text" class="form-input" placeholder="Sekolah / pekerjaan"></td>' +
+            '<td><button type="button" onclick="removeRow(this)" class="text-red-400 hover:text-red-600 text-xs">&#10005;</button></td>';
+        tbody.appendChild(tr);
+    }
+
+    // === Remove Row ===
+    function removeRow(btn) {
+        btn.closest('tr').remove();
+    }
+
+    // === Total Pengeluaran Auto-Calc ===
+    document.addEventListener('input', function(e) {
+        if (e.target.classList.contains('pengeluaran-nominal')) {
+            var total = 0;
+            document.querySelectorAll('.pengeluaran-nominal').forEach(function(inp) {
+                var val = parseInt(inp.value.replace(/[^0-9]/g, '')) || 0;
+                total += val;
+            });
+            document.getElementById('totalPengeluaran').value = formatRupiah(total);
+        }
+    });
+
+    // === Rp Formatting ===
+    function formatRupiah(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+
+    document.querySelectorAll('.rp-input').forEach(function(inp) {
+        inp.addEventListener('input', function() {
+            var raw = this.value.replace(/[^0-9]/g, '');
+            if (raw) this.value = formatRupiah(parseInt(raw));
+        });
+    });
+
+    // === Toast ===
+    function showToast(msg, type) {
+        var t = document.getElementById('toast');
+        t.textContent = msg;
+        t.style.background = type === 'success' ? '#2B7F75' : type === 'error' ? '#ef4444' : '#f59e0b';
+        t.classList.add('show');
+        setTimeout(function() { t.classList.remove('show'); }, 2500);
+    }
+</script>
+
+<script>
+function toggleSidebar() {
+  var s = document.getElementById('sidebar');
+  var o = document.getElementById('sidebarOverlay');
+  s.classList.toggle('-translate-x-full');
+  o.classList.toggle('hidden');
+}
+document.addEventListener('DOMContentLoaded', function() {
+  var page = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('#sidebar .sidebar-link').forEach(function(a) {
+    var href = a.getAttribute('href');
+    if (href === page) a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Konfigurasi LPM — Benefis LPM</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2B7F75',
+            'primary-light': '#EAF4F1',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .sidebar-link { display:flex; align-items:center; gap:0.625rem; border-radius:0.375rem; padding:0.5rem 0.75rem; font-size:0.875rem; font-weight:500; color:#4B5563; transition:all 0.15s; }
+    .sidebar-link:hover { background:#F3F4F6; color:#111827; }
+    .sidebar-link.active { background:#EAF4F1; color:#2B7F75; }
+    .form-label { display:block; font-size:0.75rem; font-weight:600; color:#374151; margin-bottom:0.375rem; }
+    .form-input { width:100%; border:1px solid #E5E7EB; border-radius:0.5rem; padding:0.5rem 0.75rem; font-size:0.875rem; color:#111827; background:#fff; outline:none; transition:all 0.15s; }
+    .form-input:focus { border-color:#2B7F75; box-shadow:0 0 0 3px rgba(43,127,117,0.12); }
+    .section-card { background:#fff; border:1px solid #F3F4F6; border-radius:0.75rem; padding:1.5rem; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .section-title { font-size:0.8125rem; font-weight:700; color:#374151; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem; }
+    .tab-btn { padding:0.5rem 1.1rem; font-size:0.875rem; font-weight:500; border-radius:0.5rem; border:1px solid #E5E7EB; background:#fff; color:#6B7280; cursor:pointer; transition:all 0.15s; }
+    .tab-btn.active { background:#2B7F75; border-color:#2B7F75; color:#fff; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<div class="flex min-h-screen">
+
+  <!-- Sidebar -->
+  <!-- SIDEBAR LAMUSTA â€” untuk semua halaman Layanan Mustahik -->
+<!-- SIDEBAR LAMUSTA — untuk semua halaman Layanan Mustahik -->
+<aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-[270px] border-r border-gray-100 bg-white flex flex-col transition-transform duration-200 max-lg:-translate-x-full max-lg:shadow-xl" data-sidebar>
+  <div class="px-6 py-5 border-b border-gray-100">
+    <div class="flex items-center gap-2">
+      <img src="../logo.webp" alt="Benefis" class="h-8 w-auto"/>
+      <span class="text-xl font-bold text-gray-900">Benefis</span>
+      <span class="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">DD</span>
+    </div>
+  </div>
+  <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+    <a href="index.html" class="sidebar-link">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Layanan Mustahik</p>
+      <a href="lpm-daftar-permohonan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Daftar Permohonan
+      </a>
+      <a href="lpm-intake-permohonan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+        Input Ajuan Baru
+      </a>
+      <a href="lpm-konseling.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        Konseling
+      </a>
+      <a href="lpm-keputusan-pimpinan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Keputusan Approval
+      </a>
+      <a href="lpm-order-survei.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Order Survei
+      </a>
+      <a href="lpm-esurvei.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        E-Survei
+      </a>
+      <a href="lpm-pencairan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        Pencairan
+      </a>
+      <a href="lpm-arsip.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+        Arsip
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Penerima Manfaat</p>
+      <a href="#" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        Program
+      </a>
+      <a href="#" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+        Entitas Pelaksanaan
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Laporan</p>
+      <a href="lpm-export-laporan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Export Laporan
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Master Data</p>
+      <a href="lpm-konfigurasi-lpm.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.756.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Konfigurasi LPM
+      </a>
+    </div>
+  </nav>
+  <div class="px-3 py-4 border-t border-gray-100">
+    <a href="#" class="sidebar-link" style="color:#F87171;">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+      Logout
+    </a>
+  </div>
+</aside>
+<!-- Mobile overlay -->
+<div id="sidebarOverlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+<!-- Hamburger button (mobile) -->
+<button id="hamburgerBtn" onclick="toggleSidebar()" class="fixed top-3 left-3 z-[55] lg:hidden bg-white rounded-lg shadow border border-gray-200 p-2 hover:bg-gray-50">
+  <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+</button>
+
+  <div class="lg:ml-[270px] flex flex-col flex-1 min-h-screen">
+
+    <header class="sticky top-0 z-40 flex items-center justify-between bg-white/80 backdrop-blur-xl border-b border-gray-100 px-6 py-3.5">
+      <div>
+        <h1 class="text-base font-semibold text-gray-900">Konfigurasi LPM</h1>
+        <p class="text-xs text-gray-400">Master data & pengaturan modul Layanan Mustahik</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-xs text-gray-400">Admin</span>
+        <div class="h-8 w-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:#2B7F75">AD</div>
+      </div>
+    </header>
+
+    <main class="flex-1 px-6 py-5 max-w-5xl space-y-5">
+
+      <!-- Tabs -->
+      <div class="flex flex-wrap gap-3" id="cfgTabs">
+        <button class="tab-btn active" onclick="switchCfg('approval')">Approval & Plafond</button>
+        <button class="tab-btn" onclick="switchCfg('retensi')">Retensi Arsip</button>
+        <button class="tab-btn" onclick="switchCfg('master')">Master Data</button>
+        <button class="tab-btn" onclick="switchCfg('user')">Manajemen Pengguna</button>
+      </div>
+
+      <!-- Approval & Plafond -->
+      <div id="cfg-approval" class="section-card">
+        <div class="section-title">
+          <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Plafond Approval per Level
+        </div>
+        <div class="grid grid-cols-2 gap-4 max-w-xl">
+          <div>
+            <label class="form-label">Plafond SPV LPM (Rp)</label>
+            <input type="text" class="form-input" value="5.000.000"/>
+          </div>
+          <div>
+            <label class="form-label">Threshold Persetujuan Pimpinan (Rp)</label>
+            <input type="text" class="form-input" value="5.000.001"/>
+          </div>
+          <div class="col-span-2 text-xs text-gray-400">Bila nominal keputusan melebihi plafond SPV, alur otomatis meneruskan ke Pimpinan LPM untuk persetujuan final.</div>
+        </div>
+        <div class="mt-4 flex justify-end">
+          <button class="px-4 py-2 text-sm font-semibold bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">Simpan</button>
+        </div>
+      </div>
+
+      <!-- Retensi -->
+      <div id="cfg-retensi" class="section-card hidden">
+        <div class="section-title">
+          <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Durasi Retensi Arsip Aktif
+        </div>
+        <div class="grid grid-cols-2 gap-4 max-w-xl">
+          <div>
+            <label class="form-label">Lama Retensi Aktif (tahun)</label>
+            <input type="number" class="form-input" value="1"/>
+          </div>
+          <div>
+            <label class="form-label">Tindakan Setelah Kadaluarsa</label>
+            <select class="form-input">
+              <option>Pindah ke Cold Storage otomatis</option>
+              <option>Hapus otomatis</option>
+            </select>
+          </div>
+        </div>
+        <div class="mt-4 flex justify-end">
+          <button class="px-4 py-2 text-sm font-semibold bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">Simpan</button>
+        </div>
+      </div>
+
+      <!-- Master Data -->
+      <div id="cfg-master" class="section-card hidden">
+        <div class="section-title">
+          <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+          Daftar Master (Kategori PM, Asnaf, Program, Wilayah)
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-gray-100 text-xs text-gray-500 uppercase"><th class="text-left py-2 px-3">Grup</th><th class="text-left py-2 px-3">Nilai</th><th class="py-2 px-3"></th></tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50 text-gray-700">
+              <tr><td class="py-2 px-3 font-medium">Kategori PM</td><td class="py-2 px-3">Pendidikan, Pengobatan, Usaha, Muallaf, Fisabilillah, Fakir Miskin</td><td class="py-2 px-3 text-right"><a href="#" class="text-primary text-xs hover:underline">Edit</a></td></tr>
+              <tr><td class="py-2 px-3 font-medium">Asnaf</td><td class="py-2 px-3">Fakir Miskin, Muallaf, Gharim, Ibnu Sabil, Fisabilillah</td><td class="py-2 px-3 text-right"><a href="#" class="text-primary text-xs hover:underline">Edit</a></td></tr>
+              <tr><td class="py-2 px-3 font-medium">Program</td><td class="py-2 px-3">Beasiswa, Bantuan Kesehatan, Modal Usaha, Bantuan Tunai</td><td class="py-2 px-3 text-right"><a href="#" class="text-primary text-xs hover:underline">Edit</a></td></tr>
+              <tr><td class="py-2 px-3 font-medium">Wilayah</td><td class="py-2 px-3">Jakarta Timur, Jakarta Selatan, Depok, Bekasi</td><td class="py-2 px-3 text-right"><a href="#" class="text-primary text-xs hover:underline">Edit</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="mt-3 flex items-center gap-1.5 text-sm font-medium text-primary border border-primary/30 bg-primary-light rounded-lg px-3 py-1.5">
+          <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+          Tambah Nilai Master
+        </button>
+      </div>
+
+      <!-- User management -->
+      <div id="cfg-user" class="section-card hidden">
+        <div class="section-title">
+          <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          Manajemen Pengguna & Role
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-gray-100 text-xs text-gray-500 uppercase"><th class="text-left py-2 px-3">Nama</th><th class="text-left py-2 px-3">Role</th><th class="text-left py-2 px-3">Akses</th><th class="py-2 px-3"></th></tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50 text-gray-700">
+              <tr><td class="py-2 px-3 font-medium">Rini S.</td><td class="py-2 px-3"><span class="badge bg-primary-light text-primary">SPV LPM</span></td><td class="py-2 px-3 text-xs">Keputusan, Order Survei</td><td class="py-2 px-3 text-right"><a href="#" class="text-primary text-xs hover:underline">Edit</a></td></tr>
+              <tr><td class="py-2 px-3 font-medium">Budi K.</td><td class="py-2 px-3"><span class="badge bg-blue-50 text-blue-600">Konselor</span></td><td class="py-2 px-3 text-xs">Intake, Konseling</td><td class="py-2 px-3 text-right"><a href="#" class="text-primary text-xs hover:underline">Edit</a></td></tr>
+              <tr><td class="py-2 px-3 font-medium">Dian P.</td><td class="py-2 px-3"><span class="badge bg-sky-50 text-sky-600">Surveyor</span></td><td class="py-2 px-3 text-xs">E-Survei (magic link)</td><td class="py-2 px-3 text-right"><a href="#" class="text-primary text-xs hover:underline">Edit</a></td></tr>
+              <tr><td class="py-2 px-3 font-medium">Kasir</td><td class="py-2 px-3"><span class="badge bg-emerald-50 text-emerald-600">Kasir</span></td><td class="py-2 px-3 text-xs">Pencairan</td><td class="py-2 px-3 text-right"><a href="#" class="text-primary text-xs hover:underline">Edit</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="mt-3 flex items-center gap-1.5 text-sm font-medium text-primary border border-primary/30 bg-primary-light rounded-lg px-3 py-1.5">
+          <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+          Tambah Pengguna
+        </button>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+  function switchCfg(tab) {
+    ['approval','retensi','master','user'].forEach(t => {
+      document.getElementById('cfg-' + t).classList.toggle('hidden', t !== tab);
+    });
+    document.querySelectorAll('#cfgTabs .tab-btn').forEach((b, i) => {
+      const map = ['approval','retensi','master','user'];
+      b.classList.toggle('active', map[i] === tab);
+    });
+  }
+</script>
+  <!-- Toast gimmick -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-4 bg-gray-900 text-white text-sm px-4 py-2.5 rounded-xl shadow-lg opacity-0 transition-all duration-300 z-[60] flex items-center gap-2 pointer-events-none">
+    <svg class="h-4 w-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+    <span id="toastMsg"></span>
+  </div>
+  <script>
+    function showToast(msg){ var t=document.getElementById('toast'); document.getElementById('toastMsg').textContent=msg; t.classList.remove('opacity-0','translate-y-4'); t.classList.add('opacity-100','translate-y-0'); clearTimeout(window._tt); window._tt=setTimeout(function(){ t.classList.add('opacity-0','translate-y-4'); t.classList.remove('opacity-100','translate-y-0'); },2200); }
+    document.querySelectorAll('button').forEach(function(b){ var t=b.textContent.trim(); if(/Simpan|Cetak|Tandai|Terapkan|Export|Unduh/i.test(t)){ b.addEventListener('click',function(e){ e.preventDefault(); showToast(t+' — berhasil'); }); } });
+  </script>
+
+<script>
+function toggleSidebar() {
+  var s = document.getElementById('sidebar');
+  var o = document.getElementById('sidebarOverlay');
+  s.classList.toggle('-translate-x-full');
+  o.classList.toggle('hidden');
+}
+document.addEventListener('DOMContentLoaded', function() {
+  // Highlight active sidebar link
+  var page = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('#sidebar .sidebar-link').forEach(function(a) {
+    var href = a.getAttribute('href');
+    if (href === page) a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

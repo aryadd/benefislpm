@@ -1,0 +1,335 @@
+﻿<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Daftar Ajuan Barzah — Benefis LPM v2</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2B7F75',
+            'primary-light': '#EAF4F1',
+          },
+          fontFamily: { inter: ['Inter', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .sidebar-link { display:flex; align-items:center; gap:0.625rem; border-radius:0.375rem; padding:0.5rem 0.75rem; font-size:0.875rem; font-weight:500; color:#4B5563; transition:all 0.15s; }
+    .sidebar-link:hover { background:#F3F4F6; color:#111827; }
+    .sidebar-link.active { background:#EAF4F1; color:#2B7F75; }
+    .form-select { border:1px solid #E5E7EB; border-radius:0.5rem; padding:0.375rem 0.75rem; font-size:0.875rem; color:#4B5563; background:#fff; outline:none; }
+    .form-select:focus { border-color:#2B7F75; box-shadow:0 0 0 3px rgba(43,127,117,0.12); }
+    .badge { display:inline-flex; align-items:center; border-radius:9999px; font-size:0.75rem; font-weight:600; padding:0.25rem 0.75rem; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<!-- Toast Notification -->
+<div id="toast" class="fixed top-5 right-5 z-[100] hidden">
+  <div class="flex items-center gap-3 bg-white border border-gray-200 rounded-xl shadow-lg px-4 py-3 min-w-[300px]">
+    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+      <svg class="h-4 w-4 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+    </div>
+    <div class="flex-1">
+      <p id="toast-title" class="text-sm font-semibold text-gray-900">Berhasil</p>
+      <p id="toast-msg" class="text-xs text-gray-500">Data telah disimpan.</p>
+    </div>
+    <button onclick="hideToast()" class="text-gray-400 hover:text-gray-600">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="flex min-h-screen">
+
+  <!-- Sidebar -->
+  <!-- SIDEBAR BARZAH â€” untuk semua halaman Layanan Barzah -->
+<!-- SIDEBAR BARZAH — untuk semua halaman Layanan Barzah -->
+<aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-[270px] border-r border-gray-100 bg-white flex flex-col transition-transform duration-200 max-lg:-translate-x-full max-lg:shadow-xl" data-sidebar>
+  <div class="px-6 py-5 border-b border-gray-100">
+    <div class="flex items-center gap-2">
+      <img src="../logo.webp" alt="Benefis" class="h-8 w-auto"/>
+      <span class="text-xl font-bold text-gray-900">Benefis</span>
+      <span class="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">DD</span>
+    </div>
+  </div>
+  <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+    <a href="index.html" class="sidebar-link">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Layanan Barzah</p>
+      <a href="lpm-barzah.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Daftar Ajuan Barzah
+      </a>
+      <a href="lpm-intake-barzah.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+        Intake Barzah
+      </a>
+      <a href="lpm-delivery-barzah.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Perintah Delivery
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Penerima Manfaat</p>
+      <a href="#" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        Program
+      </a>
+      <a href="#" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+        Entitas Pelaksanaan
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Laporan</p>
+      <a href="lpm-export-laporan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Export Laporan
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Master Data</p>
+      <a href="lpm-konfigurasi-lpm.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.756.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Konfigurasi LPM
+      </a>
+    </div>
+  </nav>
+  <div class="px-3 py-4 border-t border-gray-100">
+    <a href="#" class="sidebar-link" style="color:#F87171;">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+      Logout
+    </a>
+  </div>
+</aside>
+<div id="sidebarOverlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+<button id="hamburgerBtn" onclick="toggleSidebar()" class="fixed top-3 left-3 z-[55] lg:hidden bg-white rounded-lg shadow border border-gray-200 p-2 hover:bg-gray-50">
+  <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+</button>
+
+  <div class="lg:ml-[270px] flex flex-col flex-1 min-h-screen">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 flex items-center justify-between bg-white/80 backdrop-blur-xl border-b border-gray-100 px-6 py-3.5">
+      <div>
+        <h1 class="text-base font-semibold text-gray-900">Daftar Ajuan Barzah</h1>
+        <p class="text-xs text-gray-400">Mobil Jenazah — LPM Dompet Dhuafa</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="relative">
+          <svg class="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input type="text" placeholder="Cari nama jenazah, nomor ajuan…" class="pl-8 pr-3 py-1.5 text-sm border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary w-64"/>
+        </div>
+        <a href="lpm-intake-barzah.html" class="flex items-center gap-1.5 bg-primary text-white text-sm font-medium px-3.5 py-1.5 rounded-lg hover:bg-primary/90 transition-colors">
+          <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+          Ajuan Baru
+        </a>
+        <div class="h-8 w-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:#2B7F75">CC</div>
+      </div>
+    </header>
+
+    <!-- Page body -->
+    <main class="flex-1 px-6 py-5 space-y-4">
+
+      <!-- Breadcrumb -->
+      <div class="flex items-center gap-2 text-xs text-gray-400">
+        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1"/></svg>
+        <span>Dashboard</span>
+        <svg class="h-3 w-3 text-gray-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span>Layanan Barzah</span>
+        <svg class="h-3 w-3 text-gray-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="text-gray-700 font-medium">Daftar Ajuan Barzah</span>
+      </div>
+
+      <!-- Filter bar -->
+      <div class="flex flex-wrap items-center gap-2">
+        <select class="form-select">
+          <option value="">Semua Status</option>
+          <option>Ajuan Masuk</option>
+          <option>Disetujui</option>
+          <option>Dalam Perjalanan</option>
+          <option>Selesai</option>
+          <option>Ditolak</option>
+        </select>
+        <input type="date" class="form-select text-gray-500"/>
+        <button class="text-sm text-gray-400 hover:text-gray-600 px-2 py-1.5 transition-colors">Reset filter</button>
+
+        <div class="ml-auto flex items-center gap-2">
+          <span class="text-xs text-gray-400">23 ajuan</span>
+          <button class="flex items-center gap-1.5 text-sm border border-gray-200 rounded-lg px-3 py-1.5 bg-white text-gray-600 hover:bg-gray-50 transition-colors">
+            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            Export
+          </button>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-sm">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-gray-100 bg-gray-50/60">
+              <th class="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">No. Ajuan</th>
+              <th class="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Nama Jenazah / Keluarga</th>
+              <th class="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Lokasi Jemput</th>
+              <th class="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Lokasi Tujuan</th>
+              <th class="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Tgl Ajuan</th>
+              <th class="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Status</th>
+              <th class="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Koordinator</th>
+              <th class="px-4 py-3"></th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-50">
+
+            <!-- Row 1 — Disetujui -->
+            <tr class="hover:bg-gray-50/50 transition-colors">
+              <td class="px-4 py-3 font-mono text-xs text-gray-500">LMS-2026-000023</td>
+              <td class="px-4 py-3">
+                <div class="font-medium text-gray-900">Alm. H. Ahmad</div>
+                <div class="text-xs text-gray-400">Keluarga: Hj. Maryam</div>
+              </td>
+              <td class="px-4 py-3 text-gray-600 max-w-[180px] truncate">Jl. Mawar 12, Cempaka Putih</td>
+              <td class="px-4 py-3 text-gray-600 max-w-[180px] truncate">RS Hermina, Jatinegara</td>
+              <td class="px-4 py-3 text-gray-500 text-xs">24 Agu</td>
+              <td class="px-4 py-3"><span class="badge bg-emerald-50 text-emerald-700">Disetujui</span></td>
+              <td class="px-4 py-3 text-xs text-gray-500">Koord. Ahmad</td>
+              <td class="px-4 py-3 text-right"><a href="lpm-delivery-barzah.html" class="text-primary text-xs font-medium hover:underline">Perintah Delivery</a></td>
+            </tr>
+
+            <!-- Row 2 — Dalam Perjalanan -->
+            <tr class="hover:bg-gray-50/50 transition-colors">
+              <td class="px-4 py-3 font-mono text-xs text-gray-500">LMS-2026-000022</td>
+              <td class="px-4 py-3">
+                <div class="font-medium text-gray-900">Almh. Ibu Fatimah</div>
+                <div class="text-xs text-gray-400">Keluarga: Bpk. Hasan</div>
+              </td>
+              <td class="px-4 py-3 text-gray-600 max-w-[180px] truncate">Kel. Kebon Pala, Jatinegara</td>
+              <td class="px-4 py-3 text-gray-600 max-w-[180px] truncate">TPU Tanah Kusir</td>
+              <td class="px-4 py-3 text-gray-500 text-xs">23 Agu</td>
+              <td class="px-4 py-3"><span class="badge bg-blue-50 text-blue-600">Dalam Perjalanan</span></td>
+              <td class="px-4 py-3 text-xs text-gray-500">Koord. Ahmad</td>
+              <td class="px-4 py-3 text-right"><a href="#" class="text-primary text-xs font-medium hover:underline">Detail</a></td>
+            </tr>
+
+            <!-- Row 3 — Selesai -->
+            <tr class="hover:bg-gray-50/50 transition-colors">
+              <td class="px-4 py-3 font-mono text-xs text-gray-500">LMS-2026-000021</td>
+              <td class="px-4 py-3">
+                <div class="font-medium text-gray-900">Alm. Budi Hartono</div>
+                <div class="text-xs text-gray-400">Keluarga: Ny. Hartono</div>
+              </td>
+              <td class="px-4 py-3 text-gray-600 max-w-[180px] truncate">Jl. Melati 8, Pondok Gede</td>
+              <td class="px-4 py-3 text-gray-600 max-w-[180px] truncate">TPU Pondok Gede</td>
+              <td class="px-4 py-3 text-gray-500 text-xs">22 Agu</td>
+              <td class="px-4 py-3"><span class="badge bg-green-50 text-green-700">Selesai</span></td>
+              <td class="px-4 py-3 text-xs text-gray-500">Koord. Rina</td>
+              <td class="px-4 py-3 text-right"><a href="#" class="text-primary text-xs font-medium hover:underline">Detail</a></td>
+            </tr>
+
+            <!-- Row 4 — Ajuan Masuk -->
+            <tr class="hover:bg-gray-50/50 transition-colors">
+              <td class="px-4 py-3 font-mono text-xs text-gray-500">LMS-2026-000020</td>
+              <td class="px-4 py-3">
+                <div class="font-medium text-gray-900">Almh. Ny. Sari</div>
+                <div class="text-xs text-gray-400">Keluarga: Bpk. Rudi</div>
+              </td>
+              <td class="px-4 py-3 text-gray-600 max-w-[180px] truncate">Kompleks Asri, Bekasi</td>
+              <td class="px-4 py-3 text-gray-600 max-w-[180px] truncate">TPU Bekasi</td>
+              <td class="px-4 py-3 text-gray-500 text-xs">21 Agu</td>
+              <td class="px-4 py-3"><span class="badge bg-gray-100 text-gray-500">Ajuan Masuk</span></td>
+              <td class="px-4 py-3 text-xs text-gray-500">—</td>
+              <td class="px-4 py-3 text-right"><a href="#" onclick="showToast('Disetujui','Ajuan LMS-2026-000020 telah disetujui.')" class="text-primary text-xs font-medium hover:underline">Setujui</a></td>
+            </tr>
+
+            <!-- Row 5 — Ditolak -->
+            <tr class="hover:bg-gray-50/50 transition-colors">
+              <td class="px-4 py-3 font-mono text-xs text-gray-500">LMS-2026-000019</td>
+              <td class="px-4 py-3">
+                <div class="font-medium text-gray-900">Alm. H. Muhammad</div>
+                <div class="text-xs text-gray-400">Keluarga: Hj. Nurul</div>
+              </td>
+              <td class="px-4 py-3 text-gray-600 max-w-[180px] truncate">Jl. Kenanga 5, Depok</td>
+              <td class="px-4 py-3 text-gray-600 max-w-[180px] truncate">TPU Depok</td>
+              <td class="px-4 py-3 text-gray-500 text-xs">20 Agu</td>
+              <td class="px-4 py-3"><span class="badge bg-red-50 text-red-600">Ditolak</span></td>
+              <td class="px-4 py-3 text-xs text-gray-500">Koord. Ahmad</td>
+              <td class="px-4 py-3 text-right"><a href="#" class="text-primary text-xs font-medium hover:underline">Detail</a></td>
+            </tr>
+
+            <!-- Row 6 — Selesai -->
+            <tr class="hover:bg-gray-50/50 transition-colors">
+              <td class="px-4 py-3 font-mono text-xs text-gray-500">LMS-2026-000018</td>
+              <td class="px-4 py-3">
+                <div class="font-medium text-gray-900">Alm. Pak Soedjono</div>
+                <div class="text-xs text-gray-400">Keluarga: Ibu Soedjono</div>
+              </td>
+              <td class="px-4 py-3 text-gray-600 max-w-[180px] truncate">Jl. Merdeka 1, Bogor</td>
+              <td class="px-4 py-3 text-gray-600 max-w-[180px] truncate">TPU Bogor</td>
+              <td class="px-4 py-3 text-gray-500 text-xs">19 Agu</td>
+              <td class="px-4 py-3"><span class="badge bg-green-50 text-green-700">Selesai</span></td>
+              <td class="px-4 py-3 text-xs text-gray-500">Koord. Rina</td>
+              <td class="px-4 py-3 text-right"><a href="#" class="text-primary text-xs font-medium hover:underline">Detail</a></td>
+            </tr>
+
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="flex items-center justify-between px-4 py-3 border-t border-gray-100 bg-gray-50/40">
+          <span class="text-xs text-gray-400">Menampilkan 1–6 dari 23 ajuan</span>
+          <div class="flex items-center gap-1">
+            <button class="px-2.5 py-1 text-xs rounded border border-gray-200 text-gray-400 bg-white hover:bg-gray-50">&lsaquo;</button>
+            <button class="px-2.5 py-1 text-xs rounded border border-primary bg-primary text-white font-semibold">1</button>
+            <button class="px-2.5 py-1 text-xs rounded border border-gray-200 text-gray-600 bg-white hover:bg-gray-50">2</button>
+            <button class="px-2.5 py-1 text-xs rounded border border-gray-200 text-gray-600 bg-white hover:bg-gray-50">3</button>
+            <button class="px-2.5 py-1 text-xs rounded border border-gray-200 text-gray-600 bg-white hover:bg-gray-50">&rsaquo;</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+function showToast(title, msg) {
+  var el = document.getElementById('toast');
+  document.getElementById('toast-title').textContent = title || 'Berhasil';
+  document.getElementById('toast-msg').textContent = msg || '';
+  el.classList.remove('hidden');
+  setTimeout(function(){ hideToast(); }, 4000);
+}
+function hideToast() {
+  document.getElementById('toast').classList.add('hidden');
+}
+</script>
+
+
+<script>
+function toggleSidebar() {
+  var s = document.getElementById('sidebar');
+  var o = document.getElementById('sidebarOverlay');
+  s.classList.toggle('-translate-x-full');
+  o.classList.toggle('hidden');
+}
+document.addEventListener('DOMContentLoaded', function() {
+  // Highlight active sidebar link
+  var page = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('#sidebar .sidebar-link').forEach(function(a) {
+    var href = a.getAttribute('href');
+    if (href === page) a.classList.add('active');
+  });
+});
+</script>
+</body></html>

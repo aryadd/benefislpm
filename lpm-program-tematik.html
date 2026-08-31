@@ -1,0 +1,500 @@
+﻿<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daftar Program Tematik — LPM Dompet Dhuafa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2B7F75',
+            'primary-light': '#EAF4F1',
+          },
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #64748b;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .sidebar-link:hover {
+      background-color: #EAF4F1;
+      color: #2B7F75;
+    }
+    .sidebar-link.active {
+      background-color: #2B7F75;
+      color: #ffffff;
+    }
+    .form-input {
+      display: block;
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      color: #334155;
+      background-color: #ffffff;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: #2B7F75;
+      box-shadow: 0 0 0 3px rgba(43, 127, 117, 0.1);
+    }
+    .form-select {
+      display: block;
+      width: 100%;
+      padding: 0.5rem 2rem 0.5rem 0.75rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      color: #334155;
+      background-color: #ffffff;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right 0.5rem center;
+      background-repeat: no-repeat;
+      background-size: 1.5em 1.5em;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .form-select:focus {
+      outline: none;
+      border-color: #2B7F75;
+      box-shadow: 0 0 0 3px rgba(43, 127, 117, 0.1);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.625rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1rem;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background-color: #2B7F75;
+      color: #ffffff;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+      text-decoration: none;
+    }
+    .btn-primary:hover { background-color: #246b63; }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background-color: #ffffff;
+      color: #64748b;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border-radius: 0.5rem;
+      border: 1px solid #e2e8f0;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+    .btn-outline:hover { background-color: #f8fafc; border-color: #cbd5e1; }
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .toast {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.875rem 1.25rem;
+      background-color: #ffffff;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+      border-left: 4px solid #2B7F75;
+      transform: translateX(120%);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      min-width: 300px;
+    }
+    .toast.show { transform: translateX(0); }
+    /* Sidebar toggle */
+    .sidebar-group-label {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #94a3b8;
+      padding: 0.5rem 1rem 0.25rem;
+    }
+    .sidebar-sub { padding-left: 1rem; }
+    /* Table hover */
+    tbody tr { transition: background-color 0.1s ease; }
+    tbody tr:hover { background-color: #f8fafc; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex">
+
+  <!-- SIDEBAR -->
+  <!-- SIDEBAR TEMATIK â€” untuk semua halaman Program Tematik -->
+<!-- SIDEBAR TEMATIK — untuk semua halaman Program Tematik -->
+<aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-[270px] border-r border-gray-100 bg-white flex flex-col transition-transform duration-200 max-lg:-translate-x-full max-lg:shadow-xl" data-sidebar>
+  <div class="px-6 py-5 border-b border-gray-100">
+    <div class="flex items-center gap-2">
+      <img src="../logo.webp" alt="Benefis" class="h-8 w-auto"/>
+      <span class="text-xl font-bold text-gray-900">Benefis</span>
+      <span class="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">DD</span>
+    </div>
+  </div>
+  <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+    <a href="index.html" class="sidebar-link">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Program Tematik</p>
+      <a href="lpm-program-tematik.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Daftar Program Tematik
+      </a>
+      <a href="lpm-intake-tematik.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+        Input & Survei Koordinator
+      </a>
+      <a href="lpm-approval-tematik.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Approval Manager
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Penerima Manfaat</p>
+      <a href="#" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        Program
+      </a>
+      <a href="#" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+        Entitas Pelaksanaan
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Laporan</p>
+      <a href="lpm-export-laporan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Export Laporan
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Master Data</p>
+      <a href="lpm-konfigurasi-lpm.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.756.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Konfigurasi LPM
+      </a>
+    </div>
+  </nav>
+  <div class="px-3 py-4 border-t border-gray-100">
+    <a href="#" class="sidebar-link" style="color:#F87171;">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+      Logout
+    </a>
+  </div>
+</aside>
+<div id="sidebarOverlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+<button id="hamburgerBtn" onclick="toggleSidebar()" class="fixed top-3 left-3 z-[55] lg:hidden bg-white rounded-lg shadow border border-gray-200 p-2 hover:bg-gray-50">
+  <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+</button>
+
+  <div class="lg:ml-64 flex-1 flex flex-col min-h-screen">
+
+    <!-- HEADER -->
+    <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 sticky top-0 z-30">
+      <div class="flex items-center gap-3">
+        <!-- Mobile menu button (hidden on desktop) -->
+        <button id="menuToggle" class="lg:hidden text-gray-500 hover:text-gray-700">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div>
+          <nav class="flex items-center gap-1.5 text-sm">
+            <span class="text-gray-400">Program Tematik</span>
+            <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <span class="font-semibold text-gray-700">Daftar Program Tematik</span>
+          </nav>
+          <p class="text-xs text-gray-400 mt-0.5">Program Yatim, PMTU, Disabilitas Mandiri — LPM Dompet Dhuafa</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="relative p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-50">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+          <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="flex-1 p-6">
+
+      <!-- Page Title Row -->
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h1 class="text-xl font-bold text-gray-800">Daftar Program Tematik</h1>
+          <p class="text-sm text-gray-500 mt-0.5">Kelola pengajuan Beasiswa Yatim, PMTU, dan Disabilitas Mandiri</p>
+        </div>
+        <a href="lpm-intake-tematik.html" class="btn-primary">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          Input Baru
+        </a>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="bg-white rounded-xl border border-gray-200 p-4 mb-5">
+        <div class="flex flex-wrap items-end gap-3">
+          <!-- Status -->
+          <div class="flex-1 min-w-[160px]">
+            <label class="block text-xs font-semibold text-gray-500 mb-1">Status</label>
+            <select id="filterStatus" class="form-select">
+              <option>Semua Status</option>
+              <option>Ajuan Baru</option>
+              <option>Dalam Survei</option>
+              <option>Usulan Bantuan</option>
+              <option>Disetujui</option>
+              <option>Ditolak</option>
+              <option>Penyaluran</option>
+              <option>Selesai</option>
+            </select>
+          </div>
+          <!-- Program -->
+          <div class="flex-1 min-w-[160px]">
+            <label class="block text-xs font-semibold text-gray-500 mb-1">Program</label>
+            <select id="filterProgram" class="form-select">
+              <option>Semua Program</option>
+              <option>Beasiswa Yatim</option>
+              <option>PMTU</option>
+              <option>Disabilitas Mandiri</option>
+            </select>
+          </div>
+          <!-- Date -->
+          <div class="flex-1 min-w-[160px]">
+            <label class="block text-xs font-semibold text-gray-500 mb-1">Tanggal</label>
+            <input type="date" class="form-input" />
+          </div>
+          <!-- Reset -->
+          <button id="btnReset" class="btn-outline">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            Reset
+          </button>
+          <!-- Count -->
+          <div class="ml-auto flex items-center gap-2">
+            <span class="text-sm text-gray-500"><span id="totalCount" class="font-semibold text-gray-700">45</span> permohonan</span>
+          </div>
+          <!-- Export -->
+          <button class="btn-outline">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            Export
+          </button>
+        </div>
+      </div>
+
+      <!-- Data Table -->
+      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="bg-gray-50 border-b border-gray-200">
+                <th class="text-left px-4 py-3 font-semibold text-gray-500 text-xs uppercase tracking-wider w-10">No.</th>
+                <th class="text-left px-4 py-3 font-semibold text-gray-500 text-xs uppercase tracking-wider">No. Permohonan</th>
+                <th class="text-left px-4 py-3 font-semibold text-gray-500 text-xs uppercase tracking-wider">Program</th>
+                <th class="text-left px-4 py-3 font-semibold text-gray-500 text-xs uppercase tracking-wider">Jenis PM</th>
+                <th class="text-left px-4 py-3 font-semibold text-gray-500 text-xs uppercase tracking-wider">Pemohon / PM</th>
+                <th class="text-left px-4 py-3 font-semibold text-gray-500 text-xs uppercase tracking-wider">Koordinator</th>
+                <th class="text-left px-4 py-3 font-semibold text-gray-500 text-xs uppercase tracking-wider">Tgl Input</th>
+                <th class="text-left px-4 py-3 font-semibold text-gray-500 text-xs uppercase tracking-wider">Status</th>
+                <th class="text-center px-4 py-3 font-semibold text-gray-500 text-xs uppercase tracking-wider w-24">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody" class="divide-y divide-gray-100">
+              <!-- Rows rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex items-center justify-between px-4 py-3 border-t border-gray-200">
+          <p class="text-xs text-gray-400">Menampilkan <span class="font-medium text-gray-600">1–8</span> dari <span class="font-medium text-gray-600">45</span></p>
+          <div class="flex items-center gap-1">
+            <button class="px-3 py-1.5 text-xs font-medium text-gray-400 bg-white border border-gray-200 rounded-lg cursor-not-allowed">Prev</button>
+            <button class="px-3 py-1.5 text-xs font-medium text-white bg-primary border border-primary rounded-lg">1</button>
+            <button class="px-3 py-1.5 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">2</button>
+            <button class="px-3 py-1.5 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">3</button>
+            <span class="px-2 text-gray-400">...</span>
+            <button class="px-3 py-1.5 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">6</button>
+            <button class="px-3 py-1.5 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">Next</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script>
+    // ─── Data ────────────────────────────────────────────────────────────
+    const rows = [
+      { no: 'LMS-2026-000045', program: 'Beasiswa Yatim',    jenis: 'Individu',   pm: 'Siti Aminah',          coord: 'Ahmad F.',   date: '20 Agu 2026', status: 'Dalam Survei' },
+      { no: 'LMS-2026-000044', program: 'PMTU',              jenis: 'Komunitas',  pm: 'Majelis Nurul Iman',   coord: 'Rina W.',    date: '19 Agu 2026', status: 'Usulan Bantuan' },
+      { no: 'LMS-2026-000043', program: 'Disabilitas Mandiri', jenis: 'Individu', pm: 'Budi Santoso',         coord: 'Ahmad F.',   date: '18 Agu 2026', status: 'Disetujui' },
+      { no: 'LMS-2026-000042', program: 'Beasiswa Yatim',    jenis: 'Individu',   pm: 'Ahmad Ridwan',         coord: 'Dian P.',    date: '17 Agu 2026', status: 'Penyaluran' },
+      { no: 'LMS-2026-000041', program: 'PMTU',              jenis: 'Komunitas',  pm: 'Kelompok Berkah',      coord: 'Rina W.',    date: '16 Agu 2026', status: 'Selesai' },
+      { no: 'LMS-2026-000040', program: 'Disabilitas Mandiri', jenis: 'Individu', pm: 'Dewi Lestari',         coord: 'Ahmad F.',   date: '15 Agu 2026', status: 'Ditolak' },
+      { no: 'LMS-2026-000039', program: 'Beasiswa Yatim',    jenis: 'Individu',   pm: 'Muhammad Zain',        coord: 'Dian P.',    date: '14 Agu 2026', status: 'Ajuan Baru' },
+      { no: 'LMS-2026-000038', program: 'PMTU',              jenis: 'Komunitas',  pm: 'Majelis Al-Hikmah',    coord: 'Rina W.',    date: '13 Agu 2026', status: 'Selesai' },
+    ];
+
+    // ─── Badge Maps ──────────────────────────────────────────────────────
+    const programBadge = {
+      'Beasiswa Yatim':    'bg-purple-50 text-purple-600',
+      'PMTU':              'bg-amber-50 text-amber-700',
+      'Disabilitas Mandiri': 'bg-pink-50 text-pink-600',
+    };
+    const statusBadge = {
+      'Ajuan Baru':      'bg-gray-100 text-gray-500',
+      'Dalam Survei':    'bg-sky-50 text-sky-700',
+      'Usulan Bantuan':  'bg-amber-50 text-amber-700',
+      'Disetujui':       'bg-emerald-50 text-emerald-700',
+      'Ditolak':         'bg-red-50 text-red-600',
+      'Penyaluran':      'bg-blue-50 text-blue-600',
+      'Selesai':         'bg-green-50 text-green-700',
+    };
+    const jenisBadge = {
+      'Individu':  'bg-gray-100 text-gray-600',
+      'Komunitas': 'bg-teal-50 text-teal-700',
+    };
+
+    // ─── Render ──────────────────────────────────────────────────────────
+    const tbody = document.getElementById('tableBody');
+
+    function render(data) {
+      tbody.innerHTML = data.map((r, i) => `
+        <tr>
+          <td class="px-4 py-3 text-gray-400 font-medium">${i + 1}</td>
+          <td class="px-4 py-3">
+            <span class="font-semibold text-gray-800">${r.no}</span>
+          </td>
+          <td class="px-4 py-3">
+            <span class="badge ${programBadge[r.program] || ''}">${r.program}</span>
+          </td>
+          <td class="px-4 py-3">
+            <span class="badge ${jenisBadge[r.jenis] || ''}">${r.jenis}</span>
+          </td>
+          <td class="px-4 py-3 text-gray-700">${r.pm}</td>
+          <td class="px-4 py-3 text-gray-600">${r.coord}</td>
+          <td class="px-4 py-3 text-gray-500">${r.date}</td>
+          <td class="px-4 py-3">
+            <span class="badge ${statusBadge[r.status] || ''}">${r.status}</span>
+          </td>
+          <td class="px-4 py-3 text-center">
+            <button onclick="showToast('Membuka detail ${r.no}')" class="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:text-primary/80 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+              Detail
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    render(rows);
+
+    // ─── Filters ─────────────────────────────────────────────────────────
+    const filterStatus  = document.getElementById('filterStatus');
+    const filterProgram = document.getElementById('filterProgram');
+    const totalCount    = document.getElementById('totalCount');
+
+    function applyFilter() {
+      const s = filterStatus.value;
+      const p = filterProgram.value;
+      let filtered = rows;
+      if (s !== 'Semua Status') filtered = filtered.filter(r => r.status === s);
+      if (p !== 'Semua Program') filtered = filtered.filter(r => r.program === p);
+      totalCount.textContent = filtered.length;
+      render(filtered);
+    }
+
+    filterStatus.addEventListener('change', applyFilter);
+    filterProgram.addEventListener('change', applyFilter);
+
+    document.getElementById('btnReset').addEventListener('click', () => {
+      filterStatus.value  = 'Semua Status';
+      filterProgram.value = 'Semua Program';
+      applyFilter();
+    });
+
+    // ─── Toast ───────────────────────────────────────────────────────────
+    const toastContainer = document.getElementById('toastContainer');
+
+    function showToast(msg) {
+      const t = document.createElement('div');
+      t.className = 'toast';
+      t.innerHTML = `
+        <svg class="w-5 h-5 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span class="text-sm text-gray-700 font-medium">${msg}</span>
+      `;
+      toastContainer.appendChild(t);
+      requestAnimationFrame(() => t.classList.add('show'));
+      setTimeout(() => {
+        t.classList.remove('show');
+        setTimeout(() => t.remove(), 400);
+      }, 3000);
+    }
+  </script>
+
+<script>
+function toggleSidebar() {
+  var s = document.getElementById('sidebar');
+  var o = document.getElementById('sidebarOverlay');
+  s.classList.toggle('-translate-x-full');
+  o.classList.toggle('hidden');
+}
+document.addEventListener('DOMContentLoaded', function() {
+  // Highlight active sidebar link
+  var page = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('#sidebar .sidebar-link').forEach(function(a) {
+    var href = a.getAttribute('href');
+    if (href === page) a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

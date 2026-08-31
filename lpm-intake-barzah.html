@@ -1,0 +1,347 @@
+﻿<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Intake Barzah — Benefis LPM</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2B7F75',
+            'primary-light': '#EAF4F1',
+          },
+          fontFamily: { inter: ['Inter', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .sidebar-link { display:flex; align-items:center; gap:0.625rem; border-radius:0.375rem; padding:0.5rem 0.75rem; font-size:0.875rem; font-weight:500; color:#4B5563; transition:all 0.15s; }
+    .sidebar-link:hover { background:#F3F4F6; color:#111827; }
+    .sidebar-link.active { background:#EAF4F1; color:#2B7F75; }
+    .form-label { display:block; font-size:0.75rem; font-weight:600; color:#374151; margin-bottom:0.375rem; }
+    .form-input { width:100%; border:1px solid #E5E7EB; border-radius:0.5rem; padding:0.5rem 0.75rem; font-size:0.875rem; color:#111827; background:#fff; outline:none; transition:all 0.15s; }
+    .form-input:focus { border-color:#2B7F75; box-shadow:0 0 0 3px rgba(43,127,117,0.12); }
+    .form-select { width:100%; border:1px solid #E5E7EB; border-radius:0.5rem; padding:0.5rem 0.75rem; font-size:0.875rem; color:#111827; background:#fff; outline:none; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239CA3AF' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 0.75rem center; background-size:1rem; padding-right:2.5rem; }
+    .form-select:focus { border-color:#2B7F75; box-shadow:0 0 0 3px rgba(43,127,117,0.12); }
+    .section-card { background:#fff; border:1px solid #F3F4F6; border-radius:0.75rem; padding:1.5rem; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .section-title { font-size:0.8125rem; font-weight:700; color:#374151; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem; }
+    .upload-zone { position:relative; display:flex; align-items:center; gap:0.75rem; padding:0.75rem; border:1.5px dashed #D1D5DB; border-radius:0.75rem; background:#FAFAFA; transition:all 0.15s; }
+    .upload-zone:hover { border-color:#2B7F75; background:#EAF4F1; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<div class="flex min-h-screen">
+
+  <!-- Sidebar V2 -->
+  <!-- SIDEBAR BARZAH â€” untuk semua halaman Layanan Barzah -->
+<!-- SIDEBAR BARZAH — untuk semua halaman Layanan Barzah -->
+<aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-[270px] border-r border-gray-100 bg-white flex flex-col transition-transform duration-200 max-lg:-translate-x-full max-lg:shadow-xl" data-sidebar>
+  <div class="px-6 py-5 border-b border-gray-100">
+    <div class="flex items-center gap-2">
+      <img src="../logo.webp" alt="Benefis" class="h-8 w-auto"/>
+      <span class="text-xl font-bold text-gray-900">Benefis</span>
+      <span class="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">DD</span>
+    </div>
+  </div>
+  <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+    <a href="index.html" class="sidebar-link">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Layanan Barzah</p>
+      <a href="lpm-barzah.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Daftar Ajuan Barzah
+      </a>
+      <a href="lpm-intake-barzah.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+        Intake Barzah
+      </a>
+      <a href="lpm-delivery-barzah.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Perintah Delivery
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Penerima Manfaat</p>
+      <a href="#" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        Program
+      </a>
+      <a href="#" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+        Entitas Pelaksanaan
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Laporan</p>
+      <a href="lpm-export-laporan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Export Laporan
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Master Data</p>
+      <a href="lpm-konfigurasi-lpm.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.756.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Konfigurasi LPM
+      </a>
+    </div>
+  </nav>
+  <div class="px-3 py-4 border-t border-gray-100">
+    <a href="#" class="sidebar-link" style="color:#F87171;">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+      Logout
+    </a>
+  </div>
+</aside>
+<div id="sidebarOverlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+<button id="hamburgerBtn" onclick="toggleSidebar()" class="fixed top-3 left-3 z-[55] lg:hidden bg-white rounded-lg shadow border border-gray-200 p-2 hover:bg-gray-50">
+  <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+</button>
+
+  <div class="lg:ml-[270px] flex flex-col flex-1 min-h-screen">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 flex items-center justify-between bg-white/80 backdrop-blur-xl border-b border-gray-100 px-6 py-3.5">
+      <div class="flex items-center gap-2 text-sm text-gray-400">
+        <a href="lpm-barzah.html" class="hover:text-primary transition-colors">Layanan Barzah</a>
+        <svg class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="text-gray-700 font-medium">Intake Barzah</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-xs text-gray-400">Customer Care</span>
+        <div class="h-8 w-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:#2B7F75">CC</div>
+      </div>
+    </header>
+
+    <!-- Form body -->
+    <main class="flex-1 px-6 py-5 max-w-4xl">
+
+      <div class="mb-5">
+        <h1 class="text-lg font-semibold text-gray-900">Intake Barzah</h1>
+        <p class="text-sm text-gray-400 mt-0.5">Pencatatan ajuan mobil jenazah — Customer Care</p>
+      </div>
+
+      <div class="space-y-4">
+
+        <!-- Section 1: Data Jenazah -->
+        <div class="section-card">
+          <div class="section-title">
+            <span class="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold">1</span>
+            Data Jenazah
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="form-label">Nama Almarhum / Almarhumah <span class="text-red-400">*</span></label>
+              <input type="text" class="form-input" placeholder="Nama lengkap sesuai KTP"/>
+            </div>
+            <div>
+              <label class="form-label">Jenis Kelamin</label>
+              <select class="form-select">
+                <option value="">— Pilih —</option>
+                <option>Laki-laki</option>
+                <option>Perempuan</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label">Usia</label>
+              <input type="number" class="form-input" placeholder="Tahun" min="0"/>
+            </div>
+            <div class="col-span-2">
+              <label class="form-label">Penyebab Kematian</label>
+              <textarea class="form-input" rows="3" placeholder="Contoh: sakit, kecelakaan, lanjut usia…"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Data Keluarga / Pelapor -->
+        <div class="section-card">
+          <div class="section-title">
+            <span class="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold">2</span>
+            Data Keluarga / Pelapor
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="form-label">Nama Keluarga / Pelapor <span class="text-red-400">*</span></label>
+              <input type="text" class="form-input" placeholder="Nama lengkap"/>
+            </div>
+            <div>
+              <label class="form-label">Hubungan dengan Jenazah</label>
+              <select class="form-select">
+                <option value="">— Pilih hubungan —</option>
+                <option>Anak</option>
+                <option>Suami / Istri</option>
+                <option>Cucu</option>
+                <option>Saudara</option>
+                <option>Lainnya</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label">No. HP Pelapor <span class="text-red-400">*</span></label>
+              <input type="text" class="form-input" placeholder="08xx-xxxx-xxxx"/>
+            </div>
+            <div>
+              <label class="form-label">Alamat Pelapor <span class="text-red-400">*</span></label>
+              <input type="text" class="form-input" placeholder="Jl. … No. … RT/RW …"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Lokasi & Waktu -->
+        <div class="section-card">
+          <div class="section-title">
+            <span class="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold">3</span>
+            Lokasi &amp; Waktu
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="col-span-2">
+              <label class="form-label">Lokasi Jenazah / Saat Ini <span class="text-red-400">*</span></label>
+              <input type="text" class="form-input" placeholder="Rumah sakit / rumah duka / alamat lengkap"/>
+            </div>
+            <div class="col-span-2">
+              <label class="form-label">Lokasi Tujuan <span class="text-red-400">*</span></label>
+              <input type="text" class="form-input" placeholder="Tempat pemakaman / pemulasaran jenazah"/>
+            </div>
+            <div class="col-span-2">
+              <label class="form-label">Waktu Dibutuhkan</label>
+              <input type="datetime-local" class="form-input"/>
+            </div>
+            <div class="col-span-2">
+              <label class="form-label">Catatan Khusus</label>
+              <textarea class="form-input" rows="3" placeholder="Misal: akses jalan sempit, ada kondisi khusus…"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4: Lampiran -->
+        <div class="section-card">
+          <div class="section-title">
+            <span class="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold">4</span>
+            Lampiran
+          </div>
+          <p class="text-xs text-gray-400 mb-4">Dokumen pendukung. Format: JPG, PNG, PDF. Maks. 10 MB per file.</p>
+          <div class="space-y-3">
+
+            <!-- Upload slot 1: Surat Keterangan Kematian -->
+            <div class="upload-zone">
+              <div class="h-9 w-9 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
+                <svg class="h-4 w-4 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              </div>
+              <div class="flex-1">
+                <p class="text-sm font-medium text-gray-700">Surat Keterangan Kematian</p>
+                <p class="text-xs text-gray-400">Opsional — maks. 10 MB</p>
+              </div>
+              <label class="flex items-center gap-1.5 text-xs font-medium text-primary cursor-pointer hover:text-primary/80 transition-colors border border-primary/30 rounded-md px-3 py-1.5 bg-primary-light">
+                <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                Unggah
+                <input type="file" class="hidden" accept=".jpg,.jpeg,.png,.pdf" onchange="validateFileSize(this, 10)"/>
+              </label>
+            </div>
+
+            <!-- Upload slot 2: Lampiran lainnya -->
+            <div class="upload-zone">
+              <div class="h-9 w-9 rounded-lg bg-green-50 flex items-center justify-center flex-shrink-0">
+                <svg class="h-4 w-4 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </div>
+              <div class="flex-1">
+                <p class="text-sm font-medium text-gray-700">Lampiran Lainnya</p>
+                <p class="text-xs text-gray-400">Opsional — maks. 10 MB</p>
+              </div>
+              <label class="flex items-center gap-1.5 text-xs font-medium text-gray-500 cursor-pointer hover:text-gray-700 transition-colors border border-gray-200 rounded-md px-3 py-1.5 bg-white">
+                <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                Unggah
+                <input type="file" class="hidden" accept=".jpg,.jpeg,.png,.pdf" onchange="validateFileSize(this, 10)"/>
+              </label>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="flex items-center justify-between py-2">
+          <a href="lpm-barzah.html" class="text-sm text-gray-400 hover:text-gray-600 transition-colors">← Batal, kembali ke daftar</a>
+          <div class="flex items-center gap-3">
+            <button type="button" id="btnDraft" class="px-4 py-2 text-sm font-medium border border-gray-200 rounded-lg bg-white text-gray-600 hover:bg-gray-50 transition-colors">Simpan Draft</button>
+            <button type="button" id="btnKirim" class="px-5 py-2 text-sm font-semibold bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors shadow-sm">
+              Simpan &amp; Kirim ke Koordinator
+            </button>
+          </div>
+        </div>
+
+      </div><!-- /space-y-4 -->
+    </main>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-4 bg-gray-900 text-white text-sm px-4 py-2.5 rounded-xl shadow-lg opacity-0 transition-all duration-300 z-[60] flex items-center gap-2 pointer-events-none">
+  <svg class="h-4 w-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+  <span id="toastMsg"></span>
+</div>
+
+<script>
+  /* ── File size validation (MB) ── */
+  function validateFileSize(input, maxMB) {
+    if (input.files && input.files[0]) {
+      var sizeMB = input.files[0].size / 1024 / 1024;
+      if (sizeMB > maxMB) {
+        showToast('File terlalu besar! Maks. ' + maxMB + ' MB. Ukuran: ' + sizeMB.toFixed(1) + ' MB');
+        input.value = '';
+      } else {
+        showToast('File terunggah: ' + input.files[0].name + ' (' + sizeMB.toFixed(1) + ' MB)');
+      }
+    }
+  }
+
+  /* ── Toast ── */
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    t.classList.remove('opacity-0', 'translate-y-4');
+    t.classList.add('opacity-100', 'translate-y-0');
+    clearTimeout(window._tt);
+    window._tt = setTimeout(function() {
+      t.classList.add('opacity-0', 'translate-y-4');
+      t.classList.remove('opacity-100', 'translate-y-0');
+    }, 2800);
+  }
+
+  /* ── Simpan buttons trigger toast ── */
+  document.getElementById('btnDraft').addEventListener('click', function(e) {
+    e.preventDefault();
+    showToast('Draft berhasil disimpan');
+  });
+  document.getElementById('btnKirim').addEventListener('click', function(e) {
+    e.preventDefault();
+    showToast('Berhasil dikirim ke Koordinator');
+  });
+</script>
+
+<script>
+function toggleSidebar() {
+  var s = document.getElementById('sidebar');
+  var o = document.getElementById('sidebarOverlay');
+  s.classList.toggle('-translate-x-full');
+  o.classList.toggle('hidden');
+}
+document.addEventListener('DOMContentLoaded', function() {
+  // Highlight active sidebar link
+  var page = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('#sidebar .sidebar-link').forEach(function(a) {
+    var href = a.getAttribute('href');
+    if (href === page) a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

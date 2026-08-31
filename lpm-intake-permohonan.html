@@ -1,0 +1,835 @@
+﻿<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Input Ajuan Baru — Benefis LPM</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2B7F75',
+            'primary-light': '#EAF4F1',
+          },
+          fontFamily: { inter: ['Inter', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .sidebar-link { display:flex; align-items:center; gap:0.625rem; border-radius:0.375rem; padding:0.5rem 0.75rem; font-size:0.875rem; font-weight:500; color:#4B5563; transition:all 0.15s; }
+    .sidebar-link:hover { background:#F3F4F6; color:#111827; }
+    .sidebar-link.active { background:#EAF4F1; color:#2B7F75; }
+    .form-label { display:block; font-size:0.75rem; font-weight:600; color:#374151; margin-bottom:0.375rem; }
+    .form-input { width:100%; border:1px solid #E5E7EB; border-radius:0.5rem; padding:0.5rem 0.75rem; font-size:0.875rem; color:#111827; background:#fff; outline:none; transition:all 0.15s; }
+    .form-input:focus { border-color:#2B7F75; box-shadow:0 0 0 3px rgba(43,127,117,0.12); }
+    .form-select { width:100%; border:1px solid #E5E7EB; border-radius:0.5rem; padding:0.5rem 0.75rem; font-size:0.875rem; color:#111827; background:#fff; outline:none; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239CA3AF' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 0.75rem center; background-size:1rem; padding-right:2.5rem; }
+    .form-select:focus { border-color:#2B7F75; box-shadow:0 0 0 3px rgba(43,127,117,0.12); }
+    .section-card { background:#fff; border:1px solid #F3F4F6; border-radius:0.75rem; padding:1.5rem; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .section-title { font-size:0.8125rem; font-weight:700; color:#374151; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem; }
+    .tab-btn { padding:0.5rem 1.25rem; font-size:0.875rem; font-weight:500; border-radius:0.5rem; border:1px solid #E5E7EB; background:#fff; color:#6B7280; cursor:pointer; transition:all 0.15s; }
+    .tab-btn.active { background:#2B7F75; border-color:#2B7F75; color:#fff; }
+    .layanan-btn { padding:0.625rem 1.25rem; font-size:0.875rem; font-weight:600; border-radius:0.5rem; border:2px solid #E5E7EB; background:#fff; color:#6B7280; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
+    .layanan-btn.active { background:#2B7F75; border-color:#2B7F75; color:#fff; box-shadow:0 2px 8px rgba(43,127,117,0.25); }
+    .layanan-btn:hover:not(.active) { border-color:#9CA3AF; color:#374151; }
+    .upload-zone { position:relative; display:flex; align-items:center; gap:0.75rem; padding:0.75rem; border:1.5px dashed #D1D5DB; border-radius:0.75rem; background:#FAFAFA; transition:all 0.15s; }
+    .upload-zone:hover { border-color:#2B7F75; background:#EAF4F1; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<div class="flex min-h-screen">
+
+  <!-- Sidebar V2 -->
+  <!-- SIDEBAR LAMUSTA â€” untuk semua halaman Layanan Mustahik -->
+<!-- SIDEBAR LAMUSTA — untuk semua halaman Layanan Mustahik -->
+<aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-[270px] border-r border-gray-100 bg-white flex flex-col transition-transform duration-200 max-lg:-translate-x-full max-lg:shadow-xl" data-sidebar>
+  <div class="px-6 py-5 border-b border-gray-100">
+    <div class="flex items-center gap-2">
+      <img src="../logo.webp" alt="Benefis" class="h-8 w-auto"/>
+      <span class="text-xl font-bold text-gray-900">Benefis</span>
+      <span class="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">DD</span>
+    </div>
+  </div>
+  <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+    <a href="index.html" class="sidebar-link">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Layanan Mustahik</p>
+      <a href="lpm-daftar-permohonan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Daftar Permohonan
+      </a>
+      <a href="lpm-intake-permohonan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+        Input Ajuan Baru
+      </a>
+      <a href="lpm-konseling.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        Konseling
+      </a>
+      <a href="lpm-keputusan-pimpinan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Keputusan Approval
+      </a>
+      <a href="lpm-order-survei.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Order Survei
+      </a>
+      <a href="lpm-esurvei.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        E-Survei
+      </a>
+      <a href="lpm-pencairan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        Pencairan
+      </a>
+      <a href="lpm-arsip.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+        Arsip
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Penerima Manfaat</p>
+      <a href="#" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        Program
+      </a>
+      <a href="#" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+        Entitas Pelaksanaan
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Laporan</p>
+      <a href="lpm-export-laporan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Export Laporan
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Master Data</p>
+      <a href="lpm-konfigurasi-lpm.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.756.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Konfigurasi LPM
+      </a>
+    </div>
+  </nav>
+  <div class="px-3 py-4 border-t border-gray-100">
+    <a href="#" class="sidebar-link" style="color:#F87171;">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+      Logout
+    </a>
+  </div>
+</aside>
+<!-- Mobile overlay -->
+<div id="sidebarOverlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+<!-- Hamburger button (mobile) -->
+<button id="hamburgerBtn" onclick="toggleSidebar()" class="fixed top-3 left-3 z-[55] lg:hidden bg-white rounded-lg shadow border border-gray-200 p-2 hover:bg-gray-50">
+  <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+</button>
+
+  <div class="lg:ml-[270px] flex flex-col flex-1 min-h-screen">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 flex items-center justify-between bg-white/80 backdrop-blur-xl border-b border-gray-100 px-6 py-3.5">
+      <div class="flex items-center gap-2 text-sm text-gray-400">
+        <a href="lpm-daftar-permohonan.html" class="hover:text-primary transition-colors">Daftar Permohonan</a>
+        <svg class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="text-gray-700 font-medium">Input Ajuan Baru Baru</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-xs text-gray-400">Customer Care</span>
+        <div class="h-8 w-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:#2B7F75">CC</div>
+      </div>
+    </header>
+
+    <!-- Form body -->
+    <main class="flex-1 px-6 py-5 max-w-4xl">
+
+      <div class="mb-5">
+        <h1 class="text-lg font-semibold text-gray-900">Input Ajuan Baru Baru</h1>
+        <p class="text-sm text-gray-400 mt-0.5">Catat berkas masuk dari pemohon. Pilih jenis layanan terlebih dahulu, lalu isi formulir sesuai kebutuhan.</p>
+      </div>
+
+      <div class="space-y-4">
+
+        <!-- Section 0: Jenis Layanan -->
+        <div class="section-card">
+          <div class="section-title">
+            <span class="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold">0</span>
+            Kategori Layanan
+          </div>
+          <p class="text-xs text-gray-400 mb-4">Pilih kategori layanan yang akan diintake. Formulir akan menyesuaikan otomatis.</p>
+          <div class="flex flex-wrap gap-3" id="jenisLayanan">
+            <button type="button" class="layanan-btn active" onclick="switchLayanan('lamusta')" data-layanan="lamusta">Lamusta</button>
+            <button type="button" class="layanan-btn" onclick="switchLayanan('tematik')" data-layanan="tematik">Tematik</button>
+            <button type="button" class="layanan-btn" onclick="switchLayanan('barzah')" data-layanan="barzah">Barzah</button>
+          </div>
+        </div>
+
+        <!-- ====================== LAMUSTA / YATIM / PMTU / DISABILITAS FORM ====================== -->
+        <div id="form-standard">
+
+          <!-- Section 1: Info Masuk -->
+          <div class="section-card">
+            <div class="section-title">
+              <span class="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold">1</span>
+              Informasi Berkas Masuk
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="form-label">Channel Masuk <span class="text-red-400">*</span></label>
+                <select class="form-select">
+                  <option value="">— Pilih channel —</option>
+                  <option>WA</option>
+                  <option>Telepon</option>
+                  <option>Datang langsung</option>
+                  <option>Email</option>
+                  <option>Rekomendasi Amil</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label">Tanggal &amp; Waktu Masuk</label>
+                <input type="text" class="form-input bg-gray-50 text-gray-400 cursor-not-allowed" value="26 Agustus 2026, 09:41 WIB" readonly/>
+                <p class="text-[10px] text-gray-400 mt-1">Terisi otomatis dari waktu server.</p>
+              </div>
+              <div>
+                <label class="form-label">Program Terkait</label>
+                <select class="form-select" id="programTerkait">
+                  <option value="">— Pilih program —</option>
+                </select>
+                <p class="text-[10px] text-gray-400 mt-1">Program menyesuaikan kategori layanan yang dipilih.</p>
+              </div>
+              <div class="col-span-2">
+                <label class="form-label">Perihal Permohonan <span class="text-red-400">*</span></label>
+                <input type="text" class="form-input" placeholder="Contoh: Bantuan biaya pengobatan, tunggakan SPP, modal usaha…"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Jenis Pemohon -->
+          <div class="section-card">
+            <div class="section-title">
+              <span class="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold">2</span>
+              Jenis Pemohon
+            </div>
+            <div class="flex gap-3 mb-5" id="jenisTabs">
+              <button type="button" class="tab-btn active flex items-center gap-2" onclick="switchTab('individu')"><svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg> Individu</button>
+              <button type="button" class="tab-btn flex items-center gap-2" onclick="switchTab('komunitas')"><svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 10-3-6.7"/></svg> Komunitas</button>
+            </div>
+
+            <!-- Individu fields -->
+            <div id="tab-individu">
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="form-label">No. KTP (NIK) <span class="text-red-400">*</span></label>
+                  <input type="text" class="form-input" placeholder="16 digit NIK" maxlength="16"/>
+                  <p id="nikInfo" class="text-[10px] text-gray-400 mt-1 hidden">
+                    <span class="inline-flex items-center gap-1 text-amber-600">
+                      <svg class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                      <span id="nikInfoText">Terakhir bantuan: 12 Jan 2026 — Program Pendidikan</span>
+                    </span>
+                  </p>
+                  <p id="nikDefault" class="text-[10px] text-gray-400 mt-1">Sistem akan cek duplikasi otomatis.</p>
+                </div>
+                <div>
+                  <label class="form-label">No. Kartu Keluarga</label>
+                  <input type="text" class="form-input" placeholder="16 digit No. KK"/>
+                </div>
+                <div>
+                  <label class="form-label">Nama Kepala Keluarga <span class="text-red-400">*</span></label>
+                  <input type="text" class="form-input" placeholder="Sesuai KTP"/>
+                </div>
+                <div>
+                  <label class="form-label">Nama Lengkap Pengaju <span class="text-red-400">*</span></label>
+                  <input type="text" class="form-input" placeholder="Sesuai KTP"/>
+                </div>
+                <div>
+                  <label class="form-label">Nomor HP <span class="text-red-400">*</span></label>
+                  <input type="text" class="form-input" placeholder="08xx-xxxx-xxxx"/>
+                </div>
+                <div>
+                  <label class="form-label">Jumlah Anggota Keluarga</label>
+                  <input type="number" class="form-input" placeholder="Termasuk pengaju"/>
+                </div>
+                <div>
+                  <label class="form-label">Tempat Lahir</label>
+                  <input type="text" class="form-input" placeholder="Kota/kabupaten"/>
+                </div>
+                <div>
+                  <label class="form-label">Tanggal Lahir</label>
+                  <input type="date" class="form-input"/>
+                </div>
+                <div>
+                  <label class="form-label">Jenis Kelamin</label>
+                  <select class="form-select">
+                    <option value="">— Pilih —</option>
+                    <option>Laki-laki</option>
+                    <option>Perempuan</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label">Agama</label>
+                  <select class="form-select">
+                    <option value="">— Pilih —</option>
+                    <option>Islam</option>
+                    <option>Lainnya</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label">Status Pernikahan</label>
+                  <select class="form-select">
+                    <option value="">— Pilih —</option>
+                    <option>Menikah</option>
+                    <option>Lajang</option>
+                    <option>Janda</option>
+                    <option>Duda</option>
+                    <option>Cerai Hidup</option>
+                    <option>Cerai Mati</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label">Pekerjaan</label>
+                  <input type="text" class="form-input" placeholder="Pekerjaan utama"/>
+                </div>
+                <div>
+                  <label class="form-label">Pendidikan Terakhir</label>
+                  <select class="form-select">
+                    <option value="">— Pilih —</option>
+                    <option>Tidak sekolah / SD</option>
+                    <option>SMP / Sederajat</option>
+                    <option>SMA / Sederajat</option>
+                    <option>Perguruan Tinggi</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label">Penghasilan Bulanan</label>
+                  <input type="text" class="form-input" placeholder="Rp …"/>
+                </div>
+                <div class="col-span-2">
+                  <label class="form-label">Alamat Lengkap <span class="text-red-400">*</span></label>
+                  <input type="text" class="form-input" placeholder="Jl. … No. … RT/RW …"/>
+                </div>
+                <div>
+                  <label class="form-label">Kelurahan</label>
+                  <input type="text" class="form-input"/>
+                </div>
+                <div>
+                  <label class="form-label">Kecamatan</label>
+                  <input type="text" class="form-input"/>
+                </div>
+                <div>
+                  <label class="form-label">Kota / Kabupaten</label>
+                  <input type="text" class="form-input"/>
+                </div>
+                <div>
+                  <label class="form-label">Provinsi</label>
+                  <input type="text" class="form-input"/>
+                </div>
+                <div>
+                  <label class="form-label">Status Mustahik</label>
+                  <select class="form-select">
+                    <option>Baru</option>
+                    <option>Lama (pernah mengajukan sebelumnya)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label">Rekomendasi Dari</label>
+                  <input type="text" class="form-input" placeholder="Nama / instansi pengirim"/>
+                </div>
+              </div>
+            </div>
+
+            <!-- Komunitas fields (hidden by default) -->
+            <div id="tab-komunitas" class="hidden">
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="form-label">Nama Komunitas / Lembaga <span class="text-red-400">*</span></label>
+                  <input type="text" class="form-input" placeholder="Nama resmi komunitas"/>
+                </div>
+                <div>
+                  <label class="form-label">Jumlah Anggota</label>
+                  <input type="number" class="form-input" placeholder="Total anggota komunitas"/>
+                </div>
+                <div>
+                  <label class="form-label">Nama Pengaju / Penanggung Jawab <span class="text-red-400">*</span></label>
+                  <input type="text" class="form-input"/>
+                </div>
+                <div>
+                  <label class="form-label">No. KTP Penanggung Jawab <span class="text-red-400">*</span></label>
+                  <input type="text" class="form-input" placeholder="16 digit NIK"/>
+                </div>
+                <div>
+                  <label class="form-label">Nomor HP <span class="text-red-400">*</span></label>
+                  <input type="text" class="form-input" placeholder="08xx-xxxx-xxxx"/>
+                </div>
+                <div>
+                  <label class="form-label">Status</label>
+                  <select class="form-select">
+                    <option>Baru</option>
+                    <option>Lama</option>
+                  </select>
+                </div>
+                <div class="col-span-2">
+                  <label class="form-label">Alamat Lengkap <span class="text-red-400">*</span></label>
+                  <input type="text" class="form-input" placeholder="Jl. … No. … RT/RW …"/>
+                </div>
+                <div>
+                  <label class="form-label">Kelurahan</label>
+                  <input type="text" class="form-input"/>
+                </div>
+                <div>
+                  <label class="form-label">Kecamatan</label>
+                  <input type="text" class="form-input"/>
+                </div>
+                <div>
+                  <label class="form-label">Kota / Kabupaten</label>
+                  <input type="text" class="form-input"/>
+                </div>
+                <div>
+                  <label class="form-label">Provinsi</label>
+                  <input type="text" class="form-input"/>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Profil Permohonan -->
+          <div class="section-card">
+            <div class="section-title">
+              <span class="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold">3</span>
+              Profil Permohonan
+            </div>
+            <div class="space-y-4">
+              <div>
+                <label class="form-label">Kategori PM</label>
+                <select class="form-select" style="max-width:320px">
+                  <option value="">— Pilih kategori —</option>
+                  <option>Pendidikan</option>
+                  <option>Pengobatan</option>
+                  <option>Usaha</option>
+                  <option>Muallaf</option>
+                  <option>Fisabilillah</option>
+                  <option>Fakir Miskin</option>
+                  <option>Gharim</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label">Profil Permohonan <span class="text-red-400">*</span></label>
+                <textarea class="form-input" rows="4" placeholder="Uraikan kondisi dan latar belakang permohonan secara singkat…"></textarea>
+              </div>
+              <div>
+                <label class="form-label">Keterangan Tambahan</label>
+                <textarea class="form-input" rows="3" placeholder="Contoh: nama sekolah, kelas, rincian tunggakan, nama wali murid (untuk kategori Pendidikan)"></textarea>
+              </div>
+              <div>
+                <label class="form-label">Inputan Lainnya</label>
+                <textarea class="form-input" rows="3" placeholder="Informasi tambahan yang perlu dicatat, riwayat sebelumnya, catatan internal…"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 4: Lampiran -->
+          <div class="section-card">
+            <div class="section-title">
+              <span class="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold">4</span>
+              Lampiran Berkas
+            </div>
+            <p class="text-xs text-gray-400 mb-4">Minimal 1 file wajib diunggah (scan KTP/KK atau surat permohonan). Format: JPG, PNG, PDF. Maks. 10 MB per file.</p>
+            <div class="space-y-3">
+
+              <!-- Upload slot 1 -->
+              <div class="upload-zone">
+                <div class="h-9 w-9 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
+                  <svg class="h-4 w-4 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/></svg>
+                </div>
+                <div class="flex-1">
+                  <p class="text-sm font-medium text-gray-700">Scan KTP / Kartu Keluarga</p>
+                  <p class="text-xs text-gray-400">Wajib — maks. 10 MB</p>
+                </div>
+                <label class="flex items-center gap-1.5 text-xs font-medium text-primary cursor-pointer hover:text-primary/80 transition-colors border border-primary/30 rounded-md px-3 py-1.5 bg-primary-light">
+                  <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                  Unggah
+                  <input type="file" class="hidden" accept=".jpg,.jpeg,.png,.pdf" onchange="validateFileSize(this, 10)"/>
+                </label>
+              </div>
+
+              <!-- Upload slot 2 -->
+              <div class="upload-zone">
+                <div class="h-9 w-9 rounded-lg bg-green-50 flex items-center justify-center flex-shrink-0">
+                  <svg class="h-4 w-4 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                </div>
+                <div class="flex-1">
+                  <p class="text-sm font-medium text-gray-700">Surat / Proposal Permohonan</p>
+                  <p class="text-xs text-gray-400">Opsional — maks. 10 MB</p>
+                </div>
+                <label class="flex items-center gap-1.5 text-xs font-medium text-gray-500 cursor-pointer hover:text-gray-700 transition-colors border border-gray-200 rounded-md px-3 py-1.5 bg-white">
+                  <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                  Unggah
+                  <input type="file" class="hidden" accept=".jpg,.jpeg,.png,.pdf" onchange="validateFileSize(this, 10)"/>
+                </label>
+              </div>
+
+              <!-- Upload slot 3 -->
+              <div class="upload-zone">
+                <div class="h-9 w-9 rounded-lg bg-orange-50 flex items-center justify-center flex-shrink-0">
+                  <svg class="h-4 w-4 text-orange-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                </div>
+                <div class="flex-1">
+                  <p class="text-sm font-medium text-gray-700">Lampiran Lainnya</p>
+                  <p class="text-xs text-gray-400">Opsional — foto, dokumen pendukung — maks. 10 MB</p>
+                </div>
+                <label class="flex items-center gap-1.5 text-xs font-medium text-gray-500 cursor-pointer hover:text-gray-700 transition-colors border border-gray-200 rounded-md px-3 py-1.5 bg-white">
+                  <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                  Unggah
+                  <input type="file" class="hidden" accept=".jpg,.jpeg,.png,.pdf" onchange="validateFileSize(this, 10)"/>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action buttons (standard form) -->
+          <div class="flex items-center justify-between py-2" id="actionsStandard">
+            <a href="lpm-daftar-permohonan.html" class="text-sm text-gray-400 hover:text-gray-600 transition-colors">← Batal, kembali ke daftar</a>
+            <div class="flex items-center gap-3">
+              <button type="button" class="px-4 py-2 text-sm font-medium border border-gray-200 rounded-lg bg-white text-gray-600 hover:bg-gray-50 transition-colors">Simpan Draft</button>
+              <button type="button" class="px-5 py-2 text-sm font-semibold bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors shadow-sm" id="submitBtnStandard">
+                Simpan &amp; Kirim ke Konselor
+              </button>
+            </div>
+          </div>
+        </div><!-- /form-standard -->
+
+        <!-- ====================== BARZAH FORM ====================== -->
+        <div id="form-barzah" class="hidden">
+
+          <!-- Section 1: Info Masuk (simplified) -->
+          <div class="section-card">
+            <div class="section-title">
+              <span class="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold">1</span>
+              Informasi Berkas Masuk
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="form-label">Channel Masuk <span class="text-red-400">*</span></label>
+                <select class="form-select">
+                  <option value="">— Pilih channel —</option>
+                  <option>WA</option>
+                  <option>Telepon</option>
+                  <option>Datang langsung</option>
+                  <option>Email</option>
+                  <option>Rekomendasi Amil</option>
+                </select>
+              </div>
+              <div class="col-span-2">
+                <label class="form-label">Tanggal &amp; Waktu Masuk</label>
+                <input type="text" class="form-input bg-gray-50 text-gray-400 cursor-not-allowed" value="26 Agustus 2026, 09:41 WIB" readonly/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Data Jenazah -->
+          <div class="section-card">
+            <div class="section-title">
+              <span class="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold">2</span>
+              Data Jenazah
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="form-label">Nama Almarhum / Almarhumah <span class="text-red-400">*</span></label>
+                <input type="text" class="form-input" placeholder="Nama lengkap sesuai KTP"/>
+              </div>
+              <div>
+                <label class="form-label">Status</label>
+                <select class="form-select">
+                  <option value="">— Pilih —</option>
+                  <option>Almarhum</option>
+                  <option>Almarhumah</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label">Tanggal Wafat</label>
+                <input type="date" class="form-input"/>
+              </div>
+              <div>
+                <label class="form-label">Penyebab Kematian</label>
+                <input type="text" class="form-input" placeholder="Contoh: sakit, kecelakaan…"/>
+              </div>
+              <div class="col-span-2">
+                <label class="form-label">Uraian Singkat</label>
+                <textarea class="form-input" rows="3" placeholder="Kondisi jenazah, riwayat kesehatan, keterangan penting lainnya…"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Data Keluarga -->
+          <div class="section-card">
+            <div class="section-title">
+              <span class="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold">3</span>
+              Data Keluarga
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="form-label">Nama Keluarga yang Dihubungi <span class="text-red-400">*</span></label>
+                <input type="text" class="form-input" placeholder="Nama lengkap"/>
+              </div>
+              <div>
+                <label class="form-label">Nomor HP <span class="text-red-400">*</span></label>
+                <input type="text" class="form-input" placeholder="08xx-xxxx-xxxx"/>
+              </div>
+              <div>
+                <label class="form-label">Hubungan dengan Jenazah <span class="text-red-400">*</span></label>
+                <select class="form-select">
+                  <option value="">— Pilih hubungan —</option>
+                  <option>Suami / Istri</option>
+                  <option>Anak</option>
+                  <option>Orang Tua</option>
+                  <option>Saudara</option>
+                  <option>Lainnya</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label">Agama</label>
+                <select class="form-select">
+                  <option value="">— Pilih —</option>
+                  <option>Islam</option>
+                  <option>Lainnya</option>
+                </select>
+              </div>
+              <div class="col-span-2">
+                <label class="form-label">Alamat Keluarga</label>
+                <input type="text" class="form-input" placeholder="Jl. … No. … RT/RW …"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 4: Lokasi & Waktu -->
+          <div class="section-card">
+            <div class="section-title">
+              <span class="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold">4</span>
+              Lokasi &amp; Waktu
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="col-span-2">
+                <label class="form-label">Lokasi Jemput Jenazah <span class="text-red-400">*</span></label>
+                <input type="text" class="form-input" placeholder="Rumah sakit / rumah duka / alamat lengkap"/>
+              </div>
+              <div class="col-span-2">
+                <label class="form-label">Lokasi Tujuan Pemakaman / Pemulasaran <span class="text-red-400">*</span></label>
+                <input type="text" class="form-input" placeholder="Tempat pemakaman / pemulasaran jenazah"/>
+              </div>
+              <div>
+                <label class="form-label">Tanggal Dibutuhkan <span class="text-red-400">*</span></label>
+                <input type="date" class="form-input"/>
+              </div>
+              <div>
+                <label class="form-label">Waktu Dibutuhkan</label>
+                <input type="time" class="form-input"/>
+              </div>
+              <div class="col-span-2">
+                <label class="form-label">Keterangan Tambahan</label>
+                <textarea class="form-input" rows="2" placeholder="Kebutuhan khusus, catatan terkait prosesi pemakaman…"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 5: Lampiran Barzah -->
+          <div class="section-card">
+            <div class="section-title">
+              <span class="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold">5</span>
+              Lampiran
+            </div>
+            <p class="text-xs text-gray-400 mb-4">Dokumen pendukung: surat kematian, surat pengantar RT/RW. Maks. 10 MB per file.</p>
+            <div class="space-y-3">
+              <div class="upload-zone">
+                <div class="h-9 w-9 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
+                  <svg class="h-4 w-4 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                </div>
+                <div class="flex-1">
+                  <p class="text-sm font-medium text-gray-700">Surat Kematian / Surat Pengantar</p>
+                  <p class="text-xs text-gray-400">Opsional — maks. 10 MB</p>
+                </div>
+                <label class="flex items-center gap-1.5 text-xs font-medium text-primary cursor-pointer hover:text-primary/80 transition-colors border border-primary/30 rounded-md px-3 py-1.5 bg-primary-light">
+                  <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                  Unggah
+                  <input type="file" class="hidden" accept=".jpg,.jpeg,.png,.pdf" onchange="validateFileSize(this, 10)"/>
+                </label>
+              </div>
+              <div class="upload-zone">
+                <div class="h-9 w-9 rounded-lg bg-green-50 flex items-center justify-center flex-shrink-0">
+                  <svg class="h-4 w-4 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                </div>
+                <div class="flex-1">
+                  <p class="text-sm font-medium text-gray-700">Dokumen Pendukung Lainnya</p>
+                  <p class="text-xs text-gray-400">Opsional — maks. 10 MB</p>
+                </div>
+                <label class="flex items-center gap-1.5 text-xs font-medium text-gray-500 cursor-pointer hover:text-gray-700 transition-colors border border-gray-200 rounded-md px-3 py-1.5 bg-white">
+                  <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                  Unggah
+                  <input type="file" class="hidden" accept=".jpg,.jpeg,.png,.pdf" onchange="validateFileSize(this, 10)"/>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action buttons (barzah form) -->
+          <div class="flex items-center justify-between py-2" id="actionsBarzah">
+            <a href="lpm-daftar-permohonan.html" class="text-sm text-gray-400 hover:text-gray-600 transition-colors">← Batal, kembali ke daftar</a>
+            <div class="flex items-center gap-3">
+              <button type="button" class="px-4 py-2 text-sm font-medium border border-gray-200 rounded-lg bg-white text-gray-600 hover:bg-gray-50 transition-colors">Simpan Draft</button>
+              <button type="button" class="px-5 py-2 text-sm font-semibold bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors shadow-sm">
+                Simpan &amp; Kirim ke Koordinator
+              </button>
+            </div>
+          </div>
+        </div><!-- /form-barzah -->
+
+      </div><!-- /space-y-4 -->
+    </main>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-4 bg-gray-900 text-white text-sm px-4 py-2.5 rounded-xl shadow-lg opacity-0 transition-all duration-300 z-[60] flex items-center gap-2 pointer-events-none">
+  <svg class="h-4 w-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+  <span id="toastMsg"></span>
+</div>
+
+<script>
+  /* ── Kategori Layanan Switch ── */
+  var PROGRAM_BY_KATEGORI = {
+    lamusta: [
+      'Lamusta - Bantuan Langsung',
+      'Lamusta - Layanan Mustahik'
+    ],
+    tematik: [
+      'Yatim - Santunan',
+      'Yatim - Beasiswa',
+      'Yatim - Besteam',
+      'PKM - Pemberdayaan Majelis Taklim Ummahat',
+      'PKM - Disabilitas Mandiri',
+      'PKM - Penguatan Keluarga Mandiri'
+    ],
+    barzah: [
+      'Barzah - Perintah Delivery',
+      'Barzah - Bantuan Jenazah'
+    ]
+  };
+
+  function populateProgram(kategori) {
+    var sel = document.getElementById('programTerkait');
+    var opts = PROGRAM_BY_KATEGORI[kategori] || [];
+    sel.innerHTML = '<option value="">— Pilih program —</option>' +
+      opts.map(function(p) { return '<option>' + p + '</option>'; }).join('');
+  }
+
+  function switchLayanan(layanan) {
+    document.querySelectorAll('#jenisLayanan .layanan-btn').forEach(function(btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-layanan') === layanan);
+    });
+    var isBarzah = (layanan === 'barzah');
+    document.getElementById('form-standard').classList.toggle('hidden', isBarzah);
+    document.getElementById('form-barzah').classList.toggle('hidden', !isBarzah);
+    if (!isBarzah) populateProgram(layanan);
+    var stdBtn = document.getElementById('submitBtnStandard');
+    if (stdBtn) {
+      if (layanan === 'lamusta') {
+        stdBtn.textContent = 'Simpan \u0026 Kirim ke Konselor';
+      } else if (layanan === 'tematik') {
+        stdBtn.textContent = 'Simpan \u0026 Kirim ke Manajer';
+      } else {
+        stdBtn.textContent = 'Simpan \u0026 Kirim ke Manajer';
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    populateProgram('lamusta');
+  });
+
+  /* ── Tab Individu / Komunitas ── */
+  function switchTab(tab) {
+    document.getElementById('tab-individu').classList.toggle('hidden', tab !== 'individu');
+    document.getElementById('tab-komunitas').classList.toggle('hidden', tab !== 'komunitas');
+    document.querySelectorAll('#jenisTabs .tab-btn').forEach(function(btn, i) {
+      btn.classList.toggle('active', (i === 0 && tab === 'individu') || (i === 1 && tab === 'komunitas'));
+    });
+  }
+
+  /* ── NIK last-aid info (mock) ── */
+  document.querySelector('#tab-individu input[maxlength="16"]').addEventListener('input', function() {
+    var v = this.value.trim();
+    var nikInfo = document.getElementById('nikInfo');
+    var nikDefault = document.getElementById('nikDefault');
+    if (v.length === 16) {
+      nikDefault.classList.add('hidden');
+      nikInfo.classList.remove('hidden');
+    } else {
+      nikInfo.classList.add('hidden');
+      nikDefault.classList.remove('hidden');
+    }
+  });
+
+  /* ── File size validation (MB) ── */
+  function validateFileSize(input, maxMB) {
+    if (input.files && input.files[0]) {
+      var sizeMB = input.files[0].size / 1024 / 1024;
+      if (sizeMB > maxMB) {
+        showToast('File terlalu besar! Maks. ' + maxMB + ' MB. Ukuran: ' + sizeMB.toFixed(1) + ' MB');
+        input.value = '';
+      } else {
+        showToast('File terunggah: ' + input.files[0].name + ' (' + sizeMB.toFixed(1) + ' MB)');
+      }
+    }
+  }
+
+  /* ── Toast ── */
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    t.classList.remove('opacity-0', 'translate-y-4');
+    t.classList.add('opacity-100', 'translate-y-0');
+    clearTimeout(window._tt);
+    window._tt = setTimeout(function() {
+      t.classList.add('opacity-0', 'translate-y-4');
+      t.classList.remove('opacity-100', 'translate-y-0');
+    }, 2800);
+  }
+
+  /* ── Simpan buttons trigger toast ── */
+  document.querySelectorAll('button').forEach(function(b) {
+    if (/Simpan|Kirim/i.test(b.textContent.trim())) {
+      b.addEventListener('click', function(e) {
+        e.preventDefault();
+        showToast(this.textContent.trim() + ' — berhasil');
+      });
+    }
+  });
+</script>
+
+<script>
+function toggleSidebar() {
+  var s = document.getElementById('sidebar');
+  var o = document.getElementById('sidebarOverlay');
+  s.classList.toggle('-translate-x-full');
+  o.classList.toggle('hidden');
+}
+document.addEventListener('DOMContentLoaded', function() {
+  // Highlight active sidebar link
+  var page = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('#sidebar .sidebar-link').forEach(function(a) {
+    var href = a.getAttribute('href');
+    if (href === page) a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

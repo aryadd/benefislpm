@@ -1,0 +1,527 @@
+﻿<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Keputusan Approval — Benefis LPM</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2B7F75',
+            'primary-light': '#EAF4F1',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .sidebar-link { display:flex; align-items:center; gap:0.625rem; border-radius:0.375rem; padding:0.5rem 0.75rem; font-size:0.875rem; font-weight:500; color:#4B5563; transition:all 0.15s; }
+    .sidebar-link:hover { background:#F3F4F6; color:#111827; }
+    .sidebar-link.active { background:#EAF4F1; color:#2B7F75; }
+    .form-label { display:block; font-size:0.75rem; font-weight:600; color:#374151; margin-bottom:0.375rem; }
+    .form-input { width:100%; border:1px solid #E5E7EB; border-radius:0.5rem; padding:0.5rem 0.75rem; font-size:0.875rem; color:#111827; background:#fff; outline:none; transition:all 0.15s; }
+    .form-input:focus { border-color:#2B7F75; box-shadow:0 0 0 3px rgba(255,104,71,0.12); }
+    .form-select { width:100%; border:1px solid #E5E7EB; border-radius:0.5rem; padding:0.5rem 0.75rem; font-size:0.875rem; color:#111827; background:#fff; outline:none; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239CA3AF' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 0.75rem center; background-size:1rem; padding-right:2.5rem; }
+    .form-select:focus { border-color:#2B7F75; box-shadow:0 0 0 3px rgba(255,104,71,0.12); }
+    .section-card { background:#fff; border:1px solid #F3F4F6; border-radius:0.75rem; padding:1.5rem; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .section-title { font-size:0.8125rem; font-weight:700; color:#374151; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem; }
+    .info-row { display:flex; gap:0.25rem; font-size:0.8125rem; }
+    .info-key { color:#9CA3AF; min-width:140px; }
+    .info-val { color:#111827; font-weight:500; }
+    .status-badge { display:inline-flex; align-items:center; gap:0.375rem; padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.75rem; font-weight:600; }
+    .timeline-dot { width:0.625rem; height:0.625rem; border-radius:50%; flex-shrink:0; margin-top:0.25rem; }
+    .keputusan-btn { flex:1; border:2px solid #E5E7EB; border-radius:0.75rem; padding:0.875rem; text-align:center; cursor:pointer; transition:all 0.15s; background:#fff; }
+    .keputusan-btn:hover { border-color:#9CA3AF; }
+    .keputusan-btn.selected-bantu { border-color:#10B981; background:#ECFDF5; }
+    .keputusan-btn.selected-survei { border-color:#2B7F75; background:#EAF4F1; }
+    .keputusan-btn.selected-tolak { border-color:#EF4444; background:#FEF2F2; }
+    .keputusan-btn.selected-lengkapi { border-color:#F59E0B; background:#FFFBEB; }
+    .tier-pill { display:inline-flex; align-items:center; gap:0.375rem; padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.6875rem; font-weight:600; border:1px solid #E5E7EB; background:#fff; color:#6B7280; }
+    .tier-pill.tier-active { border-color:#2B7F75; background:#EAF4F1; color:#2B7F75; }
+    .tier-pill.tier-passed { border-color:#10B981; background:#ECFDF5; color:#059669; }
+    .tier-pill.tier-next { border-color:#F59E0B; background:#FFFBEB; color:#D97706; }
+    .tier-arrow { color:#D1D5DB; font-size:0.75rem; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<div class="flex min-h-screen">
+
+  <!-- Sidebar V2 -->
+  <!-- SIDEBAR LAMUSTA â€” untuk semua halaman Layanan Mustahik -->
+<!-- SIDEBAR LAMUSTA — untuk semua halaman Layanan Mustahik -->
+<aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-[270px] border-r border-gray-100 bg-white flex flex-col transition-transform duration-200 max-lg:-translate-x-full max-lg:shadow-xl" data-sidebar>
+  <div class="px-6 py-5 border-b border-gray-100">
+    <div class="flex items-center gap-2">
+      <img src="../logo.webp" alt="Benefis" class="h-8 w-auto"/>
+      <span class="text-xl font-bold text-gray-900">Benefis</span>
+      <span class="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">DD</span>
+    </div>
+  </div>
+  <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+    <a href="index.html" class="sidebar-link">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Layanan Mustahik</p>
+      <a href="lpm-daftar-permohonan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Daftar Permohonan
+      </a>
+      <a href="lpm-intake-permohonan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+        Input Ajuan Baru
+      </a>
+      <a href="lpm-konseling.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        Konseling
+      </a>
+      <a href="lpm-keputusan-pimpinan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Keputusan Approval
+      </a>
+      <a href="lpm-order-survei.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Order Survei
+      </a>
+      <a href="lpm-esurvei.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        E-Survei
+      </a>
+      <a href="lpm-pencairan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        Pencairan
+      </a>
+      <a href="lpm-arsip.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+        Arsip
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Penerima Manfaat</p>
+      <a href="#" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        Program
+      </a>
+      <a href="#" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+        Entitas Pelaksanaan
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Laporan</p>
+      <a href="lpm-export-laporan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Export Laporan
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Master Data</p>
+      <a href="lpm-konfigurasi-lpm.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.756.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Konfigurasi LPM
+      </a>
+    </div>
+  </nav>
+  <div class="px-3 py-4 border-t border-gray-100">
+    <a href="#" class="sidebar-link" style="color:#F87171;">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+      Logout
+    </a>
+  </div>
+</aside>
+<!-- Mobile overlay -->
+<div id="sidebarOverlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+<!-- Hamburger button (mobile) -->
+<button id="hamburgerBtn" onclick="toggleSidebar()" class="fixed top-3 left-3 z-[55] lg:hidden bg-white rounded-lg shadow border border-gray-200 p-2 hover:bg-gray-50">
+  <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+</button>
+
+  <div class="lg:ml-[270px] flex flex-col flex-1 min-h-screen">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 flex items-center justify-between bg-white/80 backdrop-blur-xl border-b border-gray-100 px-6 py-3.5">
+      <div class="flex items-center gap-2 text-sm text-gray-400">
+        <a href="lpm-daftar-permohonan.html" class="hover:text-primary transition-colors">Daftar Permohonan</a>
+        <svg class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="text-gray-500">LMS-2026-000126</span>
+        <svg class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        <span class="text-gray-700 font-medium">Keputusan Approval</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-xs text-gray-400">Koordinator LPM</span>
+        <div class="h-8 w-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:#2B7F75">RS</div>
+      </div>
+    </header>
+
+    <!-- Two-column layout -->
+    <main class="flex-1 px-6 py-5">
+      <div class="flex gap-5 items-start max-w-6xl">
+
+        <!-- Left: form (2/3) -->
+        <div class="flex-1 space-y-4 min-w-0">
+
+          <!-- Approval Tier Tracker -->
+          <div class="section-card" id="tierTracker">
+            <div class="section-title">
+              <span class="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold">!</span>
+              Jenjang Approval
+            </div>
+            <div class="flex items-center gap-2 flex-wrap" id="tierPills"></div>
+            <p class="text-[11px] text-gray-400 mt-2" id="tierNote">Plafond dikonfigurasi oleh Admin. Nilai contoh di bawah.</p>
+          </div>
+
+          <!-- Alert: Melampaui plafond -->
+          <div class="flex items-start gap-3 p-3.5 rounded-xl border border-amber-200 bg-amber-50" id="alertBox">
+            <svg class="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            <div>
+              <p class="text-sm font-semibold text-amber-700" id="alertTitle"></p>
+              <p class="text-xs text-amber-600 mt-0.5" id="alertDesc"></p>
+            </div>
+          </div>
+
+          <!-- Section: Rekomendasi Konselor (read-only) -->
+          <div class="section-card">
+            <div class="section-title">
+              <span class="flex h-5 w-5 items-center justify-center rounded-full bg-gray-400 text-white text-[10px] font-bold">i</span>
+              Rekomendasi Konselor (Ringkasan)
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="info-row"><span class="info-key">Konselor</span><span class="info-val">Budi K.</span></div>
+              <div class="info-row"><span class="info-key">Tgl Konseling</span><span class="info-val">11 Agu 2026</span></div>
+              <div class="info-row"><span class="info-key">Rekomendasi</span><span class="info-val text-emerald-600 font-semibold">Dibantu Langsung</span></div>
+              <div class="info-row"><span class="info-key">Nominal Ajuan</span><span class="info-val" id="nominalDisplay">Rp 8.000.000</span></div>
+            </div>
+            <div class="mt-3 p-3 rounded-lg bg-gray-50 text-xs text-gray-600 leading-relaxed">
+              Pemohon anak yatim piatu yang dititipkan di panti, membutuhkan biaya SPP dan perlengkapan sekolah untuk 3 bersaudara. Kondisi ekonomi pengasuh panti terbatas, sumbangan menurun pasca lebaran.
+            </div>
+          </div>
+
+          <!-- Section: Keputusan -->
+          <div class="section-card">
+            <div class="section-title">
+              <span class="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold">1</span>
+              Keputusan Approval
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="form-label">Asnaf <span class="text-red-400">*</span></label>
+                <select class="form-select">
+                  <option value="">-- Pilih asnaf --</option>
+                  <option>Fakir Miskin</option>
+                  <option>Muallaf</option>
+                  <option>Gharim</option>
+                  <option>Ibnu Sabil</option>
+                  <option>Fisabilillah</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label">Otorisasi Bantuan <span class="text-red-400">*</span></label>
+                <select class="form-select" id="otorisasiSelect" onchange="toggleRekening()">
+                  <option value="">-- Pilih --</option>
+                  <option value="savecash">Savecash (tunai/barang)</option>
+                  <option value="outstanding">Outstanding (transfer)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <label class="form-label">Keputusan Final <span class="text-red-400">*</span></label>
+              <div class="flex gap-3" id="keputusanGroup">
+                <div class="keputusan-btn selected-bantu" onclick="selectKeputusan('bantu', this)">
+                  <div class="mb-1 flex justify-center text-emerald-500"><svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+                  <p class="font-semibold text-sm text-emerald-700">Dibantu</p>
+                  <p class="text-xs text-gray-400 mt-1">Langsung cairkan</p>
+                </div>
+                <div class="keputusan-btn" onclick="selectKeputusan('survei', this)">
+                  <div class="mb-1 flex justify-center text-gray-400"><svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"/></svg></div>
+                  <p class="font-semibold text-sm text-gray-700">Disurvei</p>
+                  <p class="text-xs text-gray-400 mt-1">Perlu verifikasi lapangan</p>
+                </div>
+                <div class="keputusan-btn" onclick="selectKeputusan('tolak', this)">
+                  <div class="mb-1 flex justify-center text-red-400"><svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></div>
+                  <p class="font-semibold text-sm text-red-700">Ditolak</p>
+                  <p class="text-xs text-gray-400 mt-1">Tidak layak</p>
+                </div>
+                <div class="keputusan-btn" onclick="selectKeputusan('lengkapi', this)">
+                  <div class="mb-1 flex justify-center text-amber-500"><svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg></div>
+                  <p class="font-semibold text-sm text-amber-700">Melengkapi</p>
+                  <p class="text-xs text-gray-400 mt-1">Kembalikan ke konselor</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mt-4">
+              <div>
+                <label class="form-label">Mekanisme Bantuan</label>
+                <select class="form-select">
+                  <option value="">-- Pilih --</option>
+                  <option>Ke Sekolah</option>
+                  <option>Ke Rumah</option>
+                  <option>Wesel</option>
+                  <option>Di LPM</option>
+                  <option>Transfer</option>
+                  <option>Belikan Barang</option>
+                  <option>Lainnya</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label">Sifat Bantuan</label>
+                <select class="form-select">
+                  <option value="">-- Pilih --</option>
+                  <option>Rutin</option>
+                  <option>Insidental</option>
+                  <option>Pemberdayaan</option>
+                  <option>Biasa</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Nomor rekening (conditional) -->
+            <div id="rekeningField" class="mt-4 hidden">
+              <label class="form-label">Nomor Rekening <span class="text-red-400">*</span></label>
+              <input type="text" class="form-input" placeholder="No. rekening tujuan (untuk mekanisme transfer/outstanding)"/>
+            </div>
+
+            <!-- Catatan melengkapi berkas (conditional) -->
+            <div id="lengkapiField" class="mt-4 hidden">
+              <label class="form-label">Catatan Kekurangan Berkas <span class="text-red-400">*</span></label>
+              <textarea class="form-input" rows="3" placeholder="Jelaskan berkas apa yang perlu dilengkapi pemohon..."></textarea>
+            </div>
+
+            <div class="mt-4">
+              <label class="form-label">Catatan Keputusan</label>
+              <textarea class="form-input" rows="2" placeholder="Catatan internal untuk audit trail..."></textarea>
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="flex items-center justify-between py-2">
+            <a href="lpm-daftar-permohonan.html" class="text-sm text-gray-400 hover:text-gray-600 transition-colors">&larr; Kembali ke daftar</a>
+            <div class="flex items-center gap-3">
+              <button class="px-4 py-2 text-sm font-medium border border-gray-200 rounded-lg bg-white text-gray-600 hover:bg-gray-50 transition-colors">Simpan Draft</button>
+              <button class="px-5 py-2 text-sm font-semibold bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors shadow-sm">
+                Simpan &amp; Teruskan
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: info panel (1/3) -->
+        <div class="w-72 flex-shrink-0 space-y-4">
+
+          <!-- Ringkasan Permohonan -->
+          <div class="section-card">
+            <div class="section-title" style="margin-bottom:0.75rem">Ringkasan Permohonan</div>
+            <div class="space-y-2">
+              <div class="info-row"><span class="info-key">No. Permohonan</span><span class="info-val font-mono text-xs">LMS-2026-000126</span></div>
+              <div class="info-row"><span class="info-key">Status</span><span class="status-badge bg-orange-50 text-orange-700">Direkomendasikan</span></div>
+              <div class="info-row"><span class="info-key">Tgl Masuk</span><span class="info-val">11 Agu 2026</span></div>
+              <div class="info-row"><span class="info-key">Channel</span><span class="info-val">Email</span></div>
+              <div class="info-row"><span class="info-key">Kategori PM</span><span class="info-val">Pendidikan</span></div>
+              <div class="info-row"><span class="info-key">Jenis Layanan</span><span class="info-val">Layanan Mustahik</span></div>
+            </div>
+
+            <hr class="my-3 border-gray-100"/>
+
+            <div class="section-title" style="margin-bottom:0.75rem">Data Pemohon</div>
+            <div class="space-y-2">
+              <div class="info-row"><span class="info-key">Nama</span><span class="info-val">Ahmad Fauzi</span></div>
+              <div class="info-row"><span class="info-key">NIK</span><span class="info-val font-mono text-xs">3278010506900012</span></div>
+              <div class="info-row"><span class="info-key">No. HP</span><span class="info-val">0813-7788-2233</span></div>
+              <div class="info-row"><span class="info-key">Alamat</span><span class="info-val text-xs leading-relaxed">Jl. Melati No. 8 RT 02/05, Kel. Kebon Pala, Kec. Jatinegara, Jakarta Timur</span></div>
+              <div class="info-row"><span class="info-key">Perihal</span><span class="info-val text-xs">Tunggakan SPP anak kelas 6</span></div>
+            </div>
+
+            <hr class="my-3 border-gray-100"/>
+            <div class="section-title" style="margin-bottom:0.625rem">Lampiran Berkas</div>
+            <div class="space-y-2">
+              <a href="#" class="flex items-center gap-2 text-xs text-primary hover:underline">
+                <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                SuratPermohonan.pdf
+              </a>
+              <a href="#" class="flex items-center gap-2 text-xs text-primary hover:underline">
+                <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                KKS_Permohonan.jpg
+              </a>
+            </div>
+          </div>
+
+          <!-- Timeline log status -->
+          <div class="section-card">
+            <div class="section-title" style="margin-bottom:0.75rem">Riwayat Status</div>
+            <div class="space-y-3">
+              <div class="flex gap-3">
+                <div class="flex flex-col items-center">
+                  <div class="timeline-dot bg-orange-400"></div>
+                  <div class="w-px flex-1 bg-gray-100 mt-1"></div>
+                </div>
+                <div class="pb-3 min-w-0">
+                  <p class="text-xs font-semibold text-gray-700">Direkomendasikan</p>
+                  <p class="text-[10px] text-gray-400">Budi K. &middot; 11 Agu 10:30</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="flex flex-col items-center">
+                  <div class="timeline-dot bg-yellow-300"></div>
+                  <div class="w-px flex-1 bg-gray-100 mt-1"></div>
+                </div>
+                <div class="pb-3 min-w-0">
+                  <p class="text-xs font-semibold text-gray-700">Dalam Konseling</p>
+                  <p class="text-[10px] text-gray-400">Budi K. &middot; 11 Agu 09:15</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="flex flex-col items-center">
+                  <div class="timeline-dot bg-gray-300"></div>
+                </div>
+                <div class="min-w-0">
+                  <p class="text-xs font-semibold text-gray-700">Berkas Diterima</p>
+                  <p class="text-[10px] text-gray-400">CC Ani &middot; 11 Agu 08:50</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-4 bg-gray-900 text-white text-sm px-4 py-2.5 rounded-xl shadow-lg opacity-0 transition-all duration-300 z-[60] flex items-center gap-2 pointer-events-none">
+  <svg class="h-4 w-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+  <span id="toastMsg"></span>
+</div>
+
+<script>
+  /* Plafond Tiers (configurable by Admin) */
+  var TIERS = [
+    { id: 'koordinator', label: 'Koordinator/SPV', plafond: 750000 },
+    { id: 'kabag',       label: 'Kabag',           plafond: 1500000 },
+    { id: 'manager',     label: 'Manager',          plafond: 5000000 },
+    { id: 'gm',          label: 'GM',               plafond: 10000000 },
+    { id: 'direktur',    label: 'Direktur',          plafond: Infinity }
+  ];
+
+  /* Sample nominal */
+  var NOMINAL = 8000000;
+
+  function renderTiers(nominal) {
+    var container = document.getElementById('tierPills');
+    var alertBox = document.getElementById('alertBox');
+    var alertTitle = document.getElementById('alertTitle');
+    var alertDesc = document.getElementById('alertDesc');
+    var html = '';
+    var currentIdx = -1;
+    var nextIdx = -1;
+
+    for (var i = 0; i < TIERS.length; i++) {
+      if (nominal <= TIERS[i].plafond) {
+        currentIdx = i;
+        nextIdx = i + 1 < TIERS.length ? i + 1 : -1;
+        break;
+      }
+    }
+    if (currentIdx === -1) { currentIdx = TIERS.length - 1; nextIdx = -1; }
+
+    for (var j = 0; j < TIERS.length; j++) {
+      var cls = 'tier-pill';
+      var icon = '';
+      if (j < currentIdx) {
+        cls += ' tier-passed';
+        icon = '<svg class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
+      } else if (j === currentIdx) {
+        cls += ' tier-active';
+        icon = '<svg class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/></svg>';
+      } else if (j === nextIdx) {
+        cls += ' tier-next';
+        icon = '<svg class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>';
+      }
+      var pf = TIERS[j].plafond === Infinity ? '> 10jt' : '≤ ' + fmtRupiah(TIERS[j].plafond);
+      html += '<span class="' + cls + '">' + icon + TIERS[j].label + ' <span class="text-[10px] opacity-60">' + pf + '</span></span>';
+      if (j < TIERS.length - 1) html += '<span class="tier-arrow">→</span>';
+    }
+    container.innerHTML = html;
+
+    if (nextIdx !== -1) {
+      alertBox.className = 'flex items-start gap-3 p-3.5 rounded-xl border border-amber-200 bg-amber-50';
+      alertTitle.className = 'text-sm font-semibold text-amber-700';
+      alertDesc.className = 'text-xs text-amber-600 mt-0.5';
+      alertTitle.textContent = 'Jenjang saat ini: ' + TIERS[currentIdx].label + ' | Diteruskan ke: ' + TIERS[nextIdx].label;
+      alertDesc.textContent = 'Ajuan ' + fmtRupiah(nominal) + ' melebihi plafond ' + TIERS[currentIdx].label + ' (' + (TIERS[currentIdx].plafond === Infinity ? '> 10jt' : '≤ ' + fmtRupiah(TIERS[currentIdx].plafond)) + '). Keputusan diteruskan ke ' + TIERS[nextIdx].label + '.';
+    } else {
+      alertBox.className = 'flex items-start gap-3 p-3.5 rounded-xl border border-emerald-200 bg-emerald-50';
+      alertTitle.className = 'text-sm font-semibold text-emerald-700';
+      alertDesc.className = 'text-xs text-emerald-600 mt-0.5';
+      alertTitle.textContent = 'Jenjang saat ini: ' + TIERS[currentIdx].label;
+      alertDesc.textContent = 'Ajuan ' + fmtRupiah(nominal) + ' berada di jenjang tertinggi. ' + TIERS[currentIdx].label + ' dapat menyetujui langsung.';
+    }
+  }
+
+  function fmtRupiah(n) { return 'Rp ' + n.toLocaleString('id-ID'); }
+
+  function selectKeputusan(type, el) {
+    document.querySelectorAll('.keputusan-btn').forEach(function(b) {
+      b.classList.remove('selected-bantu','selected-survei','selected-tolak','selected-lengkapi');
+    });
+    if (type === 'bantu') el.classList.add('selected-bantu');
+    if (type === 'survei') el.classList.add('selected-survei');
+    if (type === 'tolak') el.classList.add('selected-tolak');
+    if (type === 'lengkapi') el.classList.add('selected-lengkapi');
+    document.getElementById('lengkapiField').classList.toggle('hidden', type !== 'lengkapi');
+  }
+
+  function toggleRekening() {
+    var v = document.getElementById('otorisasiSelect').value;
+    document.getElementById('rekeningField').classList.toggle('hidden', v !== 'outstanding');
+  }
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    t.classList.remove('opacity-0','translate-y-4');
+    t.classList.add('opacity-100','translate-y-0');
+    clearTimeout(window._tt);
+    window._tt = setTimeout(function() {
+      t.classList.add('opacity-0','translate-y-4');
+      t.classList.remove('opacity-100','translate-y-0');
+    }, 2200);
+  }
+  document.querySelectorAll('button').forEach(function(b) {
+    var t = b.textContent.trim();
+    if (/Simpan|Cetak|Tandai|Terapkan|Export|Unduh/i.test(t)) {
+      b.addEventListener('click', function(e) { e.preventDefault(); showToast(t + ' - berhasil'); });
+    }
+  });
+
+  renderTiers(NOMINAL);
+</script>
+
+<script>
+function toggleSidebar() {
+  var s = document.getElementById('sidebar');
+  var o = document.getElementById('sidebarOverlay');
+  s.classList.toggle('-translate-x-full');
+  o.classList.toggle('hidden');
+}
+document.addEventListener('DOMContentLoaded', function() {
+  // Highlight active sidebar link
+  var page = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('#sidebar .sidebar-link').forEach(function(a) {
+    var href = a.getAttribute('href');
+    if (href === page) a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
