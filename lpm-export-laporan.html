@@ -37,8 +37,7 @@
 <div class="flex min-h-screen">
 
   <!-- Sidebar -->
-  <!-- SIDEBAR LAMUSTA â€” untuk semua halaman Layanan Mustahik -->
-<!-- SIDEBAR LAMUSTA — untuk semua halaman Layanan Mustahik -->
+  <!-- SIDEBAR LAMUSTA — untuk semua halaman Layanan Mustahik -->
 <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-[270px] border-r border-gray-100 bg-white flex flex-col transition-transform duration-200 max-lg:-translate-x-full max-lg:shadow-xl" data-sidebar>
   <div class="px-6 py-5 border-b border-gray-100">
     <div class="flex items-center gap-2">
@@ -82,9 +81,28 @@
         <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
         Pencairan
       </a>
-      <a href="lpm-arsip.html" class="sidebar-link">
+<a href="lpm-arsip.html" class="sidebar-link">
         <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
         Arsip
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Layanan Barzah</p>
+      <a href="lpm-barzah.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Daftar Ajuan Barzah
+      </a>
+      <a href="lpm-intake-barzah.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+        Intake Barzah
+      </a>
+      <a href="lpm-delivery-barzah.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Perintah Delivery
+      </a>
+      <a href="lpm-pencairan-barzah.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V6zm18 6h-4a2 2 0 100 4h4m0-4V9a2 2 0 00-2-2M9 10h.01M9 14h.01"/></svg>
+        Realisasi Uang Muka
       </a>
     </div>
     <div class="pt-3">
@@ -132,7 +150,7 @@
     <header class="sticky top-0 z-40 flex items-center justify-between bg-white/80 backdrop-blur-xl border-b border-gray-100 px-6 py-3.5">
       <div>
         <h1 class="text-base font-semibold text-gray-900">Export Laporan</h1>
-        <p class="text-xs text-gray-400">Filter data & unduh laporan layanan mustahik</p>
+        <p class="text-xs text-gray-400">Filter data & unduh laporan seluruh layanan LPM</p>
       </div>
       <div class="flex items-center gap-3">
         <span class="text-xs text-gray-400">Admin</span>
@@ -142,8 +160,8 @@
 
     <main class="flex-1 px-6 py-5 max-w-6xl space-y-5">
 
-      <!-- Summary cards -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<!-- Summary cards -->
+      <div id="kpiLamusta" class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="section-card !p-4">
           <p class="text-xs text-gray-400">Total Ajuan</p>
           <p class="text-2xl font-bold text-gray-900 mt-1">128</p>
@@ -162,13 +180,45 @@
         </div>
       </div>
 
+      <!-- Summary cards — Barzah -->
+      <div id="kpiBarzah" class="hidden grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="section-card !p-4">
+          <p class="text-xs text-gray-400">Total Uang Muka</p>
+          <p class="text-2xl font-bold text-gray-900 mt-1">Rp 12,4 jt</p>
+          <p class="text-[0.65rem] text-gray-400 mt-0.5">14 perjalanan</p>
+        </div>
+        <div class="section-card !p-4">
+          <p class="text-xs text-gray-400">Total Realisasi</p>
+          <p class="text-2xl font-bold text-primary mt-1">Rp 10,9 jt</p>
+          <p class="text-[0.65rem] text-gray-400 mt-0.5">11 transaksi tercatat</p>
+        </div>
+        <div class="section-card !p-4">
+          <p class="text-xs text-gray-400">Sisa Belum Dikembalikan</p>
+          <p class="text-2xl font-bold text-amber-500 mt-1">Rp 425 rb</p>
+          <p class="text-[0.65rem] text-gray-400 mt-0.5">3 perjalanan</p>
+        </div>
+        <div class="section-card !p-4">
+          <p class="text-xs text-gray-400">Selisih Lebih</p>
+          <p class="text-2xl font-bold text-red-500 mt-1">Rp 75 rb</p>
+          <p class="text-[0.65rem] text-gray-400 mt-0.5">1 perlu persetujuan</p>
+        </div>
+      </div>
+
       <!-- Filters -->
       <div class="section-card">
         <div class="section-title">
           <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
           Filter Laporan
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div>
+            <label class="form-label">Layanan</label>
+            <select class="form-input" id="selectLayanan" onchange="gantiLayanan(this.value)">
+              <option value="lamusta">Layanan Mustahik</option>
+              <option value="tematik">Program Tematik</option>
+              <option value="barzah">Barzah (Mobil Jenazah)</option>
+            </select>
+          </div>
           <div>
             <label class="form-label">Periode Mulai</label>
             <input type="date" class="form-input"/>
@@ -195,7 +245,16 @@
           </div>
           <div>
             <label class="form-label">Jenis Laporan</label>
-            <select class="form-input"><option>Rekap Permohonan</option><option>Realisasi Pencairan</option><option>Hasil Survei</option><option>Konseling</option></select>
+            <select class="form-input" id="selectJenis"><option>Rekap Permohonan</option><option>Realisasi Pencairan</option><option>Hasil Survei</option><option>Konseling</option><option>Realisasi Uang Muka (Barzah)</option><option>Rekap Delivery Barzah</option></select>
+          </div>
+          <!-- Filter khusus Barzah -->
+          <div class="hidden" id="filterBarzah1">
+            <label class="form-label">Status Realisasi</label>
+            <select class="form-input"><option>Semua</option><option>Menunggu Laporan</option><option>Tercatat</option><option>Sisa Dikembalikan</option><option>Perlu Verifikasi</option></select>
+          </div>
+          <div class="hidden" id="filterBarzah2">
+            <label class="form-label">Petugas Delivery</label>
+            <select class="form-input"><option>Semua</option><option>Budi Santoso</option><option>Dina Rahmawati</option><option>Eko Prasetyo</option><option>Fitri Handayani</option></select>
           </div>
           <div class="flex items-end">
             <button class="w-full px-4 py-2 text-sm font-semibold bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">Terapkan Filter</button>
@@ -225,8 +284,8 @@
         </div>
       </div>
 
-      <!-- Preview table -->
-      <div class="section-card">
+<!-- Preview table -->
+      <div class="section-card" id="tabelLamusta">
         <div class="section-title">
           <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
           Pratinjau Data (10 dari 128)
@@ -250,7 +309,48 @@
             </tbody>
           </table>
         </div>
-        <p class="mt-3 text-xs text-gray-400">Menampilkan 10 dari 128 baris sesuai filter. Unduh untuk mendapatkan seluruh data.</p>
+<p class="mt-3 text-xs text-gray-400">Menampilkan 10 dari 128 baris sesuai filter. Unduh untuk mendapatkan seluruh data.</p>
+      </div>
+
+      <!-- Preview table — Barzah -->
+      <div class="section-card hidden" id="tabelBarzah">
+        <div class="section-title">
+          <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V6zm18 6h-4a2 2 0 100 4h4m0-4V9a2 2 0 00-2-2M9 10h.01M9 14h.01"/></svg>
+          Pratinjau Realisasi Uang Muka (10 dari 14)
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-gray-100 text-xs text-gray-500 uppercase">
+                <th class="text-left py-2 px-3">No. Ajuan</th>
+                <th class="text-left py-2 px-3">Jenazah / Pelapor</th>
+                <th class="text-left py-2 px-3">Petugas</th>
+                <th class="text-left py-2 px-3">Tgl Berangkat</th>
+                <th class="text-right py-2 px-3">Uang Muka</th>
+                <th class="text-right py-2 px-3">Realisasi</th>
+                <th class="text-right py-2 px-3">Sisa / Selisih</th>
+                <th class="text-left py-2 px-3">Status</th>
+                <th class="text-left py-2 px-3">distribution_uuid</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50 text-gray-700">
+              <tr><td class="py-2 px-3 font-mono text-xs">LMS-2026-000019</td><td class="py-2 px-3">Alm. H. Sulaiman<span class="block text-[0.65rem] text-gray-400">Siti Aminah (Istri)</span></td><td class="py-2 px-3">Eko Prasetyo</td><td class="py-2 px-3 text-xs">25 Agu 2026</td><td class="py-2 px-3 text-right">Rp1.500.000</td><td class="py-2 px-3 text-right font-semibold">Rp1.435.000</td><td class="py-2 px-3 text-right text-emerald-600">Sisa Rp65.000</td><td class="py-2 px-3"><span class="badge bg-emerald-50 text-emerald-600">Tercatat</span></td><td class="py-2 px-3 font-mono text-[0.65rem] text-gray-400">dist-8f2a1c40-barzah</td></tr>
+              <tr><td class="py-2 px-3 font-mono text-xs">LMS-2026-000023</td><td class="py-2 px-3">Alm. H. Ahmad<span class="block text-[0.65rem] text-gray-400">Siti Aminah (Istri)</span></td><td class="py-2 px-3">Budi Santoso</td><td class="py-2 px-3 text-xs">26 Agu 2026</td><td class="py-2 px-3 text-right">Rp1.500.000</td><td class="py-2 px-3 text-right text-gray-400">-</td><td class="py-2 px-3 text-right text-gray-400">-</td><td class="py-2 px-3"><span class="badge bg-amber-50 text-amber-600">Menunggu Laporan</span></td><td class="py-2 px-3 font-mono text-[0.65rem] text-gray-400">-</td></tr>
+              <tr><td class="py-2 px-3 font-mono text-xs">LMS-2026-000021</td><td class="py-2 px-3">Alm. Sumiati<span class="block text-[0.65rem] text-gray-400">Dedi Kurniawan (Anak)</span></td><td class="py-2 px-3">Dina Rahmawati</td><td class="py-2 px-3 text-xs">25 Agu 2026</td><td class="py-2 px-3 text-right">Rp2.000.000</td><td class="py-2 px-3 text-right font-semibold">Rp1.910.000</td><td class="py-2 px-3 text-right text-amber-600">Sisa Rp90.000</td><td class="py-2 px-3"><span class="badge bg-amber-50 text-amber-600">Sisa Dikembalikan</span></td><td class="py-2 px-3 font-mono text-[0.65rem] text-gray-400">dist-3b7d90ac-barzah</td></tr>
+              <tr><td class="py-2 px-3 font-mono text-xs">LMS-2026-000024</td><td class="py-2 px-3">Alm. Abdul Karim<span class="block text-[0.65rem] text-gray-400">Nur Hidayah (Anak)</span></td><td class="py-2 px-3">Fitri Handayani</td><td class="py-2 px-3 text-xs">26 Agu 2026</td><td class="py-2 px-3 text-right">Rp1.200.000</td><td class="py-2 px-3 text-right font-semibold">Rp1.275.000</td><td class="py-2 px-3 text-right text-red-500">Lebih Rp75.000</td><td class="py-2 px-3"><span class="badge bg-red-50 text-red-500">Perlu Verifikasi</span></td><td class="py-2 px-3 font-mono text-[0.65rem] text-gray-400">-</td></tr>
+              <tr><td class="py-2 px-3 font-mono text-xs">LMS-2026-000017</td><td class="py-2 px-3">Alm. Mubar<span class="block text-[0.65rem] text-gray-400">Rina Marlina (Istri)</span></td><td class="py-2 px-3">Eko Prasetyo</td><td class="py-2 px-3 text-xs">22 Agu 2026</td><td class="py-2 px-3 text-right">Rp1.000.000</td><td class="py-2 px-3 text-right font-semibold">Rp998.000</td><td class="py-2 px-3 text-right text-emerald-600">Sisa Rp2.000</td><td class="py-2 px-3"><span class="badge bg-emerald-50 text-emerald-600">Tercatat</span></td><td class="py-2 px-3 font-mono text-[0.65rem] text-gray-400">dist-51c4e7bb-barzah</td></tr>
+              <tr><td class="py-2 px-3 font-mono text-xs">LMS-2026-000012</td><td class="py-2 px-3">Alm. Tatang<span class="block text-[0.65rem] text-gray-400">Yayat (Anak)</span></td><td class="py-2 px-3">Budi Santoso</td><td class="py-2 px-3 text-xs">18 Agu 2026</td><td class="py-2 px-3 text-right">Rp1.500.000</td><td class="py-2 px-3 text-right font-semibold">Rp1.500.000</td><td class="py-2 px-3 text-right text-gray-400">Rp0</td><td class="py-2 px-3"><span class="badge bg-emerald-50 text-emerald-600">Tercatat</span></td><td class="py-2 px-3 font-mono text-[0.65rem] text-gray-400">dist-9ae2f631-barzah</td></tr>
+              <tr><td class="py-2 px-3 font-mono text-xs">LMS-2026-000009</td><td class="py-2 px-3">Alm. N. Saadah<span class="block text-[0.65rem] text-gray-400">Abdul (Suami)</span></td><td class="py-2 px-3">Dina Rahmawati</td><td class="py-2 px-3 text-xs">15 Agu 2026</td><td class="py-2 px-3 text-right">Rp1.200.000</td><td class="py-2 px-3 text-right font-semibold">Rp1.145.000</td><td class="py-2 px-3 text-right text-emerald-600">Sisa Rp55.000</td><td class="py-2 px-3"><span class="badge bg-emerald-50 text-emerald-600">Tercatat</span></td><td class="py-2 px-3 font-mono text-[0.65rem] text-gray-400">dist-c70d15b2-barzah</td></tr>
+              <tr><td class="py-2 px-3 font-mono text-xs">LMS-2026-000006</td><td class="py-2 px-3">Alm. Waridah<span class="block text-[0.65rem] text-gray-400">Imas (Anak)</span></td><td class="py-2 px-3">Eko Prasetyo</td><td class="py-2 px-3 text-xs">11 Agu 2026</td><td class="py-2 px-3 text-right">Rp2.000.000</td><td class="py-2 px-3 text-right font-semibold">Rp2.000.000</td><td class="py-2 px-3 text-right text-gray-400">Rp0</td><td class="py-2 px-3"><span class="badge bg-emerald-50 text-emerald-600">Tercatat</span></td><td class="py-2 px-3 font-mono text-[0.65rem] text-gray-400">dist-44e8ba90-barzah</td></tr>
+              <tr><td class="py-2 px-3 font-mono text-xs">LMS-2026-000004</td><td class="py-2 px-3">Alm. R. Karsih<span class="block text-[0.65rem] text-gray-400">Slamet (Anak)</span></td><td class="py-2 px-3">Fitri Handayani</td><td class="py-2 px-3 text-xs">08 Agu 2026</td><td class="py-2 px-3 text-right">Rp1.500.000</td><td class="py-2 px-3 text-right font-semibold">Rp1.420.000</td><td class="py-2 px-3 text-right text-emerald-600">Sisa Rp80.000</td><td class="py-2 px-3"><span class="badge bg-emerald-50 text-emerald-600">Tercatat</span></td><td class="py-2 px-3 font-mono text-[0.65rem] text-gray-400">dist-6f013ac4-barzah</td></tr>
+              <tr><td class="py-2 px-3 font-mono text-xs">LMS-2026-000002</td><td class="py-2 px-3">Alm. S. Sundari<span class="block text-[0.65rem] text-gray-400">Lilis (Anak)</span></td><td class="py-2 px-3">Budi Santoso</td><td class="py-2 px-3 text-xs">04 Agu 2026</td><td class="py-2 px-3 text-right">Rp1.500.000</td><td class="py-2 px-3 text-right font-semibold">Rp1.395.000</td><td class="py-2 px-3 text-right text-emerald-600">Sisa Rp105.000</td><td class="py-2 px-3"><span class="badge bg-emerald-50 text-emerald-600">Tercatat</span></td><td class="py-2 px-3 font-mono text-[0.65rem] text-gray-400">dist-b2c7e904-barzah</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="flex items-center justify-between mt-3 flex-wrap gap-2">
+          <p class="text-xs text-gray-400">Menampilkan 10 dari 14 baris sesuai filter. Kolom <span class="font-medium text-gray-600">Realisasi</span> = nilai transaksi manfaat di Benefis &mdash; bukan nominal uang muka.</p>
+          <a href="lpm-pencairan-barzah.html" class="text-xs font-medium text-primary hover:underline">Buka rekap Realisasi Uang Muka &rarr;</a>
+        </div>
       </div>
 
     </main>
@@ -262,9 +362,33 @@
     <svg class="h-4 w-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
     <span id="toastMsg"></span>
   </div>
-  <script>
+<script>
     function showToast(msg){ var t=document.getElementById('toast'); document.getElementById('toastMsg').textContent=msg; t.classList.remove('opacity-0','translate-y-4'); t.classList.add('opacity-100','translate-y-0'); clearTimeout(window._tt); window._tt=setTimeout(function(){ t.classList.add('opacity-0','translate-y-4'); t.classList.remove('opacity-100','translate-y-0'); },2200); }
     document.querySelectorAll('button').forEach(function(b){ var t=b.textContent.trim(); if(/Simpan|Cetak|Tandai|Terapkan|Export|Unduh/i.test(t)){ b.addEventListener('click',function(e){ e.preventDefault(); showToast(t+' — berhasil'); }); } });
+  </script>
+
+  <!-- Toggle Layanan: Mustahik vs Barzah -->
+  <script>
+    function gantiLayanan(layanan) {
+      var isBarzah = layanan === 'barzah';
+      var selectJenis = document.getElementById('selectJenis');
+
+      document.getElementById('kpiLamusta').classList.toggle('hidden', isBarzah);
+      document.getElementById('kpiBarzah').classList.toggle('hidden', !isBarzah);
+      document.getElementById('tabelLamusta').classList.toggle('hidden', isBarzah);
+      document.getElementById('tabelBarzah').classList.toggle('hidden', !isBarzah);
+      document.getElementById('filterBarzah1').classList.toggle('hidden', !isBarzah);
+      document.getElementById('filterBarzah2').classList.toggle('hidden', !isBarzah);
+
+      if (isBarzah) {
+        var opsi = ['Rekap Permohonan', 'Realisasi Pencairan', 'Hasil Survei', 'Konseling',
+                    'Realisasi Uang Muka (Barzah)', 'Rekap Delivery Barzah'];
+        if (opsi.indexOf(selectJenis.value) === -1) selectJenis.value = 'Realisasi Uang Muka (Barzah)';
+      } else {
+        var opsiL = ['Rekap Permohonan', 'Realisasi Pencairan', 'Hasil Survei', 'Konseling'];
+        if (opsiL.indexOf(selectJenis.value) === -1) selectJenis.value = 'Rekap Permohonan';
+      }
+    }
   </script>
 
 <script>
@@ -285,3 +409,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+
+
+
