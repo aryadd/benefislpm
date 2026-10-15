@@ -1,23 +1,26 @@
 # SOP Alur Kerja Ajuan Barzah (Layanan Mobil Jenazah)
 
-**Dokumen** : SOP Operasional Barzah
-**Versi** : 2.3 (penamaan bernomor 01-08)
+**Dokumen** : `09-SOP_Alur_Kerja_Ajuan_Barzah.md` — SOP Operasional Barzah
+**Versi** : 2.4 (dokumen dipindahkan ke folder barzah/)
 **Tanggal** : 26 Agustus 2026
 **Berlaku untuk** : LPM Dompet Dhuafa — seluruh cabang
 
-Semua halaman Barzah dikelompokkan di folder **`lpm2/barzah/`**. Penamaan memakai pola: `NN-listing-*` untuk halaman daftar data, `NN-listing-*-form-*` untuk halaman form, `NN-magic-link-*` untuk halaman petugas yang dibuka tanpa login.
+Semua halaman Barzah dikelompokkan di folder **`lpm2/barzah/`** dan diberi nomor sesuai urutan alur. Penamaan memakai pola: `NN-listing-*` untuk halaman daftar data, `NN-listing-*-form-*` untuk halaman form, `NN-magic-link-*` untuk halaman petugas yang dibuka tanpa login, dan dokumen diakhiri nomor.
 
 | # | Halaman | Untuk siapa |
 | --- | --- | --- |
-| 1 | `barzah/01-listing-ajuan.html` | Customer Care — daftar ajuan + tombol **Ajuan Baru** |
-| 2 | `barzah/02-listing-ajuan-form-tambah.html` | Customer Care — form tambah ajuan |
-| 3 | `barzah/03-listing-perintah-delivery.html` | Koordinator — daftar ajuan masuk, tombol Setujui / Tolak |
-| 4 | `barzah/04-listing-perintah-delivery-form-tambah.html` | Koordinator — form perintah delivery + uang muka |
-| 5 | `barzah/05-listing-realisasi.html` | Koordinator — daftar realisasi yang dilaporkan petugas |
-| 6 | `barzah/06-listing-realisasi-form-verifikasi.html` | Koordinator — form verifikasi / persetujuan realisasi |
-| 7 | `barzah/07-magic-link-petugas.html` | Petugas/driver — **tanpa login**, halaman tugas |
-| 8 | `barzah/08-magic-link-petugas-laporan.html` | Petugas/driver — **tanpa login**, form laporan perjalanan |
-| - | `barzah/shared/sidebar-barzah.html` | Sidebar bersama seluruh halaman Barzah |
+| 1 | `01-listing-ajuan.html` | Customer Care — daftar ajuan + tombol **Ajuan Baru** |
+| 2 | `02-listing-ajuan-form-tambah.html` | Customer Care — form tambah ajuan |
+| 3 | `03-listing-perintah-delivery.html` | Koordinator — daftar ajuan masuk, tombol Setujui / Tolak |
+| 4 | `04-listing-perintah-delivery-form-tambah.html` | Koordinator — form perintah delivery + uang muka |
+| 5 | `05-listing-realisasi.html` | Koordinator — daftar realisasi yang dilaporkan petugas |
+| 6 | `06-listing-realisasi-form-verifikasi.html` | Koordinator — form verifikasi / persetujuan realisasi |
+| 7 | `07-magic-link-petugas.html` | Petugas/driver — **tanpa login**, halaman tugas |
+| 8 | `08-magic-link-petugas-laporan.html` | Petugas/driver — **tanpa login**, form laporan perjalanan |
+| 9 | `09-SOP_Alur_Kerja_Ajuan_Barzah.md` | Dokumen ini |
+| - | `shared/sidebar-barzah.html` | Sidebar bersama seluruh halaman Barzah |
+
+Seluruh path di dalam dokumen ini relatif terhadap folder ``.
 
 Aturan pemisahan: setiap halaman `NN-listing-*` **tidak** memuat form. Aksi pada tabel selalu membuka halaman `*-form-*` atau `magic-link-*` tersendiri lewat query string, misalnya `04-listing-perintah-delivery-form-tambah.html?no=LMS-2026-000026` atau `06-listing-realisasi-form-verifikasi.html?no=LMS-2026-000023&mode=verifikasi`.
 
@@ -45,8 +48,8 @@ Nominal uang muka keluar saat perintah dikirim, tetapi **nilai manfaat di Benefi
 
 ## 2. Langkah 1 & 2 — Ajuan Baru dari Customer Care
 
-1. Buka `barzah/01-listing-ajuan.html`, klik tombol **+ Ajuan Baru**.
-2. Pergi ke `barzah/02-listing-ajuan-form-tambah.html` untuk mengisi detail.
+1. Buka `01-listing-ajuan.html`, klik tombol **+ Ajuan Baru**.
+2. Pergi ke `02-listing-ajuan-form-tambah.html` untuk mengisi detail.
 3. Klik **Simpan & Kirim ke Koordinator**. Status ajuan menjadi **Ajuan Masuk**.
 
 ### Field intake
@@ -71,7 +74,7 @@ Sebelum simpan, **cek duplikasi** NIK jenazah / No. KK pelapor ke data-benefisi 
 
 ## 3. Langkah 3 — Perintah Delivery (Koordinator)
 
-Buka `barzah/03-listing-perintah-delivery.html`. Halaman ini adalah **daftar ajuan yang masuk**, bukan satu dokumen.
+Buka `03-listing-perintah-delivery.html`. Halaman ini adalah **daftar ajuan yang masuk**, bukan satu dokumen.
 
 ### 3.1 Status yang terlihat
 
@@ -85,7 +88,7 @@ Buka `barzah/03-listing-perintah-delivery.html`. Halaman ini adalah **daftar aju
 
 ### 3.2 Klik Setujui
 
-Tombol **Setujui** membuka halaman baru `barzah/04-listing-perintah-delivery-form-tambah.html` (form tidak digabung di halaman daftar). Nomor ajuan diteruskan lewat query string, misalnya `04-listing-perintah-delivery-form-tambah.html?no=LMS-2026-000026`. Form terdiri atas dua bagian:
+Tombol **Setujui** membuka halaman baru `04-listing-perintah-delivery-form-tambah.html` (form tidak digabung di halaman daftar). Nomor ajuan diteruskan lewat query string, misalnya `04-listing-perintah-delivery-form-tambah.html?no=LMS-2026-000026`. Form terdiri atas dua bagian:
 
 **A. Delivery**
 
@@ -118,7 +121,7 @@ Tombol **Tolak** meminta alasan (data tidak lengkap / dokumen tidak valid / mele
 
 ---
 
-## 4. Langkah 4 — Halaman Petugas (`barzah/07-magic-link-petugas.html`)
+## 4. Langkah 4 — Halaman Petugas (`07-magic-link-petugas.html`)
 
 Petugas membuka magic link **tanpa login**. Isi halaman: data jenazah, pelapor + nomor HP, rute jemput ke tujuan, waktu keberangkatan, nominal uang muka yang diterima, dan catatan Koordinator.
 
@@ -127,13 +130,13 @@ Stepper: Diterima → Perjalanan → Laporan.
 | Tombol | Aksi |
 | --- | --- |
 | **Terima Delivery** | Mengambil tugas. Status berubah dari Menunggu menjadi **Dalam Perjalanan**. Tombol berganti menjadi "Selesai Perjalanan" |
-| **Selesai Perjalanan** | Menandai perjalanan selesai dan memunculkan tombol **Isi Laporan Perjalanan** yang menuju `barzah/08-magic-link-petugas-laporan.html` |
+| **Selesai Perjalanan** | Menandai perjalanan selesai dan memunculkan tombol **Isi Laporan Perjalanan** yang menuju `08-magic-link-petugas-laporan.html` |
 
 Magic link bersifat sekali pakai dan punya masa berlaku.
 
 ---
 
-## 5. Langkah 5 — Laporan Perjalanan (`barzah/08-magic-link-petugas-laporan.html`)
+## 5. Langkah 5 — Laporan Perjalanan (`08-magic-link-petugas-laporan.html`)
 
 Halaman ini diisi petugas, juga tanpa login.
 
@@ -155,7 +158,7 @@ Aturan main:
 
 ## 6. Rekap & Laporan Uang
 
-`barzah/05-listing-realisasi.html` menampilkan rekap per perjalanan: uang muka, realisasi, sisa atau selisih, batas laporan, status, dan `distribution_uuid`. KPI: total uang muka, total realisasi, sisa belum dikembalikan, selisih lebih.
+`05-listing-realisasi.html` menampilkan rekap per perjalanan: uang muka, realisasi, sisa atau selisih, batas laporan, status, dan `distribution_uuid`. KPI: total uang muka, total realisasi, sisa belum dikembalikan, selisih lebih.
 
 `lpm-export-laporan.html`: pilih **Layanan = Barzah (Mobil Jenazah)**, Jenis Laporan *Realisasi Uang Muka (Barzah)* atau *Rekap Delivery Barzah*.
 
