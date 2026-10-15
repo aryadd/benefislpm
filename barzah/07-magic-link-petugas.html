@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tugas Delivery Barzah | Benefis LPM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: { DEFAULT: '#2B7F75', light: '#EAF4F1' },
+      },
+      fontFamily: { sans: ['Inter', 'sans-serif'] },
+    }
+  }
+}
+</script>
+<style>
+body { font-family: 'Inter', sans-serif; }
+.info-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 0.55rem 0; border-bottom: 1px solid #f3f4f6; }
+.info-row:last-child { border-bottom: none; }
+.info-key { font-size: 0.8125rem; color: #6b7280; min-width: 7.5rem; }
+.info-val { font-size: 0.8125rem; color: #1f2937; font-weight: 500; text-align: right; }
+.status-badge { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.25rem 0.7rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+.status-badge.menunggu { background: #fef3c7; color: #92400e; }
+.status-badge.perjalanan { background: #dbeafe; color: #1e40af; }
+.status-badge.selesai { background: #d1fae5; color: #065f46; }
+.step-dot { width: 2rem; height: 2rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; background: #e5e7eb; color: #6b7280; }
+.step-dot.active { background: #2B7F75; color: #fff; }
+.step-dot.done { background: #d1fae5; color: #065f46; }
+.step-line { width: 2px; height: 1.75rem; background: #e5e7eb; margin: 0.25rem 0 0.25rem 0.9375rem; }
+.toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translate-y-4; background: #059669; color: #fff; font-size: 0.875rem; padding: 0.75rem 1.25rem; border-radius: 0.75rem; box-shadow: 0 8px 24px rgba(0,0,0,0.18); opacity: 0; transition: all 0.3s; z-index: 60; }
+.toast.show { opacity: 1; transform: translateX(-50%) translate-y-0; }
+</style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen">
+
+<!-- ==================== HEADER ==================== -->
+<header class="bg-white border-b border-gray-200">
+  <div class="max-w-2xl mx-auto px-4 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <img src="../../logo.webp" alt="Benefis" class="h-7 w-auto"/>
+      <span class="text-lg font-bold text-gray-900">Benefis</span>
+    </div>
+    <span class="status-badge menunggu" id="badgeStatus">Menunggu</span>
+  </div>
+</header>
+
+<main class="max-w-2xl mx-auto px-4 py-6 pb-28">
+
+  <!-- Judul -->
+  <div class="mb-5">
+    <p class="text-xs text-gray-400">Tugas Delivery Mobil Jenazah</p>
+    <h1 class="text-xl font-bold text-gray-900 mt-0.5" id="noAjuan">LMS-2026-000023</h1>
+    <p class="text-sm text-gray-500 mt-1">Anda membuka halaman ini lewat magic link, tanpa perlu login.</p>
+  </div>
+
+  <!-- Stepper -->
+  <div class="bg-white border border-gray-200 rounded-xl p-4 mb-4">
+    <div class="flex items-center">
+      <div class="flex flex-col items-center">
+        <div class="step-dot active" id="dot1">1</div>
+        <div class="text-[0.65rem] font-medium text-gray-700 mt-1">Diterima</div>
+      </div>
+      <div class="step-line" id="line1"></div>
+      <div class="flex flex-col items-center">
+        <div class="step-dot" id="dot2">2</div>
+        <div class="text-[0.65rem] font-medium text-gray-700 mt-1">Perjalanan</div>
+      </div>
+      <div class="step-line" id="line2"></div>
+      <div class="flex flex-col items-center">
+        <div class="step-dot" id="dot3">3</div>
+        <div class="text-[0.65rem] font-medium text-gray-700 mt-1">Laporan</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Data pelapor -->
+  <div class="bg-white border border-gray-200 rounded-xl p-4 mb-4">
+    <h2 class="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Data Jenazah &amp; Pelapor</h2>
+    <div class="info-row"><span class="info-key">Nama Jenazah</span><span class="info-val">Alm. H. Ahmad</span></div>
+    <div class="info-row"><span class="info-key">Jenis Kelamin</span><span class="info-val">Laki-laki, 72 tahun</span></div>
+    <div class="info-row"><span class="info-key">Penyebab</span><span class="info-val">Lanjut usia</span></div>
+    <div class="info-row"><span class="info-key">Pelapor</span><span class="info-val">Siti Aminah (Istri)</span></div>
+    <div class="info-row"><span class="info-key">No. HP</span><span class="info-val font-mono">0812-3456-7890</span></div>
+  </div>
+
+  <!-- Rute -->
+  <div class="bg-white border border-gray-200 rounded-xl p-4 mb-4">
+    <h2 class="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Rute</h2>
+    <div class="info-row"><span class="info-key">Lokasi Jemput</span><span class="info-val">Jl. Mawar 12, Cempaka Putih, Jakarta Pusat</span></div>
+    <div class="info-row"><span class="info-key">Lokasi Tujuan</span><span class="info-val">RS Hermina Jatinegara, Jl. Balai Pustaka, Jakarta Timur</span></div>
+    <div class="info-row"><span class="info-key">Waktu Berangkat</span><span class="info-val">26 Agu 2026, 08:30</span></div>
+    <div class="info-row"><span class="info-key">Estimasi Tiba</span><span class="info-val">26 Agu 2026, 09:30</span></div>
+  </div>
+
+  <!-- Uang muka -->
+  <div class="bg-white border border-gray-200 rounded-xl p-4 mb-4">
+    <h2 class="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Uang Muka Perjalanan</h2>
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm text-gray-500">Nominal diterima</span>
+      <span class="text-lg font-bold text-gray-900">Rp 1.500.000</span>
+    </div>
+    <div class="info-row"><span class="info-key">Metode</span><span class="info-val">Tunai</span></div>
+    <div class="info-row"><span class="info-key">Batas laporan</span><span class="info-val">29 Agu 2026</span></div>
+    <p class="mt-2 text-[0.7rem] text-gray-400 leading-relaxed">Uang muka hanya untuk ongkos perjalanan. Laporan rincian pemakaian wajib diisi setelah perjalanan selesai; sisa dikembalikan ke Koordinator.</p>
+  </div>
+
+  <!-- Catatan -->
+  <div class="bg-white border border-gray-200 rounded-xl p-4 mb-4">
+    <h2 class="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Catatan Koordinator</h2>
+    <p class="text-sm text-gray-700">Hubungi pelapor sebelum berangkat. Jenazah sudah di ruang доста, minta bantuan tim rumah sakit.</p>
+  </div>
+
+</main>
+
+<!-- ==================== ACTION BAR ==================== -->
+<div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-3 z-50">
+  <div class="max-w-2xl mx-auto flex gap-2">
+    <button id="btnTerima" onclick="terimaDelivery()" class="flex-1 px-5 py-3 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary/90 transition shadow-sm">
+      Terima Delivery
+    </button>
+    <button id="btnSelesai" onclick="selesaiPerjalanan()" class="hidden flex-1 px-5 py-3 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition shadow-sm">
+      Selesai Perjalanan
+    </button>
+    <a id="btnLaporan" href="08-magic-link-petugas-laporan.html" class="hidden flex-1 px-5 py-3 bg-emerald-600 text-white text-sm font-semibold rounded-lg hover:bg-emerald-700 transition shadow-sm text-center">
+      Isi Laporan Perjalanan
+    </a>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._t);
+  window._t = setTimeout(function() { t.classList.remove('show'); }, 2500);
+}
+
+// Ambil no. ajuan dari query string magic link
+var params = new URLSearchParams(window.location.search);
+var token = params.get('token') || '';
+if (token) {
+  var no = token.split('-').slice(0, 4).join('-').toUpperCase();
+  if (no.indexOf('LMS') === 0) document.getElementById('noAjuan').textContent = no;
+}
+
+function terimaDelivery() {
+  var btn = document.getElementById('btnTerima');
+  btn.disabled = true;
+  btn.className = 'flex-1 px-5 py-3 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg cursor-not-allowed';
+  btn.textContent = 'Delivery Diterima';
+
+  document.getElementById('btnSelesai').classList.remove('hidden');
+
+  var badge = document.getElementById('badgeStatus');
+  badge.className = 'status-badge perjalanan';
+  badge.textContent = 'Dalam Perjalanan';
+
+  document.getElementById('dot1').className = 'step-dot done';
+  document.getElementById('line1').className = 'step-line';
+  document.getElementById('dot2').className = 'step-dot active';
+
+  showToast('Status diubah: Dalam Perjalanan');
+}
+
+function selesaiPerjalanan() {
+  document.getElementById('btnSelesai').classList.add('hidden');
+  document.getElementById('btnLaporan').classList.remove('hidden');
+
+  var badge = document.getElementById('badgeStatus');
+  badge.className = 'status-badge menunggu';
+  badge.textContent = 'Menunggu Persetujuan';
+
+  document.getElementById('dot2').className = 'step-dot done';
+  document.getElementById('dot3').className = 'step-dot active';
+
+  showToast('Isi laporan perjalanan, lalu tunggu persetujuan Koordinator.');
+}
+</script>
+</body>
+</html>

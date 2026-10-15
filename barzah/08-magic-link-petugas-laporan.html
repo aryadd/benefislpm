@@ -1,0 +1,480 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laporan Perjalanan - LMS-2026-000023 | Benefis LPM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: { DEFAULT: '#2B7F75', light: '#EAF4F1' },
+      },
+      fontFamily: { sans: ['Inter', 'sans-serif'] },
+    }
+  }
+}
+</script>
+<style>
+body { font-family: 'Inter', sans-serif; }
+
+/* Form */
+.form-label { display: block; font-size: 0.8125rem; font-weight: 500; color: #374151; margin-bottom: 0.25rem; }
+.form-input, .form-select { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem; color: #1f2937; background: #fff; transition: border-color 0.15s; }
+.form-input:focus, .form-select:focus { outline: none; border-color: #2B7F75; box-shadow: 0 0 0 2px rgba(43,127,117,0.15); }
+.input-readonly { background: #f9fafb; color: #6b7280; cursor: default; }
+
+/* Cards */
+.section-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.25rem; margin-bottom: 1rem; }
+.section-title { font-size: 0.9375rem; font-weight: 600; color: #1f2937; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+.step-badge { display: flex; align-items: center; justify-content: center; width: 1.25rem; height: 1.25rem; border-radius: 9999px; background: #2B7F75; color: #fff; font-size: 0.625rem; font-weight: 700; flex-shrink: 0; }
+
+/* Table */
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
+.data-table thead th { text-align: left; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; padding: 0.5rem 0.625rem; border-bottom: 1px solid #e5e7eb; background: #f9fafb; }
+.data-table tbody td { padding: 0.5rem 0.625rem; border-bottom: 1px solid #f3f4f6; vertical-align: middle; }
+.data-table .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.data-table tfoot td { padding: 0.625rem; border-top: 2px solid #e5e7eb; font-weight: 700; color: #1f2937; background: #f9fafb; }
+
+/* Info rows */
+.info-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 0.4rem 0; border-bottom: 1px solid #f3f4f6; }
+.info-row:last-child { border-bottom: none; }
+.info-key { font-size: 0.8125rem; color: #6b7280; min-width: 7.5rem; }
+.info-val { font-size: 0.8125rem; color: #1f2937; font-weight: 500; text-align: right; }
+
+.status-badge { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 500; white-space: nowrap; }
+.status-badge.selesai { background: #d1fae5; color: #065f46; }
+.status-badge.menunggu { background: #fef3c7; color: #92400e; }
+.status-badge.perjalanan { background: #dbeafe; color: #1e40af; }
+
+.toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translate-y-4; background: #059669; color: #fff; font-size: 0.875rem; padding: 0.75rem 1.25rem; border-radius: 0.75rem; box-shadow: 0 8px 24px rgba(0,0,0,0.18); opacity: 0; transition: all 0.3s; z-index: 60; }
+.toast.show { opacity: 1; transform: translateX(-50%) translate-y-0; }
+.toast.error { background: #dc2626; }
+</style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen">
+
+<!-- ==================== HEADER ==================== -->
+<header class="bg-white border-b border-gray-200">
+  <div class="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <img src="../../logo.webp" alt="Benefis" class="h-7 w-auto"/>
+      <span class="text-lg font-bold text-gray-900">Benefis</span>
+    </div>
+    <span class="status-badge perjalanan" id="badgeStatus">Dalam Perjalanan</span>
+  </div>
+</header>
+
+<main class="max-w-3xl mx-auto px-4 py-6">
+
+  <!-- Judul -->
+  <div class="mb-5">
+    <p class="text-xs text-gray-400">Laporan Perjalanan &amp; Realisasi Uang Muka</p>
+    <h1 class="text-xl font-bold text-gray-900 mt-0.5" id="noAjuan">LMS-2026-000023</h1>
+    <p class="text-sm text-gray-500 mt-1">Isi rincian biaya yang benar-benar terpakai. Nilai ini yang dicatat sebagai transaksi manfaat.</p>
+  </div>
+
+  <div id="panelForm">
+
+    <!-- 1. Info perjalanan -->
+    <div class="section-card">
+      <div class="section-title">
+        <span class="step-badge">1</span>
+        Info Perjalanan
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div>
+          <label class="form-label">Waktu Tiba <span class="text-red-500">*</span></label>
+          <input type="datetime-local" class="form-input" id="waktuTiba"/>
+        </div>
+        <div>
+          <label class="form-label">Kendala</label>
+          <input type="text" class="form-input" id="kendala" placeholder="Contoh: macet, akses jalan sempit"/>
+        </div>
+        <div class="md:col-span-2">
+          <label class="form-label">Catatan Perjalanan</label>
+          <textarea class="form-input" id="catatan" rows="2" placeholder="Kondisi jenazah, permintaan bantuan, hal penting lain."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Rincian biaya -->
+    <div class="section-card">
+      <div class="section-title">
+        <span class="step-badge">2</span>
+        Rincian Biaya Terpakai
+      </div>
+      <p class="text-sm text-gray-500 mb-4">Total baris ini menjadi nilai transaksi manfaat di Benefis.</p>
+
+      <div class="overflow-x-auto -mx-1 px-1">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width:2.5rem;">#</th>
+              <th>Kategori Biaya</th>
+              <th class="num" style="width:9rem;">Nominal (Rp)</th>
+              <th>Keterangan</th>
+              <th style="width:2.5rem;"></th>
+            </tr>
+          </thead>
+          <tbody id="rincianBody">
+            <tr data-baris>
+              <td class="text-xs text-gray-400">1</td>
+              <td>
+                <select class="form-select">
+                  <option>BBM / Transportasi Mobil</option>
+                  <option>Tol &amp; Parkir</option>
+                  <option>Ojol / Angkut Jenazah</option>
+                  <option>Layanan Jenazah (Pemandian &amp; Kebersihan)</option>
+                  <option>Perlengkapan Jenazah (Kain Kaffan, Kapas, dst)</option>
+                  <option>Adhkarial / PAB</option>
+                  <option>Honor Petugas &amp; Tim</option>
+                  <option>Lain-lain</option>
+                </select>
+              </td>
+              <td>
+                <div class="relative">
+                  <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-gray-400 font-medium">Rp</span>
+                  <input type="text" data-nominal class="form-input pl-8 text-right" value="185.000" oninput="hitungRealisasi()" onblur="formatNominal(this)"/>
+                </div>
+              </td>
+              <td><input type="text" class="form-input" placeholder="Contoh: 2x refill Pertalite"/></td>
+              <td><button type="button" onclick="hapusBaris(this)" class="text-red-400 hover:text-red-600 text-xs">&#10005;</button></td>
+            </tr>
+            <tr data-baris>
+              <td class="text-xs text-gray-400">2</td>
+              <td>
+                <select class="form-select">
+                  <option>BBM / Transportasi Mobil</option>
+                  <option selected>Tol &amp; Parkir</option>
+                  <option>Ojol / Angkut Jenazah</option>
+                  <option>Layanan Jenazah (Pemandian &amp; Kebersihan)</option>
+                  <option>Perlengkapan Jenazah (Kain Kaffan, Kapas, dst)</option>
+                  <option>Adhkarial / PAB</option>
+                  <option>Honor Petugas &amp; Tim</option>
+                  <option>Lain-lain</option>
+                </select>
+              </td>
+              <td>
+                <div class="relative">
+                  <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-gray-400 font-medium">Rp</span>
+                  <input type="text" data-nominal class="form-input pl-8 text-right" value="35.000" oninput="hitungRealisasi()" onblur="formatNominal(this)"/>
+                </div>
+              </td>
+              <td><input type="text" class="form-input" placeholder="Contoh: tol masuk RS + 2 jam"/></td>
+              <td><button type="button" onclick="hapusBaris(this)" class="text-red-400 hover:text-red-600 text-xs">&#10005;</button></td>
+            </tr>
+            <tr data-baris>
+              <td class="text-xs text-gray-400">3</td>
+              <td>
+                <select class="form-select">
+                  <option>Layanan Jenazah (Pemandian &amp; Kebersihan)</option>
+                  <option>BBM / Transportasi Mobil</option>
+                  <option>Tol &amp; Parkir</option>
+                  <option>Ojol / Angkut Jenazah</option>
+                  <option>Perlengkapan Jenazah (Kain Kaffan, Kapas, dst)</option>
+                  <option>Adhkarial / PAB</option>
+                  <option>Honor Petugas &amp; Tim</option>
+                  <option>Lain-lain</option>
+                </select>
+              </td>
+              <td>
+                <div class="relative">
+                  <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-gray-400 font-medium">Rp</span>
+                  <input type="text" data-nominal class="form-input pl-8 text-right" value="950.000" oninput="hitungRealisasi()" onblur="formatNominal(this)"/>
+                </div>
+              </td>
+              <td><input type="text" class="form-input" value="Transfer ke tim pemandian jenazah"/></td>
+              <td><button type="button" onclick="hapusBaris(this)" class="text-red-400 hover:text-red-600 text-xs">&#10005;</button></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2" class="num">Total Realisasi</td>
+              <td class="num" id="totalRealisasi">Rp 1.170.000</td>
+              <td colspan="2" class="text-[0.7rem] font-normal text-gray-400">Otomatis dari jumlah baris</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <button type="button" onclick="tambahBaris()" class="mt-3 flex items-center gap-1.5 text-xs font-medium text-primary border border-primary/30 rounded-lg px-3 py-1.5 hover:bg-primary-light transition">
+        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+        Tambah Baris
+      </button>
+    </div>
+
+    <!-- 3. Sisa uang muka -->
+    <div class="section-card">
+      <div class="section-title">
+        <span class="step-badge">3</span>
+        Uang Muka
+      </div>
+      <div class="grid grid-cols-3 gap-3 mb-4">
+        <div class="p-3 rounded-lg bg-gray-50 border border-gray-100">
+          <div class="text-[0.65rem] uppercase tracking-wide text-gray-400 font-semibold">Diterima</div>
+          <div class="text-base font-bold text-gray-900 mt-0.5">Rp 1.500.000</div>
+        </div>
+        <div class="p-3 rounded-lg bg-gray-50 border border-gray-100">
+          <div class="text-[0.65rem] uppercase tracking-wide text-gray-400 font-semibold">Terpakai</div>
+          <div class="text-base font-bold text-primary mt-0.5" id="boxRealisasi">Rp 1.170.000</div>
+        </div>
+        <div class="p-3 rounded-lg bg-gray-50 border border-gray-100">
+          <div class="text-[0.65rem] uppercase tracking-wide text-gray-400 font-semibold" id="labelSisa">Sisa Dikembalikan</div>
+          <div class="text-base font-bold text-emerald-600 mt-0.5" id="boxSisa">Rp 330.000</div>
+        </div>
+      </div>
+
+      <div class="hidden" id="blokSelisihLebih">
+        <div class="p-3 rounded-lg bg-red-50 border border-red-200 mb-3">
+          <p class="text-xs font-semibold text-red-700">Realisasi melebihi uang muka</p>
+          <p class="text-xs text-red-600 mt-0.5">Wajib disertai alasan. Koordinator akan memverifikasi sebelum transaksi dicatat.</p>
+        </div>
+        <div>
+          <label class="form-label">Alasan <span class="text-red-500">*</span></label>
+          <textarea class="form-input" id="alasanLebih" rows="2" placeholder="Contoh: biaya tidak terprediksi, bukti nota terlampir"></textarea>
+        </div>
+      </div>
+
+      <div id="blokPengembalian">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div>
+            <label class="form-label">Tanggal Kembalikan Sisa</label>
+            <input type="date" class="form-input" id="tanggalKembali" value="2026-08-26"/>
+          </div>
+          <div>
+            <label class="form-label">Metode Pengembalian</label>
+            <select class="form-select">
+              <option>Tunai ke Koordinator</option>
+              <option>Transfer ke rekening LPM</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Bukti -->
+    <div class="section-card">
+      <div class="section-title">
+        <span class="step-badge">4</span>
+        Bukti
+      </div>
+      <div class="space-y-2">
+        <div class="flex items-center gap-3 p-3 border border-dashed border-gray-200 rounded-lg bg-gray-50/50">
+          <div class="h-9 w-9 rounded-lg bg-primary-light flex items-center justify-center flex-shrink-0">
+            <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+          </div>
+          <div class="flex-1">
+            <p class="text-sm font-medium text-gray-700">Nota / kuitansi pengeluaran</p>
+            <p class="text-xs text-gray-400">JPG/PNG/PDF &middot; maks 5 MB</p>
+          </div>
+          <label class="flex items-center gap-1.5 text-xs font-medium text-primary cursor-pointer border border-primary/30 rounded-md px-3 py-1.5 bg-primary-light">
+            Unggah
+            <input type="file" class="hidden" accept=".jpg,.jpeg,.png,.pdf" onchange="tandaiBukti(this)"/>
+          </label>
+        </div>
+        <div class="flex items-center gap-3 p-3 border border-dashed border-gray-200 rounded-lg bg-gray-50/50">
+          <div class="h-9 w-9 rounded-lg bg-primary-light flex items-center justify-center flex-shrink-0">
+            <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+          </div>
+          <div class="flex-1">
+            <p class="text-sm font-medium text-gray-700">Bukti serah terima jenazah</p>
+            <p class="text-xs text-gray-400">Foto bersama pelapor atau petugas tujuan</p>
+          </div>
+          <label class="flex items-center gap-1.5 text-xs font-medium text-primary cursor-pointer border border-primary/30 rounded-md px-3 py-1.5 bg-primary-light">
+            Unggah
+            <input type="file" class="hidden" accept=".jpg,.jpeg,.png,.pdf" onchange="tandaiBukti(this)"/>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Aksi -->
+    <div class="flex items-center justify-between py-1">
+      <a href="07-magic-link-petugas.html" class="text-sm text-gray-400 hover:text-gray-600 transition-colors">&larr; Kembali ke tugas</a>
+      <button type="button" onclick="kirimLaporan()" class="px-5 py-3 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary/90 transition shadow-sm">Kirim Laporan</button>
+    </div>
+
+  </div>
+
+  <!-- ==================== PANEL SUKSES ==================== -->
+  <div id="panelSelesai" style="display:none;">
+    <div class="bg-white border border-gray-200 rounded-xl p-6 text-center">
+      <div class="w-14 h-14 rounded-full bg-emerald-50 flex items-center justify-center mx-auto mb-3">
+        <svg class="w-7 h-7 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <h2 class="text-lg font-bold text-gray-900">Laporan terkirim</h2>
+      <p class="text-sm text-gray-500 mt-1">Status ajuan menjadi <span class="font-semibold text-gray-700">Menunggu Persetujuan</span>. Koordinator memverifikasi sebelum transaksi dicatat.</p>
+
+      <div class="mt-5 text-left space-y-0 max-w-sm mx-auto">
+        <div class="info-row"><span class="info-key">No. Ajuan</span><span class="info-val font-mono">LMS-2026-000023</span></div>
+        <div class="info-row"><span class="info-key">Uang Muka</span><span class="info-val">Rp 1.500.000</span></div>
+        <div class="info-row"><span class="info-key">Realisasi</span><span class="info-val" id="hasilRealisasi">Rp 1.170.000</span></div>
+        <div class="info-row"><span class="info-key">Sisa dikembalikan</span><span class="info-val" id="hasilSisa">Rp 330.000</span></div>
+        <div class="info-row"><span class="info-key">Nilai transaksi</span><span class="info-val font-semibold text-primary" id="hasilTransaksi">Rp 1.170.000</span></div>
+      </div>
+
+      <p class="text-xs text-gray-400 mt-4">Nilai transaksi di Benefis mengikuti realisasi terpakai, bukan nominal uang muka. Sisa uang muka menunggu verifikasi Koordinator.</p>
+
+      <div class="flex flex-col sm:flex-row gap-2 justify-center mt-5">
+        <a href="07-magic-link-petugas.html" class="px-4 py-2.5 border border-gray-300 text-gray-600 text-sm font-medium rounded-lg hover:bg-gray-50 transition">Kembali ke tugas</a>
+        <a href="../index.html" class="px-4 py-2.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/90 transition">Tutup</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var MUKA = 1500000;
+var barisCounter = 3;
+
+function fmtRp(n) { return 'Rp ' + n.toLocaleString('id-ID'); }
+
+function parseNominal(el) {
+  return parseInt(String(el.value).replace(/[^0-9]/g, ''), 10) || 0;
+}
+
+function formatNominal(el) {
+  var pos = el.selectionStart;
+  var digits = String(el.value).replace(/[^0-9]/g, '');
+  el.value = digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  if (pos !== null) el.setSelectionRange(pos, pos);
+  hitungRealisasi();
+}
+
+function totalRealisasi() {
+  var total = 0;
+  document.querySelectorAll('#rincianBody input[data-nominal]').forEach(function(inp) {
+    total += parseNominal(inp);
+  });
+  return total;
+}
+
+function hitungRealisasi() {
+  var total = totalRealisasi();
+  var sisa = MUKA - total;
+
+  document.getElementById('totalRealisasi').textContent = fmtRp(total);
+  document.getElementById('boxRealisasi').textContent = fmtRp(total);
+
+  var label = document.getElementById('labelSisa');
+  var box = document.getElementById('boxSisa');
+  var lebih = document.getElementById('blokSelisihLebih');
+  var kembali = document.getElementById('blokPengembalian');
+
+  if (sisa >= 0) {
+    label.textContent = 'Sisa Dikembalikan';
+    box.textContent = fmtRp(sisa);
+    box.className = 'text-base font-bold text-emerald-600 mt-0.5';
+    lebih.classList.add('hidden');
+    kembali.classList.remove('hidden');
+  } else {
+    label.textContent = 'Selisih Lebih';
+    box.textContent = fmtRp(Math.abs(sisa));
+    box.className = 'text-base font-bold text-red-600 mt-0.5';
+    lebih.classList.remove('hidden');
+    kembali.classList.add('hidden');
+  }
+}
+
+function tambahBaris() {
+  barisCounter++;
+  var tr = document.createElement('tr');
+  tr.setAttribute('data-baris', '');
+  var opsi = ['BBM / Transportasi Mobil', 'Tol &amp; Parkir', 'Ojol / Angkut Jenazah',
+              'Layanan Jenazah (Pemandian &amp; Kebersihan)', 'Perlengkapan Jenazah (Kain Kaffan, Kapas, dst)',
+              'Adhkarial / PAB',
+              'Honor Petugas &amp; Tim', 'Lain-lain'];
+  var inner = '<option>' + opsi[0] + '</option>';
+  for (var i = 1; i < opsi.length; i++) inner += '<option>' + opsi[i] + '</option>';
+  tr.innerHTML =
+    '<td class="text-xs text-gray-400">' + barisCounter + '</td>' +
+    '<td><select class="form-select">' + inner + '</select></td>' +
+    '<td><div class="relative"><span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-gray-400 font-medium">Rp</span>' +
+    '<input type="text" data-nominal class="form-input pl-8 text-right" value="0" oninput="hitungRealisasi()" onblur="formatNominal(this)"/></div></td>' +
+    '<td><input type="text" class="form-input" placeholder="Opsional"/></td>' +
+    '<td><button type="button" onclick="hapusBaris(this)" class="text-red-400 hover:text-red-600 text-xs">&#10005;</button></td>';
+  document.getElementById('rincianBody').appendChild(tr);
+  hitungRealisasi();
+}
+
+function hapusBaris(btn) {
+  var rows = document.querySelectorAll('#rincianBody tr[data-baris]');
+  if (rows.length <= 1) {
+    showToast('Minimal satu baris rincian.', true);
+    return;
+  }
+  btn.closest('tr[data-baris]').remove();
+  var nomor = document.querySelectorAll('#rincianBody tr[data-baris]').length;
+  barisCounter = nomor;
+  document.querySelectorAll('#rincianBody tr[data-baris] td:first-child').forEach(function(td, i) {
+    td.textContent = i + 1;
+  });
+  hitungRealisasi();
+}
+
+function tandaiBukti(input) {
+  if (!input.files.length) return;
+  input.closest('.flex').querySelector('p').textContent = input.files[0].name;
+  showToast('Lampiran terunggah.');
+}
+
+function showToast(msg, error) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (error ? ' error' : '');
+  t.classList.add('show');
+  clearTimeout(window._t);
+  window._t = setTimeout(function() { t.classList.remove('show'); }, 2500);
+}
+
+function kirimLaporan() {
+  if (!document.getElementById('waktuTiba').value) {
+    showToast('Isi waktu tiba terlebih dahulu.', true);
+    return;
+  }
+  var total = totalRealisasi();
+  if (total <= 0) {
+    showToast('Isi rincian biaya yang terpakai.', true);
+    return;
+  }
+  if (total > MUKA && !document.getElementById('alasanLebih').value.trim()) {
+    showToast('Selisih lebih wajib disertai alasan.', true);
+    return;
+  }
+
+  var sisa = MUKA - total;
+  document.getElementById('hasilRealisasi').textContent = fmtRp(total);
+  document.getElementById('hasilTransaksi').textContent = fmtRp(total);
+  document.getElementById('hasilSisa').textContent = sisa >= 0 ? fmtRp(sisa) : fmtRp(0);
+
+  var badge = document.getElementById('badgeStatus');
+  badge.className = 'status-badge menunggu';
+  badge.textContent = 'Menunggu Persetujuan';
+
+  document.getElementById('panelForm').style.display = 'none';
+  document.getElementById('panelSelesai').style.display = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// init
+document.addEventListener('DOMContentLoaded', function() {
+  var params = new URLSearchParams(window.location.search);
+  var token = params.get('token') || '';
+  if (token) {
+    var no = token.split('-').slice(0, 4).join('-').toUpperCase();
+    if (no.indexOf('LMS') === 0) document.getElementById('noAjuan').textContent = no;
+  }
+  hitungRealisasi();
+});
+</script>
+</body>
+</html>

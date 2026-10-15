@@ -1,0 +1,523 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perintah Delivery - Layanan Barzah | Benefis LPM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: { DEFAULT: '#2B7F75', light: '#EAF4F1' },
+      },
+      fontFamily: { sans: ['Inter', 'sans-serif'] },
+    }
+  }
+}
+</script>
+<style>
+body { font-family: 'Inter', sans-serif; }
+
+/* Sidebar */
+.sidebar-link { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; border-radius: 0.375rem; color: #4b5563; font-size: 0.875rem; font-weight: 400; transition: all 0.15s; cursor: pointer; text-decoration: none; }
+.sidebar-link:hover { background: #EAF4F1; color: #2B7F75; }
+.sidebar-link.active { background: #2B7F75; color: #fff; font-weight: 500; }
+
+/* Form */
+.form-label { display: block; font-size: 0.8125rem; font-weight: 500; color: #374151; margin-bottom: 0.25rem; }
+.form-input, .form-select { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem; color: #1f2937; background: #fff; transition: border-color 0.15s; }
+.form-input:focus, .form-select:focus { outline: none; border-color: #2B7F75; box-shadow: 0 0 0 2px rgba(43,127,117,0.15); }
+.input-readonly { background: #f9fafb; color: #6b7280; cursor: default; }
+
+/* Cards */
+.section-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.25rem; margin-bottom: 1rem; }
+.section-title { font-size: 0.9375rem; font-weight: 600; color: #1f2937; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+
+/* Table */
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
+.data-table thead th { text-align: left; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; padding: 0.625rem 0.75rem; border-bottom: 1px solid #e5e7eb; background: #f9fafb; }
+.data-table tbody td { padding: 0.75rem; border-bottom: 1px solid #f3f4f6; vertical-align: middle; color: #374151; }
+
+/* Info rows */
+.info-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 0.4rem 0; border-bottom: 1px solid #f3f4f6; }
+.info-row:last-child { border-bottom: none; }
+.info-key { font-size: 0.8125rem; color: #6b7280; min-width: 7.5rem; }
+.info-val { font-size: 0.8125rem; color: #1f2937; font-weight: 500; text-align: right; }
+
+/* Status badge */
+.status-badge { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 500; white-space: nowrap; }
+.status-badge.masuk { background: #ede9fe; color: #5b21b6; }
+.status-badge.menunggu { background: #fef3c7; color: #92400e; }
+.status-badge.perjalanan { background: #dbeafe; color: #1e40af; }
+.status-badge.selesai { background: #d1fae5; color: #065f46; }
+.status-badge.ditolak { background: #fee2e2; color: #991b1b; }
+
+/* Step badge */
+.step-badge { display: flex; align-items: center; justify-content: center; width: 1.25rem; height: 1.25rem; border-radius: 9999px; background: #2B7F75; color: #fff; font-size: 0.625rem; font-weight: 700; flex-shrink: 0; }
+
+/* Toast */
+.toast-container { position: fixed; top: 1rem; right: 1rem; z-index: 9999; display: flex; flex-direction: column; gap: 0.5rem; }
+.toast { padding: 0.75rem 1rem; border-radius: 0.375rem; color: #fff; font-size: 0.8125rem; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transform: translateX(120%); transition: transform 0.3s ease; max-width: 22rem; }
+.toast.show { transform: translateX(0); }
+.toast.success { background: #059669; }
+.toast.error { background: #dc2626; }
+.toast.info { background: #2563eb; }
+</style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen">
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<div class="flex min-h-screen">
+
+<!-- ==================== SIDEBAR ==================== -->
+<!-- SIDEBAR BARZAH - untuk semua halaman Layanan Barzah -->
+<aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-[270px] border-r border-gray-100 bg-white flex flex-col transition-transform duration-200 max-lg:-translate-x-full max-lg:shadow-xl" data-sidebar>
+  <div class="px-6 py-5 border-b border-gray-100">
+    <div class="flex items-center gap-2">
+      <img src="../../logo.webp" alt="Benefis" class="h-8 w-auto"/>
+      <span class="text-xl font-bold text-gray-900">Benefis</span>
+      <span class="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">DD</span>
+    </div>
+  </div>
+  <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+    <a href="../index.html" class="sidebar-link">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Layanan Barzah</p>
+      <a href="01-listing-ajuan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Daftar Ajuan Barzah
+      </a>
+      <a href="02-listing-ajuan-form-tambah.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+        Intake Barzah
+      </a>
+      <a href="03-listing-perintah-delivery.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Perintah Delivery
+      </a>
+      <a href="08-magic-link-petugas-laporan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 2 0 01.707.293l5.414 5.414a1 2 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Laporan Perjalanan
+      </a>
+      <a href="05-listing-realisasi.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V6zm18 6h-4a2 2 0 100 4h4m0-4V9a2 2 0 00-2-2M9 10h.01M9 14h.01"/></svg>
+        Rekap Realisasi
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Penerima Manfaat</p>
+      <a href="#" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 00-2-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        Program
+      </a>
+      <a href="#" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+        Entitas Pelaksanaan
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Laporan</p>
+      <a href="../lpm-export-laporan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 2 0 01.707.293l5.414 5.414a1 2 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Export Laporan
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Master Data</p>
+      <a href="../lpm-konfigurasi-lpm.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Konfigurasi LPM
+      </a>
+    </div>
+  </nav>
+  <div class="px-3 py-4 border-t border-gray-100">
+    <a href="#" class="sidebar-link" style="color:#F87171;">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+      Logout
+    </a>
+  </div>
+</aside>
+<div id="sidebarOverlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+<button id="hamburgerBtn" onclick="toggleSidebar()" class="fixed top-3 left-3 z-[55] lg:hidden bg-white rounded-lg shadow border border-gray-200 p-2 hover:bg-gray-50">
+  <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+</button>
+
+<!-- ==================== MAIN CONTENT ==================== -->
+<main class="lg:ml-64 flex-1 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-gray-200 px-6 py-3 sticky top-0 z-20">
+    <div class="flex items-center justify-between">
+      <nav class="flex items-center gap-1.5 text-sm">
+        <span class="text-gray-400">Layanan Barzah</span>
+        <svg class="w-3.5 h-3.5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <span class="font-medium text-primary" id="crumb">Perintah Delivery</span>
+      </nav>
+      <div class="flex items-center gap-2">
+        <span class="text-[0.7rem] text-gray-400">26 Agustus 2026</span>
+        <button class="relative p-1.5 rounded-lg hover:bg-gray-100 transition">
+          <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+          <span class="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-red-500 rounded-full text-[0.5rem] text-white flex items-center justify-center font-bold" id="notifCount">3</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="p-6">
+
+    <!-- ==================== PANEL DAFTAR ==================== -->
+    <div id="panelList">
+
+      <div class="flex items-start justify-between mb-5">
+        <div>
+          <h1 class="text-xl font-bold text-gray-900">Perintah Delivery</h1>
+          <p class="text-sm text-gray-500 mt-0.5">Daftar ajuan yang masuk dari Customer Care. Setujui, pilih petugas, tentukan uang muka, kirim magic link.</p>
+        </div>
+        <a href="05-listing-realisasi.html" class="flex items-center gap-1.5 border border-gray-300 text-gray-600 text-sm font-medium px-3.5 py-1.5 rounded-lg hover:bg-gray-50 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V6zm18 6h-4a2 2 0 100 4h4m0-4V9a2 2 0 00-2-2M9 10h.01M9 14h.01"/></svg>
+          Rekap Realisasi
+        </a>
+      </div>
+
+      <!-- KPI -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+        <div class="bg-white border border-gray-200 rounded-xl p-4">
+          <div class="text-[0.65rem] uppercase tracking-wide text-gray-400 font-semibold">Ajuan Masuk</div>
+          <div class="text-2xl font-bold text-gray-900 mt-1" id="kpiMasuk">3</div>
+          <div class="text-[0.7rem] text-gray-400 mt-0.5">Perlu keputusan Koordinator</div>
+        </div>
+        <div class="bg-white border border-gray-200 rounded-xl p-4">
+          <div class="text-[0.65rem] uppercase tracking-wide text-gray-400 font-semibold">Menunggu</div>
+          <div class="text-2xl font-bold text-amber-600 mt-1" id="kpiMenunggu">1</div>
+          <div class="text-[0.7rem] text-gray-400 mt-0.5">Perintah sudah dikirim</div>
+        </div>
+        <div class="bg-white border border-gray-200 rounded-xl p-4">
+          <div class="text-[0.65rem] uppercase tracking-wide text-gray-400 font-semibold">Dalam Perjalanan</div>
+          <div class="text-2xl font-bold text-blue-600 mt-1" id="kpiPerjalanan">1</div>
+          <div class="text-[0.7rem] text-gray-400 mt-0.5">Petugas sedang mengantar</div>
+        </div>
+        <div class="bg-white border border-gray-200 rounded-xl p-4">
+          <div class="text-[0.65rem] uppercase tracking-wide text-gray-400 font-semibold">Selesai Bulan Ini</div>
+          <div class="text-2xl font-bold text-primary mt-1" id="kpiSelesai">18</div>
+          <div class="text-[0.7rem] text-gray-400 mt-0.5">Termasuk laporan diterima</div>
+        </div>
+      </div>
+
+      <!-- Filter -->
+      <div class="bg-white border border-gray-200 rounded-xl p-4 mb-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div>
+            <label class="form-label">Cari</label>
+            <input type="text" class="form-input" placeholder="No. ajuan, nama jenazah, nama pelapor, nama petugas" oninput="filterBaris(this.value)"/>
+          </div>
+          <div>
+            <label class="form-label">Status</label>
+            <select class="form-select" onchange="filterStatus(this.value)">
+              <option value="">Semua Status</option>
+              <option value="masuk">Ajuan Masuk</option>
+              <option value="menunggu">Menunggu</option>
+              <option value="perjalanan">Dalam Perjalanan</option>
+              <option value="selesai">Selesai</option>
+              <option value="ditolak">Ditolak</option>
+            </select>
+          </div>
+          <div class="flex items-end">
+            <button onclick="resetFilter()" class="w-full px-4 py-2 border border-gray-200 rounded-lg bg-white text-gray-600 text-sm font-medium hover:bg-gray-50 transition">Reset filter</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabel -->
+      <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
+        <div class="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
+          <h2 class="text-sm font-semibold text-gray-900">Ajuan Masuk</h2>
+          <span class="text-xs text-gray-400" id="jumlahBaris">6 baris</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>No. Ajuan</th>
+                <th>Jenazah / Pelapor</th>
+                <th>Jemput &rarr; Tujuan</th>
+                <th>Tgl Ajuan</th>
+                <th>Petugas</th>
+                <th>Status</th>
+                <th class="text-right">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tabelBody">
+
+              <tr data-status="masuk" data-cari="lms-2026-000026 al-munir rohimah">
+                <td class="font-mono text-xs">LMS-2026-000026</td>
+                <td>Alm. Abdul Munir<span class="block text-[0.7rem] text-gray-400">Rohimah (Istri)</span></td>
+                <td class="text-xs">Kebayoran Baru &rarr; RSPAD Gatot Soebroto</td>
+                <td class="text-xs text-gray-500">26 Agu 2026</td>
+                <td class="text-xs font-medium text-gray-800" data-cell="petugas">&mdash;</td>                
+                <td><span class="status-badge masuk">Ajuan Masuk</span></td>
+                <td class="text-right">
+                  <button onclick="location.href='04-listing-perintah-delivery-form-tambah.html?no=LMS-2026-000026'" class="text-primary text-xs font-semibold hover:underline">Setujui</button>
+                  <span class="text-gray-300 mx-1">|</span>
+                  <button onclick="tolakAjuan('LMS-2026-000026')" class="text-red-500 text-xs font-medium hover:underline">Tolak</button>
+                </td>
+              </tr>
+
+              <tr data-status="masuk" data-cari="lms-2026-000025 s. aminah bambang">
+                <td class="font-mono text-xs">LMS-2026-000025</td>
+                <td>Alm. S. Aminah<span class="block text-[0.7rem] text-gray-400">Bambang (Anak)</span></td>
+                <td class="text-xs">Tangerang &rarr; Pemakaman Keluarga</td>
+                <td class="text-xs text-gray-500">26 Agu 2026</td>
+                <td class="text-xs font-medium text-gray-800" data-cell="petugas">&mdash;</td>                
+                <td><span class="status-badge masuk">Ajuan Masuk</span></td>
+                <td class="text-right">
+                  <button onclick="location.href='04-listing-perintah-delivery-form-tambah.html?no=LMS-2026-000025'" class="text-primary text-xs font-semibold hover:underline">Setujui</button>
+                  <span class="text-gray-300 mx-1">|</span>
+                  <button onclick="tolakAjuan('LMS-2026-000025')" class="text-red-500 text-xs font-medium hover:underline">Tolak</button>
+                </td>
+              </tr>
+
+              <tr data-status="masuk" data-cari="lms-2026-000027 m. yusuf(last) siti">
+                <td class="font-mono text-xs">LMS-2026-000027</td>
+                <td>Alm. M. Yusuf<span class="block text-[0.7rem] text-gray-400">Siti Aminah (Istri)</span></td>
+                <td class="text-xs">Bekasi &rarr; RS patriot Cikarang</td>
+                <td class="text-xs text-gray-500">25 Agu 2026</td>
+                <td class="text-xs font-medium text-gray-800" data-cell="petugas">&mdash;</td>                
+                <td><span class="status-badge masuk">Ajuan Masuk</span></td>
+                <td class="text-right">
+                  <button onclick="location.href='04-listing-perintah-delivery-form-tambah.html?no=LMS-2026-000027'" class="text-primary text-xs font-semibold hover:underline">Setujui</button>
+                  <span class="text-gray-300 mx-1">|</span>
+                  <button onclick="tolakAjuan('LMS-2026-000027')" class="text-red-500 text-xs font-medium hover:underline">Tolak</button>
+                </td>
+              </tr>
+
+              <tr data-status="menunggu" data-cari="lms-2026-000023 al. h. ahmad siti aminah">
+                <td class="font-mono text-xs">LMS-2026-000023</td>
+                <td>Alm. H. Ahmad<span class="block text-[0.7rem] text-gray-400">Siti Aminah (Istri)</span></td>
+                <td class="text-xs">Cempaka Putih &rarr; RS Hermina Jatinegara</td>
+                <td class="text-xs text-gray-500">24 Agu 2026</td>
+                <td class="text-xs font-medium text-gray-800" data-cell="petugas">Budi Santoso</td>                
+                <td><span class="status-badge menunggu">Menunggu</span></td>
+                <td class="text-right">
+                  <button onclick="bukaDetail('LMS-2026-000023','Menunggu','Budi Santoso','26 Agu 2026, 08:30','Rp 1.500.000','Tunai','29 Agu 2026')" class="text-primary text-xs font-medium hover:underline">Lihat Perintah</button>
+                </td>
+              </tr>
+
+              <tr data-status="perjalanan" data-cari="lms-2026-000022 al. s. maryam jamal">
+                <td class="font-mono text-xs">LMS-2026-000022</td>
+                <td>Alm. S. Maryam<span class="block text-[0.7rem] text-gray-400">Jamal (Anak)</span></td>
+                <td class="text-xs">Depok &rarr; RS Hermina DEPOK</td>
+                <td class="text-xs text-gray-500">25 Agu 2026</td>
+                <td class="text-xs font-medium text-gray-800" data-cell="petugas">Dina Rahmawati</td>                
+                <td><span class="status-badge perjalanan">Dalam Perjalanan</span></td>
+                <td class="text-right">
+                  <button onclick="bukaDetail('LMS-2026-000022','Dalam Perjalanan','Dina Rahmawati','26 Agu 2026, 06:45','Rp 1.200.000','Tunai','28 Agu 2026')" class="text-primary text-xs font-medium hover:underline">Lihat</button>
+                </td>
+              </tr>
+
+              <tr data-status="verifikasi" data-cari="lms-2026-000021 al. sumiati dedi kurniawan">
+                <td class="font-mono text-xs">LMS-2026-000021</td>
+                <td>Alm. Sumiati<span class="block text-[0.7rem] text-gray-400">Dedi Kurniawan (Anak)</span></td>
+                <td class="text-xs">Pasar Minggu &rarr; RS Sukma</td>
+                <td class="text-xs text-gray-500">24 Agu 2026</td>
+                <td class="text-xs font-medium text-gray-800" data-cell="petugas">Dina Rahmawati</td>                
+                <td><span class="status-badge menunggu">Menunggu Persetujuan</span></td>
+                <td class="text-right"><a href="05-listing-realisasi.html" class="text-primary text-xs font-semibold hover:underline">Verifikasi</a></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <div class="px-4 py-3 border-t border-gray-100 bg-gray-50/50">
+          <p class="text-xs text-gray-400">Status: <span class="font-medium text-gray-600">Ajuan Masuk</span> &rarr; <span class="font-medium text-gray-600">Menunggu</span> (perintah dikirim) &rarr; <span class="font-medium text-gray-600">Dalam Perjalanan</span> (petugas terima tugas) &rarr; <span class="font-medium text-gray-600">Menunggu Persetujuan</span> (laporan sudah masuk, menunggu Koordinator) &rarr; <span class="font-medium text-gray-600">Selesai</span> (Koordinator menyetujui).</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==================== PANEL DETAIL ==================== -->
+    <div id="panelDetail" style="display:none;">
+      <button onclick="tutupDetail()" class="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-800 transition mb-4">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Kembali ke daftar
+      </button>
+      <div class="flex items-center gap-3 mb-5">
+        <span id="detailBadge" class="status-badge menunggu">Menunggu</span>
+        <h1 class="text-xl font-bold text-gray-900">Detail Perintah Delivery</h1>
+        <span class="font-mono text-sm text-gray-500" id="detailNoAjuan">LMS-2026-000023</span>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div class="section-card">
+          <div class="section-title">
+            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            Perintah yang Terkirim
+          </div>
+          <div class="space-y-0">
+            <div class="info-row"><span class="info-key">Petugas</span><span class="info-val" id="detailPetugas">Budi Santoso</span></div>
+            <div class="info-row"><span class="info-key">Waktu Berangkat</span><span class="info-val" id="detailWaktu">26 Agu 2026, 08:30</span></div>
+            <div class="info-row"><span class="info-key">Uang Muka</span><span class="info-val" id="detailMuka">Rp 1.500.000</span></div>
+            <div class="info-row"><span class="info-key">Metode</span><span class="info-val" id="detailMetode">Tunai</span></div>
+            <div class="info-row"><span class="info-key">Tgl Laporan</span><span class="info-val" id="detailLaporan">29 Agu 2026</span></div>
+            <div class="info-row"><span class="info-key">Magic Link</span><span class="info-val font-mono text-[0.7rem]">petugas.html</span></div>
+          </div>
+        </div>
+        <div class="section-card">
+          <div class="section-title">
+            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Riwayat Status
+          </div>
+          <div class="space-y-0">
+            <div class="info-row"><span class="info-key">Ajuan Masuk</span><span class="info-val">Customer Care</span></div>
+            <div class="info-row"><span class="info-key">Disetujui</span><span class="info-val">Koordinator</span></div>
+            <div class="info-row"><span class="info-key">Perintah Dikirim</span><span class="info-val">Magic link</span></div>
+            <div class="info-row"><span class="info-key">Status</span><span class="info-val" id="detailStatusTeks">Menunggu</span></div>
+          </div>
+          <a href="05-listing-realisasi.html" class="inline-flex items-center gap-1.5 mt-3 text-xs font-medium text-primary hover:underline">Lihat rekap realisasi &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+</div>
+
+<script>
+var NO_AJUAN_TERAKHIR = '';
+var magicLink = '';
+
+// === Toast ===
+function showToast(message, type) {
+  type = type || 'info';
+  var container = document.getElementById('toastContainer');
+  var toast = document.createElement('div');
+  toast.className = 'toast ' + type;
+  toast.textContent = message;
+  container.appendChild(toast);
+  requestAnimationFrame(function() { toast.classList.add('show'); });
+  setTimeout(function() {
+    toast.classList.remove('show');
+    setTimeout(function() { toast.remove(); }, 300);
+  }, 3000);
+}
+
+
+
+function tutupDetail() {
+  document.getElementById('panelList').style.display = '';
+  document.getElementById('panelDetail').style.display = 'none';
+  document.getElementById('crumb').textContent = 'Perintah Delivery';
+}
+
+// === Filter ===
+function filterBaris(keyword) {
+  var q = String(keyword || '').toLowerCase().trim();
+  var tampil = 0;
+  document.querySelectorAll('#tabelBody tr').forEach(function(tr) {
+    var cocok = !q || tr.getAttribute('data-cari').indexOf(q) !== -1;
+    if (cocok && tr.style.display === 'none' && tr.getAttribute('data-force-hide') === '1') cocok = false;
+    tr.style.display = cocok ? '' : 'none';
+    if (cocok) tampil++;
+  });
+  document.getElementById('jumlahBaris').textContent = tampil + ' baris';
+}
+
+function filterStatus(status) {
+  var tampil = 0;
+  document.querySelectorAll('#tabelBody tr').forEach(function(tr) {
+    var cocok = !status || tr.getAttribute('data-status') === status;
+    tr.setAttribute('data-force-hide', cocok ? '0' : '1');
+    tr.style.display = cocok ? '' : 'none';
+    if (cocok) tampil++;
+  });
+  document.getElementById('jumlahBaris').textContent = tampil + ' baris';
+}
+
+function resetFilter() {
+  document.querySelectorAll('#tabelBody tr').forEach(function(tr) {
+    tr.setAttribute('data-force-hide', '0');
+    tr.style.display = '';
+  });
+  document.getElementById('jumlahBaris').textContent = '6 baris';
+  showToast('Filter direset.', 'info');
+}
+
+// === Tolak ===
+function tolakAjuan(noAjuan) {
+  var alasan = prompt('Alasan penolakan ajuan ' + noAjuan + '\n\n1. Data tidak lengkap\n2. Dokumen tidak valid\n3. Melewati batas waktu\n4. Lainnya');
+  if (alasan === null) return;
+  var baris = document.querySelector('#tabelBody tr[data-cari^="' + noAjuan.toLowerCase() + '"]');
+  if (baris) {
+    var badge = baris.querySelector('.status-badge');
+    badge.className = 'status-badge ditolak';
+    badge.textContent = 'Ditolak';
+    baris.setAttribute('data-status', 'ditolak');
+    baris.setAttribute('data-cari', baris.getAttribute('data-cari') + ' ditolak alasan: ' + alasan);
+    var sel = baris.querySelector('td:last-child');
+    sel.innerHTML = '<span class="text-xs text-gray-400">' + alasan + '</span>';
+  }
+  updateKpi();
+  showToast('Ajuan ' + noAjuan + ' ditolak.', 'error');
+}
+
+function updateKpi() {
+  var hitung = function(status) {
+    return document.querySelectorAll('#tabelBody tr[data-status="' + status + '"]').length;
+  };
+  document.getElementById('kpiMasuk').textContent = hitung('masuk');
+  document.getElementById('kpiMenunggu').textContent = hitung('menunggu');
+  document.getElementById('kpiPerjalanan').textContent = hitung('perjalanan');
+}
+
+// === Magic Link ===
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// === Kirim Perintah ===
+
+
+
+
+// === Init ===
+document.addEventListener('DOMContentLoaded', function() {
+  updateKpi();
+});
+</script>
+
+<script>
+function toggleSidebar() {
+  var s = document.getElementById('sidebar');
+  var o = document.getElementById('sidebarOverlay');
+  s.classList.toggle('-translate-x-full');
+  o.classList.toggle('hidden');
+}
+document.addEventListener('DOMContentLoaded', function() {
+  var page = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('#sidebar .sidebar-link').forEach(function(a) {
+    var href = a.getAttribute('href');
+    if (href === page) a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

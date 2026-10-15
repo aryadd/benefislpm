@@ -1,0 +1,350 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verifikasi Realisasi - Layanan Barzah | Benefis LPM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: { DEFAULT: '#2B7F75', light: '#EAF4F1' },
+      },
+      fontFamily: { sans: ['Inter', 'sans-serif'] },
+    }
+  }
+}
+</script>
+<style>
+body { font-family: 'Inter', sans-serif; }
+
+/* Sidebar */
+.sidebar-link { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; border-radius: 0.375rem; color: #4b5563; font-size: 0.875rem; font-weight: 400; transition: all 0.15s; cursor: pointer; text-decoration: none; }
+.sidebar-link:hover { background: #EAF4F1; color: #2B7F75; }
+.sidebar-link.active { background: #2B7F75; color: #fff; font-weight: 500; }
+
+/* Form */
+.form-label { display: block; font-size: 0.8125rem; font-weight: 500; color: #374151; margin-bottom: 0.25rem; }
+.form-input, .form-select { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem; color: #1f2937; background: #fff; transition: border-color 0.15s; }
+.form-input:focus, .form-select:focus { outline: none; border-color: #2B7F75; box-shadow: 0 0 0 2px rgba(43,127,117,0.15); }
+
+/* Cards */
+.section-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.25rem; margin-bottom: 1rem; }
+.section-title { font-size: 0.9375rem; font-weight: 600; color: #1f2937; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+
+/* Table */
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
+.data-table thead th { text-align: left; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; padding: 0.625rem 0.75rem; border-bottom: 1px solid #e5e7eb; background: #f9fafb; }
+.data-table tbody td { padding: 0.75rem; border-bottom: 1px solid #f3f4f6; color: #374151; vertical-align: middle; }
+.data-table tbody tr:hover { background: #f9fafb; }
+.data-table .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Info rows */
+.info-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 0.4rem 0; border-bottom: 1px solid #f3f4f6; }
+.info-row:last-child { border-bottom: none; }
+.info-key { font-size: 0.8125rem; color: #6b7280; min-width: 7rem; }
+.info-val { font-size: 0.8125rem; color: #1f2937; font-weight: 500; text-align: right; }
+
+/* Status badge */
+.status-badge { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 500; white-space: nowrap; }
+.status-badge.pending { background: #fef3c7; color: #92400e; }
+.status-badge.completed { background: #d1fae5; color: #065f46; }
+.status-badge.review { background: #dbeafe; color: #1e40af; }
+.status-badge.over { background: #fee2e2; color: #991b1b; }
+
+/* Toast */
+.toast-container { position: fixed; top: 1rem; right: 1rem; z-index: 9999; display: flex; flex-direction: column; gap: 0.5rem; }
+.toast { padding: 0.75rem 1rem; border-radius: 0.375rem; color: #fff; font-size: 0.8125rem; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transform: translateX(120%); transition: transform 0.3s ease; max-width: 22rem; }
+.toast.show { transform: translateX(0); }
+.toast.success { background: #059669; }
+.toast.error { background: #dc2626; }
+.toast.info { background: #2563eb; }
+</style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen">
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<div class="flex min-h-screen">
+
+<!-- ==================== SIDEBAR ==================== -->
+<!-- SIDEBAR BARZAH — untuk semua halaman Layanan Barzah -->
+<aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-[270px] border-r border-gray-100 bg-white flex flex-col transition-transform duration-200 max-lg:-translate-x-full max-lg:shadow-xl" data-sidebar>
+  <div class="px-6 py-5 border-b border-gray-100">
+    <div class="flex items-center gap-2">
+      <img src="../../logo.webp" alt="Benefis" class="h-8 w-auto"/>
+      <span class="text-xl font-bold text-gray-900">Benefis</span>
+      <span class="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">DD</span>
+    </div>
+  </div>
+  <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+    <a href="../index.html" class="sidebar-link">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Layanan Barzah</p>
+      <a href="01-listing-ajuan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2v2M7 7h10"/></svg>
+        Daftar Ajuan Barzah
+      </a>
+      <a href="02-listing-ajuan-form-tambah.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+        Intake Barzah
+      </a>
+      <a href="03-listing-perintah-delivery.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Perintah Delivery
+      </a>
+      <a href="08-magic-link-petugas-laporan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 2 0 01.707.293l5.414 5.414a1 2 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Laporan Perjalanan
+      </a>
+      <a href="05-listing-realisasi.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V6zm18 6h-4a2 2 0 100 4h4m0-4V9a2 2 0 00-2-2M9 10h.01M9 14h.01"/></svg>
+        Rekap Realisasi
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Penerima Manfaat</p>
+      <a href="#" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 00-2-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        Program
+      </a>
+      <a href="#" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+        Entitas Pelaksanaan
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Laporan</p>
+      <a href="../lpm-export-laporan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 2 0 01.707.293l5.414 5.414a1 2 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Export Laporan
+      </a>
+    </div>
+    <div class="pt-3">
+      <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Master Data</p>
+      <a href="../lpm-konfigurasi-lpm.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Konfigurasi LPM
+      </a>
+    </div>
+  </nav>
+  <div class="px-3 py-4 border-t border-gray-100">
+    <a href="#" class="sidebar-link" style="color:#F87171;">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+      Logout
+    </a>
+  </div>
+</aside>
+<div id="sidebarOverlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+<button id="hamburgerBtn" onclick="toggleSidebar()" class="fixed top-3 left-3 z-[55] lg:hidden bg-white rounded-lg shadow border border-gray-200 p-2 hover:bg-gray-50">
+  <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+</button>
+
+
+<!-- ==================== MAIN CONTENT ==================== -->
+<main class="lg:ml-64 flex-1 min-h-screen">
+  <header class="bg-white border-b border-gray-200 px-6 py-3 sticky top-0 z-20">
+    <div class="flex items-center justify-between">
+      <nav class="flex items-center gap-1.5 text-sm">
+        <span class="text-gray-400">Layanan Barzah</span>
+        <svg class="w-3.5 h-3.5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <a href="05-listing-realisasi.html" class="text-gray-400 hover:text-primary transition-colors">Listing Realisasi</a>
+        <svg class="w-3.5 h-3.5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <span class="font-medium text-primary">Form Verifikasi</span>
+      </nav>
+      <span class="text-[0.7rem] text-gray-400">26 Agustus 2026</span>
+    </div>
+  </header>
+
+  <div class="p-6">   
+     <button onclick="location.href='05-listing-realisasi.html'" class="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-800 transition mb-4">
+       <svg class="w-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+       Kembali ke rekap
+     </button>
+
+     <div class="flex items-center gap-3 mb-5">
+       <span id="verifBadge" class="status-badge review">Menunggu Persetujuan</span>
+       <h1 class="text-xl font-bold text-gray-900">Verifikasi Realisasi Uang Muka</h1>
+       <span class="font-mono text-sm text-gray-500" id="verifNoAjuan">LMS-2026-000023</span>
+     </div>
+
+     <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+       <div class="lg:col-span-2">
+
+         <div class="section-card">
+           <div class="section-title">
+             <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+             Rincian Biaya Dilaporkan Petugas
+           </div>
+           <div class="overflow-x-auto -mx-1 px-1">
+             <table class="data-table">
+               <thead>
+                 <tr><th style="width:2rem;">#</th><th>Kategori Biaya</th><th class="num" style="width:9rem;">Nominal (Rp)</th><th>Keterangan</th></tr>
+               </thead>
+               <tbody>
+                 <tr><td class="text-xs text-gray-400">1</td><td>BBM / Transportasi Mobil</td><td class="num">185.000</td><td class="text-xs text-gray-500">2x refill Pertalite</td></tr>
+                 <tr><td class="text-xs text-gray-400">2</td><td>Tol &amp; Parkir</td><td class="num">35.000</td><td class="text-xs text-gray-500">tol masuk RS + 2 jam</td></tr>
+                 <tr><td class="text-xs text-gray-400">3</td><td>Layanan Jenazah (Pemandian &amp; Kebersihan)</td><td class="num">950.000</td><td class="text-xs text-gray-500">Transfer ke tim pemandian jenazah</td></tr>
+               </tbody>
+               <tfoot>
+                 <tr><td colspan="2" class="num">Total Realisasi</td><td class="num" id="verifTotal">Rp 1.170.000</td><td></td></tr>
+               </tfoot>
+             </table>
+           </div>
+           <p class="text-xs text-gray-400 mt-3">Laporan dikirim petugas pada 26 Agu 2026, 14:20 melalui magic link.</p>
+         </div>
+
+         <div class="section-card">
+           <div class="section-title">
+             <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
+             Catatan Verifikasi
+           </div>
+           <div>
+             <label class="form-label">Catatan untuk Petugas</label>
+             <textarea class="form-input" id="verifCatatan" rows="2" placeholder="Wajib diisi bila laporan ditolak"></textarea>
+           </div>
+           <div class="flex items-center gap-2 mt-3">
+             <button type="button" onclick="setujuiRealisasi()" id="btnSetujuiRealisasi" class="px-5 py-2.5 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary/90 transition shadow-sm">Setujui &amp; Catat Transaksi</button>
+             <button type="button" onclick="tolakRealisasi()" class="px-4 py-2.5 border border-red-300 text-red-600 text-sm font-medium rounded-lg hover:bg-red-50 transition">Tolak Laporan</button>
+           </div>
+         </div>
+
+       </div>
+
+       <div class="space-y-4">
+         <div class="section-card">
+           <div class="section-title">
+             <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V6zm18 6h-4a2 2 0 100 4h4m0-4V9a2 2 0 00-2-2M9 10h.01M9 14h.01"/></svg>
+             Rekonsiliasi
+           </div>
+           <div class="space-y-0">
+             <div class="info-row"><span class="info-key">Uang Muka</span><span class="info-val">Rp 1.500.000</span></div>
+             <div class="info-row"><span class="info-key">Realisasi</span><span class="info-val" id="verifRealisasi">Rp 1.170.000</span></div>
+             <div class="info-row"><span class="info-key" id="verifLabelSisa">Sisa</span><span class="info-val text-emerald-600" id="verifSisa">Rp 330.000</span></div>
+             <div class="info-row"><span class="info-key">Pengembalian</span><span class="info-val">Tunai ke Koordinator</span></div>
+           </div>
+         </div>
+
+         <div class="section-card">
+           <div class="section-title">
+             <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 00-2-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+             Transaksi di Benefis
+           </div>
+           <div class="space-y-0">
+             <div class="info-row"><span class="info-key">Program</span><span class="info-val">LPM &ndash; Barzah</span></div>
+             <div class="info-row"><span class="info-key">Bentuk</span><span class="info-val">Jasa / Layanan</span></div>
+             <div class="info-row"><span class="info-key">Nilai</span><span class="info-val font-semibold text-primary" id="verifNilai">Rp 1.170.000</span></div>
+             <div class="info-row"><span class="info-key">Pelaksana</span><span class="info-val">Budi Santoso</span></div>
+           </div>
+           <p class="text-[0.7rem] text-gray-400 mt-2">Nilai transaksi mengikuti total realisasi, bukan nominal uang muka.</p>
+           <div class="mt-3 p-3 rounded-lg bg-gray-50 border border-gray-100 hidden" id="verifBoxUuid">
+             <div class="flex items-center justify-between">
+               <span class="text-xs text-gray-500 font-medium">distribution_uuid</span>
+               <span class="font-mono text-xs text-gray-700" id="verifUuid">&mdash;</span>
+             </div>
+           </div>
+         </div>
+
+         <div class="p-3 rounded-lg bg-blue-50 border border-blue-100">
+           <p class="text-[0.7rem] text-blue-700 leading-relaxed"><span class="font-semibold">Setujui</span> berarti mencatat transaksi manfaat di Benefis. <span class="font-semibold">Tolak</span> mengembalikan laporan ke petugas untuk diperbaiki; transaksi tidak dicatat.</p>
+         </div>
+       </div>
+     </div>
+  </div>
+</main>
+
+</div>
+
+<script>
+var MUKA_VERIF = 1500000;
+var REALISASI_VERIF = 1170000;
+
+function setujuiRealisasi() {
+  if (REALISASI_VERIF > MUKA_VERIF && !document.getElementById('verifCatatan').value.trim()) {
+    showToast('Selisih lebih wajib disertai catatan.', 'error');
+    return;
+  }
+
+  var uuid = 'dist-' + Math.random().toString(16).slice(2, 10) + '-barzah';
+  document.getElementById('verifBoxUuid').classList.remove('hidden');
+  document.getElementById('verifUuid').textContent = uuid;
+
+  var btn = document.getElementById('btnSetujuiRealisasi');
+  btn.disabled = true;
+  btn.className = 'px-5 py-2.5 bg-gray-300 text-white text-sm font-semibold rounded-lg cursor-not-allowed';
+
+  var badge = document.getElementById('verifBadge');
+  badge.className = 'status-badge completed';
+  badge.textContent = 'Tercatat';
+
+  showToast('Realisasi disetujui. Transaksi Rp 1.170.000 tercatat di Benefis.', 'success');
+}
+
+function tolakRealisasi() {
+  var catatan = document.getElementById('verifCatatan').value.trim();
+  if (!catatan) {
+    showToast('Tulis catatan untuk petugas sebelum menolak.', 'error');
+    return;
+  }
+  var badge = document.getElementById('verifBadge');
+  badge.className = 'status-badge pending';
+  badge.textContent = 'Dikembalikan ke Petugas';
+  showToast('Laporan dikembalikan ke petugas untuk diperbaiki.', 'info');
+}
+
+function showToast(message, type) {
+  type = type || 'info';
+  var container = document.getElementById('toastContainer');
+  var toast = document.createElement('div');
+  toast.className = 'toast ' + type;
+  toast.textContent = message;
+  container.appendChild(toast);
+  requestAnimationFrame(function() { toast.classList.add('show'); });
+  setTimeout(function() {
+    toast.classList.remove('show');
+    setTimeout(function() { toast.remove(); }, 300);
+  }, 3000);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var params = new URLSearchParams(window.location.search);
+  var mode = params.get('mode') || 'verifikasi';
+  var badge = document.getElementById('verifBadge');
+  var btn = document.getElementById('btnSetujuiRealisasi');
+  document.getElementById('verifNoAjuan').textContent = (params.get('no') || 'LMS-2026-000023').toUpperCase();
+
+  if (mode === 'selesai') {
+    badge.className = 'status-badge completed';
+    badge.textContent = 'Tercatat';
+    btn.style.display = 'none';
+  } else if (mode === 'selisih') {
+    badge.className = 'status-badge over';
+    badge.textContent = 'Selisih Lebih';
+  }
+});
+
+function toggleSidebar() {
+  var s = document.getElementById('sidebar');
+  var o = document.getElementById('sidebarOverlay');
+  s.classList.toggle('-translate-x-full');
+  o.classList.toggle('hidden');
+}
+document.addEventListener('DOMContentLoaded', function() {
+  var page = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('#sidebar .sidebar-link').forEach(function(a) {
+    var href = a.getAttribute('href');
+    if (href === page) a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

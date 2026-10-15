@@ -51,14 +51,14 @@ Alur Lamusta, Program Tematik, dan Layanan Barzah — satu database dengan Benef
 
 ### 3.3 Barzah
 
-1. 🟤 **Ajuan masuk** — Customer Care
-2. 🟠 **Approval & perintah delivery** — Koordinator
-3. 🟢 **Delivery & laporan selesai** — Petugas, via magic link
-4. 🔵 **Realisasi uang muka** — Koordinator verifikasi rincian biaya terpakai
+1. 🟤 **Ajuan masuk** — Customer Care, dari tombol "Ajuan Baru"
+2. 🟠 **Perintah delivery + uang muka** — Koordinator setujui, pilih petugas, waktu, catatan, nilai uang muka, tanggal laporan
+3. 🟢 **Petugas terima tugas** — magic link tanpa login; status `MENUNGGU` → `DALAM_PERJALANAN`
+4. 🔵 **Laporan perjalanan** — petugas isi rincian biaya terpakai; status → `SELESAI`
 
 → lanjut ke **database bersama Benefis**
 
-> **Uang muka & nilai manfaat (keputusan desain).** Saat perintah delivery terbit, Koordinator menyerahkan **uang muka perjalanan** ke petugas (tunai/transfer) dengan batas laporan. Officer memindahkan isi laporan petugas ke rincian biaya (BBM, tol, ojol, layanan jenazah, adhkarial/PAB, honor). **Nilai yang dicatat sebagai transaksi manfaat di Benefis adalah total realisasi terpakai — bukan nominal uang muka.** Sisa uang muka wajib dikembalikan petugas; realisasi yang melebihi muka memerlukan persetujuan Koordinator sebelum transaksi dibuat.
+> **Uang muka & nilai manfaat (keputusan desain).** Saat perintah delivery terbit, Koordinator menyerahkan **uang muka perjalanan** ke petugas (tunai/transfer) beserta batas tanggal laporan. Petugas mengisi sendiri rincian biaya terpakai (BBM, tol, ojol, layanan jenazah, adhkarial/PAB, honor) pada halaman laporan perjalanan. **Nilai yang dicatat sebagai transaksi manfaat di Benefis adalah total realisasi terpakai — bukan nominal uang muka.** Sisa uang muka wajib dikembalikan petugas; realisasi yang melebihi muka memerlukan alasan dan verifikasi Koordinator sebelum transaksi dibuat.
 
 ### 3.4 Titik Temu
 
@@ -322,7 +322,7 @@ Satu request Barzah bisa punya banyak baris biaya. Jumlah `amount` seluruh baris
 | ------------------ | --------- | ---------------------------------------------------------------------------------------------- |
 | `uuid`             | STRING    | Primary Key.                                                                                   |
 | `delivery_uuid`    | STRING    | FK `lpm_delivery.uuid`.                                                                        |
-| `cost_category`    | STRING    | `BBM_TRANSPORTASI` \| `TOL_PARKIR` \| `OJOL_ANGKUT` \| `LAYANAN_JENAZAH` \| `ADHKARIAL_PAB` \| `HONOR_PETUGAS` \| `LAIN_LAIN`. |
+| `cost_category`    | STRING    | `BBM_TRANSPORTASI` \| `TOL_PARKIR` \| `OJOL_ANGKUT` \| `LAYANAN_JENAZAH` \| `PERLENGKAPAN_JENAZAH` \| `ADHKARIAL_PAB` \| `HONOR_PETUGAS` \| `LAIN_LAIN`. |
 | `amount`           | NUMERIC   | Nominal biaya pada baris ini.                                                                 |
 | `description`      | STRING    | Keterangan bebas (mis. "2x refill Pertalite").                                                  |
 | `receipt_url`      | STRING    | URL nota/kuitansi pendukung.                                                                    |

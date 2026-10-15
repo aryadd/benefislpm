@@ -1,328 +1,207 @@
 # SOP Alur Kerja Ajuan Barzah (Layanan Mobil Jenazah)
 
 **Dokumen** : SOP Operasional Barzah
-**Versi** : 1.0
+**Versi** : 2.3 (penamaan bernomor 01-08)
 **Tanggal** : 26 Agustus 2026
-** Berlaku untuk** : LPM Dompet Dhuafa — seluruh cabang
-**Halaman sistem** : `lpm2/lpm-barzah.html`, `lpm2/lpm-intake-barzah.html`, `lpm2/lpm-delivery-barzah.html`, `lpm2/lpm-pencairan-barzah.html`, `lpm2/lpm-realisasi-barzah.html`
+**Berlaku untuk** : LPM Dompet Dhuafa — seluruh cabang
 
----
+Semua halaman Barzah dikelompokkan di folder **`lpm2/barzah/`**. Penamaan memakai pola: `NN-listing-*` untuk halaman daftar data, `NN-listing-*-form-*` untuk halaman form, `NN-magic-link-*` untuk halaman petugas yang dibuka tanpa login.
 
-## 1. Ringkasan
-
-Barzah adalah layanan mobil jenazah untuk membantu keluarga dhuafa. Alurnya paling sederhana di antara tiga layanan LPM: Alurnya paling sederhana di antara tiga layanan LPM: **tidak ada survei, tidak ada skoring, tidak ada pencairan bertahap**. Satu keputusan (Koordinator) dan satu laporan (Petugas) sudah menutup proses.
-
-```
-Ajuan masuk → Keputusan Koordinator + Uang Muka → Delivery → Laporan Petugas
-→ Realisasi Uang Muka → Transaksi Manfaat di Benefis
-```
-
-**Prinsip utama:**
-
-| Nilai uang | Sifat | Dicatat di |
+| # | Halaman | Untuk siapa |
 | --- | --- | --- |
-| Uang muka perjalanan | Alat pencairan, diberikan ke petugas | `lpm_delivery.advance_amount` |
-| Realisasi biaya terpakai | **Nilai manfaat** | `lpm_delivery.realization_amount` → `distribution.amount` |
+| 1 | `barzah/01-listing-ajuan.html` | Customer Care — daftar ajuan + tombol **Ajuan Baru** |
+| 2 | `barzah/02-listing-ajuan-form-tambah.html` | Customer Care — form tambah ajuan |
+| 3 | `barzah/03-listing-perintah-delivery.html` | Koordinator — daftar ajuan masuk, tombol Setujui / Tolak |
+| 4 | `barzah/04-listing-perintah-delivery-form-tambah.html` | Koordinator — form perintah delivery + uang muka |
+| 5 | `barzah/05-listing-realisasi.html` | Koordinator — daftar realisasi yang dilaporkan petugas |
+| 6 | `barzah/06-listing-realisasi-form-verifikasi.html` | Koordinator — form verifikasi / persetujuan realisasi |
+| 7 | `barzah/07-magic-link-petugas.html` | Petugas/driver — **tanpa login**, halaman tugas |
+| 8 | `barzah/08-magic-link-petugas-laporan.html` | Petugas/driver — **tanpa login**, form laporan perjalanan |
+| - | `barzah/shared/sidebar-barzah.html` | Sidebar bersama seluruh halaman Barzah |
 
-Nilai manfaat di Benefis = **total realisasi**, bukan nominal uang muka. Aturan ini berlaku di seluruh dokumen, form, dan laporan.
-
----
-
-## 2. Peran dan Kewenangan
-
-| Peran | Sistem login | Kewenangan dalam alur Barzah |
-| --- | --- | --- |
-| **Customer Care** | Login | Input ajuan, menerima permintaan telepon/WA/datang, Unduh laporan |
-| **Koordinator** | Login | Setuju/tolak ajuan, tetapkan petugas, tetapkan uang muka, ubah status delivery, verifikasi realisasi, kembalikan/minta sisa uang muka |
-| **Petugas Delivery** | Magic link (tanpa login) | Isi laporan delivery + rincian penggunaan uang muka |
-| **Admin / staf LPM** | Login | Export laporan, konfigurasi tarif |
-
-> Approval Barzah hanya **satu jenjang: Koordinator**, tanpa memandang nominal (PRD §9.2). Tidak ada eskalasi ke Kabag/Manajer/GM/Direktur. Pengecualian satu-satunya: **selisih realisasi lebih dari uang muka**, yang wajib persetujuan Koordinator sebelum transaksi dibuat.
+Aturan pemisahan: setiap halaman `NN-listing-*` **tidak** memuat form. Aksi pada tabel selalu membuka halaman `*-form-*` atau `magic-link-*` tersendiri lewat query string, misalnya `04-listing-perintah-delivery-form-tambah.html?no=LMS-2026-000026` atau `06-listing-realisasi-form-verifikasi.html?no=LMS-2026-000023&mode=verifikasi`.
 
 ---
 
-## 3. Alur Detail
-
-```mermaid
-flowchart TD
-    A["Ajuan masuk<br/>Customer Care<br/>WA / telepon / datang"] --> B["Cek duplikasi<br/>NIK / No. KK di Benefis"]
-    B -->|duplikat aktif| B1["Ditolak / digabung<br/>ke request berjalan"]
-    B -->|tidak ada duplikat| C["Simpan ajuan<br/>status: MENUNGGU KEPUTUSAN"]
-    C --> D{"Keputusan Koordinator"}
-    D -->|Tolak| D1["Catatan penolakan<br/>status: DITOLAK"]
-    D1 --> Z["Selesai, masuk Arsip"]
-    D -->|Setujui| E["Tetapkan petugas + tujuan + waktu berangkat"]
-    E --> F["Tetapkan UANG MUKA<br/>nominal, metode, batas laporan"]
-    F --> G["Generate magic link<br/>kirim via WhatsApp"]
-    G --> H["Petugas isi laporan<br/>via magic link"]
-    E --> I["Status: MENUNGGU → DALAM PERJALANAN"]
-    I --> J["Status: SELESAI<br/>laporan petugas terkunci"]
-    J --> K["Koordinator input RINCIAN BIAYA<br/>terpakai"]
-    K --> L{"Rekonsiliasi<br/>muka vs realisasi"}
-    L -->|realisasi < muka| M["Sisa wajib dikembalikan<br/>evidence: kuitansi surrender"]
-    L -->|realisasi = muka| N["Selaras"]
-    L -->|realisasi > muka| O["Perlu persetujuan<br/>Koordinator + alasan"]
-    M --> P["Verifikasi & catat transaksi"]
-    N --> P
-    O --> P
-    P --> Q["distribution tercatat<br/>nilai = realisasi<br/>program LPM - Barzah"]
-    Q --> Z2["Selesai, masuk Arsip"]
-```
-
----
-
-## 4. Langkah 1 — Intake Ajuan (`lpm-intake-barzah.html`)
-
-**PIC:** Customer Care · **SLA:** segera setelah permintaan diterima
-
-### Field wajib
-
-| Field | Keterangan |
-| --- | --- |
-| Nama Almarhum / Almarhumah | Nama lengkap sesuai KTP |
-| Nama Keluarga / Pelapor | Yang mengonnetif ajuan |
-| No. HP Pelapor | Nomor WhatsApp utama |
-| Alamat Pelapor | Alamat lengkap + RT/RW |
-| Lokasi Jenazah / Saat Ini | Titik jemput |
-| Lokasi Tujuan | Tujuan akhir (RS, muskula, ruang jenazah) |
-
-### Field opsional
-
-| Field | Keterangan |
-| --- | --- |
-| Jenis Kelamin | L / P |
-| Usia | Tahun |
-| Penyebab Kematian | Sakit / kecelakaan / lanjut usia / lainnya |
-| Hubungan dengan Jenazah | Istri / Anak / Suami / Orang Tua |
-| Waktu Dibutuhkan | Kapan jenazah harus sampai |
-| Catatan Khusus | Kondisi jenazah, akses jalan sempit, permintaan khusus |
-| Lampiran | Foto jenazah, surat keterangan, dll (maks 10 MB) |
-
-### Aturan
-
-1. **Cek duplikasi wajib** sebelum simpan: NIK jenazah / No. KK pelapor dicek ke `beneficiaries` di Benefis. Jika masih punya bantuan aktif (Lamusta, Yatim, PMTU, Disabilitas Mandiri, atau Barzah), ajuan digabung ke request berjalan, tidak dibuat baru.
-2. Nomor ajuan auto dengan format `LMS-2026-XXXXXX`.
-3. Status awal: **Menunggu Keputusan**.
-4. Semua perubahan status wajib menulis 1 baris `status_log`.
-
----
-
-## 5. Langkah 2 — Keputusan Koordinator & Uang Muka (`lpm-delivery-barzah.html`)
-
-**PIC:** Koordinator · **SLA:** sebelum waktu dibutuhkan pelapor
-
-### 2.1 Review ajuan
-
-Panel kanan menampilkan: No. Ajuan, status, tanggal ajuan, data jenazah, data pelapor, lokasi jemput, tujuan, riwayat status.
-
-### 2.2 Keputusan
-
-| Tombol | Efek |
-| --- | --- |
-| **Setujui** | Buka form Delivery + form Uang Muka |
-| **Tolak** | Wajib isi Alasan Penolakan (data tidak lengkap / dokumen tidak valid / melewati batas waktu / lainnya) + catatan tambahan |
-
-### 2.3 Form Delivery (wajib)
-
-| Field | Keterangan |
-| --- | --- |
-| Petugas Delivery | Pilihan dari master petugas |
-| Tanggal & Waktu Berangkat | Wajib |
-| Estimasi Tiba | Opsional |
-| Catatan untuk Petugas | Instruksi khusus |
-
-### 2.4 Form Uang Muka Perjalanan (wajib)
-
-| Field | Keterangan |
-| --- | --- |
-| Nominal Uang Muka (Rp) | Angka, auto-format ribuan. Ini **bukan** nilai manfaat |
-| Metode Serah Terima | Tunai / Transfer |
-| Waktu Uang Muka Diberikan | Wajib |
-| Batas Laporan Realisasi | Batas akhir petugas lapor |
-| Wajibkan lapor realisasi | Checkbox, default aktif |
-
-**Syarat lolos validasi sebelum "Kirim Perintah Delivery":**
-- petugas terisi
-- waktu berangkat terisi
-- nominal uang muka `> 0`
-- metode + waktu uang muka terisi
-- magic link sudah di-generate
-
-### 2.5 Generate & kirim magic link
-
-Tombol **Generate Link** membuat token unik 8 karakter. Tersedia tombol **Copy Link** dan **WhatsApp**. Pesan WhatsApp otomatis berisi: nama petugas, nomor ajuan, link, nominal uang muka, dan batas pelaporan.
+## 1. Alur Singkat
 
 ```
-Assalamu'alaikum {nama petugas},
-
-Berikut perintah delivery untuk Ajuan LMS-2026-000023:
-
-{link}
-
-Silakan buka link untuk detail dan pengisian laporan.
-
-Uang muka perjalanan: Rp 1.500.000 - wajib lapor realisasi paling lambat 2026-08-29.
-
-Terima kasih.
+[1] Ajuan Baru (Customer Care)  ->  [2] Intake Barzah (isi detail)
+                                          |  Simpan & Kirim ke Koordinator
+                                          v
+[3] Perintah Delivery (Koordinator): Setujui -> pilih petugas, waktu,
+    catatan, nilai uang muka, tanggal laporan -> Kirim Perintah
+                                          |  magic link terkirim (WA/email)
+                                          v  status = MENUNGGU
+[4] Halaman Petugas (tanpa login): "Terima Delivery" -> status = DALAM PERJALANAN
+                                          |  "Selesai Perjalanan"
+                                          v
+[5] Laporan Perjalanan (isi rincian biaya) -> Kirim Laporan -> status = SELESAI
 ```
 
+Nominal uang muka keluar saat perintah dikirim, tetapi **nilai manfaat di Benefis berasal dari rincian biaya pada laporan perjalanan, bukan dari uang muka.**
+
 ---
 
-## 6. Langkah 3 — Delivery & Laporan Petugas
+## 2. Langkah 1 & 2 — Ajuan Baru dari Customer Care
 
-### 6.1 Status Delivery
+1. Buka `barzah/01-listing-ajuan.html`, klik tombol **+ Ajuan Baru**.
+2. Pergi ke `barzah/02-listing-ajuan-form-tambah.html` untuk mengisi detail.
+3. Klik **Simpan & Kirim ke Koordinator**. Status ajuan menjadi **Ajuan Masuk**.
 
-| Status | Arti | Siapa ubah |
+### Field intake
+
+| Field | Wajib | Keterangan |
 | --- | --- | --- |
-| Menunggu | Perintah sudah dikirim, petugas belum berangkat | Koordinator |
-| Dalam Perjalanan | Petugas dalam perjalanan | Koordinator |
-| Selesai | Mobil tiba di tujuan | Koordinator |
+| Nama Almarhum / Almarhumah | ya | Nama sesuai KTP |
+| Nama Keluarga / Pelapor | ya | Yang mengajukan permintaan |
+| No. HP Pelapor | ya | Nomor WhatsApp utama |
+| Alamat Pelapor | ya | Alamat lengkap + RT/RW |
+| Lokasi Jenazah / Saat Ini | ya | Titik jemput |
+| Lokasi Tujuan | ya | RS, ruang jenazah, atau lokasi pemakaman |
+| Jenis Kelamin / Usia / Penyebab Kematian | tidak | Pendukung |
+| Hubungan dengan Jenazah | tidak | Istri / Anak / Suami / Orang Tua |
+| Waktu Dibutuhkan | tidak | Kapan jenazah harus sampai |
+| Catatan Khusus | tidak | Kondisi jenazah, akses jalan, permintaan khusus |
+| Lampiran | tidak | Foto / surat keterangan (maks 10 MB) |
 
-Saat status **Selesai**, sistem otomatis membuka bagian **Laporan Petugas** (read-only) berisi: waktu berangkat, waktu tiba, kendala, bukti serah terima. Form terkunci setelah disubmit.
-
-### 6.2 Isi laporan oleh petugas (magic link, tanpa login)
-
-| Field | Keterangan |
-| --- | --- |
-| Waktu Berangkat | Wajib |
-| Waktu Tiba | Wajib |
-| Kendala | Opsional |
-| Bukti Serah Terima | Foto/scan, wajib |
-
-Magic link bersifat **sekali pakai** dengan masa berlaku (`magic_link_expired_at`).
+Sebelum simpan, **cek duplikasi** NIK jenazah / No. KK pelapor ke data-benefisi di Benefis agar tidak ada permintaan ganda.
 
 ---
 
-## 7. Langkah 4 — Realisasi Uang Muka (`lpm-realisasi-barzah.html`)
+## 3. Langkah 3 — Perintah Delivery (Koordinator)
 
-**PIC:** Koordinator · **SLA:** maksimal H+1 setelah delivery selesai, atau sesuai batas laporan
+Buka `barzah/03-listing-perintah-delivery.html`. Halaman ini adalah **daftar ajuan yang masuk**, bukan satu dokumen.
 
-Sekali status Selesai, section **Realisasi Uang Muka** terbuka di halaman Perintah Delivery dengan tombol **Input Realisasi**.
+### 3.1 Status yang terlihat
 
-### 7.1 Rincian biaya terpakai
-
-Koordinator memindahkan isi laporan petugas ke tabel rincian. Setiap baris:
-
-| Kolom | Isi |
-| --- | --- |
-| Kategori Biaya | BBM/Transportasi Mobil · Tol & Parkir · Ojol/Angkut Jenazah · Layanan Jenazah (Pemandian & Kebersihan) · Adhkarial/PAB · Honor Petugas & Tim · Lain-lain |
-| Nominal (Rp) | Angka, auto-format ribuan |
-| Keterangan | bebas, mis. "2x refill Pertalite" |
-
-Total baris = **Nilai Realisasi**, otomatis masuk ke kolom Nilai Manfaat.
-
-### 7.2 Rekonsiliasi
-
-| Kondisi | Yang Terjadi |
-| --- | --- |
-| Realisasi < Uang Muka | Sisa wajib dikembalikan petugas. Input: tanggal pengembalian, metode (tunai ke Koordinator / transfer ke rekening LPM), diterima oleh |
-| Realisasi = Uang Muka | Selaras, tidak ada tindak lanjut |
-| Realisasi > Uang Muka | **Diblokir.** Wajib isi alasan selisih lebih + persetujuan Koordinator. Transaksi tidak boleh dicatat sebelum alasan terisi |
-
-### 7.3 Bukti pendukung
-
-- Nota/kuitansi pengeluaran (BBM, tol, layanan jenazah) — wajib
-- Kuitansi surrender / bukti pengembalian sisa — wajib bila realisasi < uang muka
-- Bukti serah terima (sudah terunggah petugas via magic link)
-
-### 7.4 Output transaksi Benefis
-
-Setelah verifikasi, sistem membuat **1 baris `distribution`**:
-
-| Field distribution | Sumber |
-| --- | --- |
-| Program | `LPM - Barzah` |
-| Bentuk manfaat | Jasa / Layanan (default) |
-| **amount** | **=`lpm_delivery.realization_amount`** |
-| Waktu | Tanggal realisasi |
-| Pelaksana | Petugas delivery |
-| `request_module` | `LPM` |
-| `request_uuid` | UUID `lpm_request` |
-| `service_type` | `BARZAH` |
-
-`distribution_uuid` ditulis balik ke `lpm_delivery.distribution_uuid`.
-
----
-
-## 8. Laporan Uang
-
-### 8.1 Rekap harian/berkala (`lpm-pencairan-barzah.html`)
-
-Kolom yang dipantau:
-
-| Kolom | Arti |
-| --- | --- |
-| Uang Muka | Nominal yang diserahkan |
-| Realisasi | Total biaya terpakai (sama dengan nilai transaksi) |
-| Sisa / Selisih | Kembalian (hijau) atau selisih lebih (merah) |
-| Batas Lapor | Deadline laporan petugas |
-| Status | Menunggu Laporan · Tercatat · Sisa Dikembalikan · Perlu Verifikasi |
-| distribution_uuid | Bukti transaksi sudah masuk Benefis |
-
-KPI utama: Total Uang Muka, Total Realisasi, **Sisa Belum Dikembalikan**, Selisih Lebih.
-
-> KPI "sisa belum dikembalikan" adalah indikator kesehatan proses. Nilai yang tidak kembali dalam 3 hari setelah batas laporan wajib ditindaklanjuti oleh Koordinator.
-
-### 8.2 Export (`lpm-export-laporan.html`)
-
-Pilih **Layanan = Barzah (Mobil Jenazah)**, lalu Jenis Laporan *Realisasi Uang Muka (Barzah)* atau *Rekap Delivery Barzah*. Kolom Realisasi pada laporan = nilai transaksi manfaat, bukan uang muka.
-
----
-
-## 9. Tabel Status (referensi cepat)
-
-| No | Status | Super User Tampilan di Daftar Ajuan |
+| Status | Arti | Aksi tersedia |
 | --- | --- | --- |
-| 1 | MENUNGGU_KEPUTUSAN | Ajuan Masuk |
-| 2 | DISETUJUI | Disetujui |
-| 3 | PERINTAH_DIKIRIM | Dalam Perjalanan |
-| 4 | DELIVERY_SELESAI | Selesai |
-| 5 | REALISASI_DILAPORKAN | Selesai (laporan diterima) |
-| 6 | REALISASI_TERVERIFIKASI | Selesai (transaksi tercatat) |
-| 7 | SELISIH_LEBIH | Selesai (perlu verifikasi) |
-| 8 | DITOLAK | Ditolak |
-| 9 | DIARSIPKAN | Selesai |
+| Ajuan Masuk | baru dari Customer Care, belum diputus | Setujui / Tolak |
+| Menunggu | perintah sudah dikirim ke petugas | Lihat Perintah |
+| Dalam Perjalanan | petugas sudah menerima tugas | Lihat |
+| Selesai | laporan perjalanan sudah dikirim | Lihat Laporan |
+| Ditolak | tidak dilanjutkan | Lihat alasan |
+
+### 3.2 Klik Setujui
+
+Tombol **Setujui** membuka halaman baru `barzah/04-listing-perintah-delivery-form-tambah.html` (form tidak digabung di halaman daftar). Nomor ajuan diteruskan lewat query string, misalnya `04-listing-perintah-delivery-form-tambah.html?no=LMS-2026-000026`. Form terdiri atas dua bagian:
+
+**A. Delivery**
+
+| Field | Wajib | Keterangan |
+| --- | --- | --- |
+| Petugas Delivery | ya | Dari master petugas |
+| Tanggal & Waktu Berangkat | ya | Waktu mulai |
+| Estimasi Tiba | tidak | Perkiraan sampai |
+| Catatan untuk Petugas | tidak | Instruksi khusus, tampil di halaman petugas |
+
+**B. Uang Muka Perjalanan**
+
+| Field | Wajib | Keterangan |
+| --- | --- | --- |
+| Nilai Uang Muka (Rp) | ya | Ongkos perjalanan, auto-format ribuan. Tombol "Isi tarif standar" mengisi saran tarif |
+| Metode Serah Terima | ya | Tunai / Transfer |
+| Tanggal Laporan Uang Muka | ya | Batas petugas mengirim laporan |
+
+### 3.3 Kirim magic link
+
+1. Klik **Generate Link**.
+2. Pilih kanal: **WhatsApp**, **Email**, atau **Copy Link**. Tombol **Buka Halaman Petugas** untuk melihat tampilan yang diterima petugas.
+3. Klik **Kirim Perintah Delivery**.
+
+Setelah dikirim: badge status baris berubah menjadi **Menunggu**, KPI "Ajuan Masuk" berkurang, KPI "Menunggu" bertambah.
+
+### 3.4 Menolak ajuan
+
+Tombol **Tolak** meminta alasan (data tidak lengkap / dokumen tidak valid / melewati batas waktu / lainnya). Baris berubah menjadi **Ditolak** dan alasannya tampil.
 
 ---
 
-## 10. Peta Data
+## 4. Langkah 4 — Halaman Petugas (`barzah/07-magic-link-petugas.html`)
 
-| Entitas | Peran |
+Petugas membuka magic link **tanpa login**. Isi halaman: data jenazah, pelapor + nomor HP, rute jemput ke tujuan, waktu keberangkatan, nominal uang muka yang diterima, dan catatan Koordinator.
+
+Stepper: Diterima → Perjalanan → Laporan.
+
+| Tombol | Aksi |
 | --- | --- |
-| `lpm_request` | Ajuan (jenis layanan `BARZAH`) |
-| `approval` | Keputusan Koordinator (`module = LPM`) |
-| `lpm_delivery` | Perintah delivery, uang muka, status, realisasi, `distribution_uuid` |
-| `lpm_delivery_cost` | Rincian baris biaya terpakai (banyak per delivery) |
-| `status_log` | Audit trail setiap perpindahan status |
-| `distribution` | Transaksi manfaat di Benefis core |
+| **Terima Delivery** | Mengambil tugas. Status berubah dari Menunggu menjadi **Dalam Perjalanan**. Tombol berganti menjadi "Selesai Perjalanan" |
+| **Selesai Perjalanan** | Menandai perjalanan selesai dan memunculkan tombol **Isi Laporan Perjalanan** yang menuju `barzah/08-magic-link-petugas-laporan.html` |
 
-Setiap perpindahan status pada `lpm_request`, `approval`, dan `lpm_delivery` wajib menghasilkan 1 baris `status_log` (`entity_type = LPM_DELIVERY` untuk tahap delivery/realisasi).
+Magic link bersifat sekali pakai dan punya masa berlaku.
 
 ---
 
-## 11. Edge Case
+## 5. Langkah 5 — Laporan Perjalanan (`barzah/08-magic-link-petugas-laporan.html`)
+
+Halaman ini diisi petugas, juga tanpa login.
+
+| Bagian | Isi |
+| --- | --- |
+| 1. Info Perjalanan | Waktu tiba (wajib), kendala, catatan perjalanan |
+| 2. Rincian Biaya Terpakai | Baris dinamis: kategori (BBM/Transportasi, Tol & Parkir, Ojol/Angkut Jenazah, Layanan Jenazah, **Perlengkapan Jenazah (Kain Kaffan, Kapas, dst)**, Adhkarial/PAB, Honor Petugas & Tim, Lain-lain) + nominal + keterangan. Total dihitung otomatis |
+| 3. Uang Muka | Diterima / Terpakai / Sisa. Bila ada sisa, isi tanggal dan metode pengembalian. Bila realisasi melebihi uang muka, wajib isi alasan |
+| 4. Bukti | Nota atau kuitansi pengeluaran, bukti serah terima jenazah |
+
+Klik **Kirim Laporan** untuk menutup tugas. Status ajuan menjadi **Selesai**, dan layar konfirmasi menampilkan ringkasan: uang muka, realisasi, sisa dikembalikan, dan nilai transaksi yang dicatat.
+
+Aturan main:
+- **Nilai transaksi di Benefis = total realisasi terpakai.**
+- Sisa uang muka wajib dikembalikan ke Koordinator.
+- Realisasi melebihi uang muka wajib disertai alasan, transaksi dicatat sebelum Koordinator memverifikasi.
+
+---
+
+## 6. Rekap & Laporan Uang
+
+`barzah/05-listing-realisasi.html` menampilkan rekap per perjalanan: uang muka, realisasi, sisa atau selisih, batas laporan, status, dan `distribution_uuid`. KPI: total uang muka, total realisasi, sisa belum dikembalikan, selisih lebih.
+
+`lpm-export-laporan.html`: pilih **Layanan = Barzah (Mobil Jenazah)**, Jenis Laporan *Realisasi Uang Muka (Barzah)* atau *Rekap Delivery Barzah*.
+
+---
+
+## 7. Tabel Status
+
+| # | Status | Dipicu oleh |
+| --- | --- | --- |
+| 1 | AJUAN_MASUK | Customer Care menyimpan ajuan |
+| 2 | MENUNGGU | Koordinator mengirim perintah delivery |
+| 3 | DALAM_PERJALANAN | Petugas klik Terima Delivery |
+| 4 | SELESAI | Petugas mengirim laporan perjalanan |
+| 5 | DITOLAK | Koordinator menolak ajuan |
+
+Setiap perpindahan status menulis 1 baris audit (`status_log`).
+
+---
+
+## 8. Peta Data
+
+| Entitas | Isi |
+| --- | --- |
+| `lpm_request` | Ajuan Barzah |
+| `approval` | Keputusan Koordinator |
+| `lpm_delivery` | Petugas, jadwal, uang muka, tanggal laporan, status |
+| `lpm_delivery_cost` | Rincian biaya terpakai (banyak baris per delivery) |
+| `status_log` | Riwayat perubahan status |
+| `distribution` | Transaksi manfaat, nilai = total realisasi, program `LPM - Barzah` |
+
+---
+
+## 9. Edge Case
 
 | Situasi | Penanganan |
 | --- | --- |
-| Jenazah sudah dikuburkan saat ajuan masuk | Ajuan ditolak, alasan "melewati batas waktu" |
-| Petugas membatalkan di tengah jalan | Status kembali Menunggu, Koordinator membuat perintah baru; nominal uang muka pertama dicatat sebagai realisasi biaya terpakai |
-| Petugas tidak lapor sampai lewat batas | Kartu "Sisa Belum Dikembalikan" naik, Koordinator menindaklanjuti manual |
-| Realisasi > uang muka | Butuh alasan + persetujuan Koordinator sebelum transaksi dicatat |
-| Petugas menolak mengembalikan sisa | Koordinator memaksa lewat halaman Verifikasi dengan catatan; transaksi tetap dicatat sebesar realisasi |
-| Jenazah dari luar yurisdiksi LPM | Ditolak atau diteruskan ke LPM wilayah setempat |
-| Pengajuan ulang oleh keluarga yang sama (jenazah berbeda) | Diizinkan; dicek hanya duplikasi **orang yang sama**, bukan per alamat |
+| Jenazah sudah dikuburkan saat ajuan masuk | Ditolak dengan alasan melewati batas waktu |
+| Petugas tidak menerima tugas sampai lewat hari H | Koordinator membatalkan assignment dan menugaskan petugas lain |
+| Petugas membatalkan di tengah jalan | Status kembali Menunggu, Koordinator menugaskan ulang |
+| Realisasi melebihi uang muka | Wajib menyertakan alasan; menunggu verifikasi Koordinator |
+| Petugas tidak mengembalikan sisa uang muka | Dicatat di rekap "Sisa Belum Dikembalikan", Koordinator menindaklanjuti |
+| Pengajuan ulang keluarga yang sama | Diizinkan; cek duplikasi hanya untuk orang yang sama |
+| Jenazah di luar wilayah kerja LPM | Ditolak atau diteruskan ke LPM setempat |
 
 ---
 
-## 12. Lampiran — Peta Halaman
+## 10. Referensi
 
-| Halaman | Isi |
-| --- | --- |
-| `lpm-barzah.html` | Daftar seluruh ajuan Barzah + filter status |
-| `lpm-intake-barzah.html` | Form input ajuan oleh Customer Care |
-| `lpm-delivery-barzah.html` | Approval Koordinator, uang muka, magic link, status delivery, laporan petugas |
-| `lpm-pencairan-barzah.html` | Rekap & antrian realisasi uang muka |
-| `lpm-realisasi-barzah.html` | Input rincian biaya, rekonsiliasi, bukti, output transaksi |
-| `lpm-export-laporan.html` | Export rekap realisasi (Layanan = Barzah) |
-
-Dokumen terkait: `PRD_v2_Pencatatan_Approval_LPM (1).md` §3.3, §6.7, §6.7b, §9.3 · `BRD_Platform_Benefis_LPM_2026-2027_v2.0.docx.md` §10.3
+`PRD_v2_Pencatatan_Approval_LPM (1).md` §3.3, §6.7, §6.7b, §9.3 · `BRD_Platform_Benefis_LPM_2026-2027_v2.0.docx.md` §10.3

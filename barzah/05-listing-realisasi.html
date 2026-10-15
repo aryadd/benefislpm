@@ -78,33 +78,37 @@ body { font-family: 'Inter', sans-serif; }
 <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-[270px] border-r border-gray-100 bg-white flex flex-col transition-transform duration-200 max-lg:-translate-x-full max-lg:shadow-xl" data-sidebar>
   <div class="px-6 py-5 border-b border-gray-100">
     <div class="flex items-center gap-2">
-      <img src="../logo.webp" alt="Benefis" class="h-8 w-auto"/>
+      <img src="../../logo.webp" alt="Benefis" class="h-8 w-auto"/>
       <span class="text-xl font-bold text-gray-900">Benefis</span>
       <span class="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">DD</span>
     </div>
   </div>
   <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
-    <a href="index.html" class="sidebar-link">
+    <a href="../index.html" class="sidebar-link">
       <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
       Dashboard
     </a>
     <div class="pt-3">
       <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Layanan Barzah</p>
-      <a href="lpm-barzah.html" class="sidebar-link">
+      <a href="01-listing-ajuan.html" class="sidebar-link">
         <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2v2M7 7h10"/></svg>
         Daftar Ajuan Barzah
       </a>
-      <a href="lpm-intake-barzah.html" class="sidebar-link">
+      <a href="02-listing-ajuan-form-tambah.html" class="sidebar-link">
         <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
         Intake Barzah
       </a>
-      <a href="lpm-delivery-barzah.html" class="sidebar-link">
+      <a href="03-listing-perintah-delivery.html" class="sidebar-link">
         <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         Perintah Delivery
       </a>
-      <a href="lpm-pencairan-barzah.html" class="sidebar-link">
+      <a href="08-magic-link-petugas-laporan.html" class="sidebar-link">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 2 0 01.707.293l5.414 5.414a1 2 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Laporan Perjalanan
+      </a>
+      <a href="05-listing-realisasi.html" class="sidebar-link">
         <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V6zm18 6h-4a2 2 0 100 4h4m0-4V9a2 2 0 00-2-2M9 10h.01M9 14h.01"/></svg>
-        Realisasi Uang Muka
+        Rekap Realisasi
       </a>
     </div>
     <div class="pt-3">
@@ -120,14 +124,14 @@ body { font-family: 'Inter', sans-serif; }
     </div>
     <div class="pt-3">
       <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Laporan</p>
-      <a href="lpm-export-laporan.html" class="sidebar-link">
+      <a href="../lpm-export-laporan.html" class="sidebar-link">
         <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 2 0 01.707.293l5.414 5.414a1 2 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
         Export Laporan
       </a>
     </div>
     <div class="pt-3">
       <p class="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Master Data</p>
-      <a href="lpm-konfigurasi-lpm.html" class="sidebar-link">
+      <a href="../lpm-konfigurasi-lpm.html" class="sidebar-link">
         <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         Konfigurasi LPM
       </a>
@@ -169,13 +173,15 @@ body { font-family: 'Inter', sans-serif; }
   <!-- Content -->
   <div class="p-6">
 
+   <div id="panelList">
+
     <!-- Page Title -->
     <div class="flex items-start justify-between mb-6">
       <div>
         <h1 class="text-xl font-bold text-gray-900">Realisasi Uang Muka</h1>
-        <p class="text-sm text-gray-500 mt-0.5">Rekap uang muka perjalanan &mdash; catat realisasi biaya yang terpakai dan kembalikan sisa</p>
+        <p class="text-sm text-gray-500 mt-0.5">Rekap &amp; verifikasi realisasi uang muka yang dilaporkan petugas</p>
       </div>
-      <a href="lpm-export-laporan.html" class="flex items-center gap-1.5 border border-gray-300 text-gray-600 text-sm font-medium px-3.5 py-1.5 rounded-lg hover:bg-gray-50 transition">
+      <a href="../lpm-export-laporan.html" class="flex items-center gap-1.5 border border-gray-300 text-gray-600 text-sm font-medium px-3.5 py-1.5 rounded-lg hover:bg-gray-50 transition">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 2 0 01.707.293l5.414 5.414a1 2 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
         Export
       </a>
@@ -191,7 +197,7 @@ body { font-family: 'Inter', sans-serif; }
       <div class="bg-white border border-gray-200 rounded-xl p-4">
         <div class="text-[0.65rem] uppercase tracking-wide text-gray-400 font-semibold">Total Realisasi</div>
         <div class="text-xl font-bold text-primary mt-1">Rp 10,9 jt</div>
-        <div class="text-[0.7rem] text-gray-400 mt-0.5">11 laporan masuk</div>
+        <div class="text-[0.7rem] text-gray-400 mt-0.5">11 laporan disetujui</div>
       </div>
       <div class="bg-white border border-gray-200 rounded-xl p-4">
         <div class="text-[0.65rem] uppercase tracking-wide text-gray-400 font-semibold">Sisa Belum Dikembalikan</div>
@@ -199,9 +205,9 @@ body { font-family: 'Inter', sans-serif; }
         <div class="text-[0.7rem] text-gray-400 mt-0.5">3 perjalanan menunggu</div>
       </div>
       <div class="bg-white border border-gray-200 rounded-xl p-4">
-        <div class="text-[0.65rem] uppercase tracking-wide text-gray-400 font-semibold">Transaksi Tercatat</div>
-        <div class="text-xl font-bold text-gray-900 mt-1">11</div>
-        <div class="text-[0.7rem] text-gray-400 mt-0.5">di Benefis &middot; program LPM &ndash; Barzah</div>
+        <div class="text-[0.65rem] uppercase tracking-wide text-gray-400 font-semibold">Menunggu Persetujuan</div>
+        <div class="text-xl font-bold text-blue-600 mt-1">2</div>
+        <div class="text-[0.7rem] text-gray-400 mt-0.5">Laporan petugas belum diverifikasi</div>
       </div>
     </div>
 
@@ -212,9 +218,9 @@ body { font-family: 'Inter', sans-serif; }
           <label class="form-label">Status Realisasi</label>
           <select class="form-select" onchange="filterBaris(this.value)">
             <option value="">Semua Status</option>
-            <option value="menunggu">Menunggu Laporan</option>
+            <option value="verifikasi">Menunggu Persetujuan</option>
             <option value="selesai">Selesai</option>
-            <option value="selisih">Ada Selisih</option>
+            <option value="selisih">Selisih Lebih</option>
           </select>
         </div>
         <div>
@@ -274,24 +280,24 @@ body { font-family: 'Inter', sans-serif; }
               <td class="num text-emerald-600">Sisa Rp 65.000</td>
               <td class="text-xs text-gray-500">25 Agu 2026</td>
               <td><span class="status-badge completed">Tercatat</span></td>
-              <td class="text-right"><a href="lpm-realisasi-barzah.html" class="text-primary text-xs font-medium hover:underline">Lihat</a></td>
+              <td class="text-right"><button onclick="location.href='06-listing-realisasi-form-verifikasi.html?no=LMS-2026-000019&mode=selesai'" class="text-primary text-xs font-medium hover:underline">Lihat</button></td>
             </tr>
 
-            <!-- 2 — Menunggu laporan (muka diberikan, delivery selesai) -->
-            <tr data-status="menunggu">
+            <!-- 2 — Laporan sudah masuk, menunggu persetujuan Koordinator -->
+            <tr data-status="verifikasi">
               <td class="font-mono text-xs">LMS-2026-000023</td>
               <td>Alm. H. Ahmad<span class="block text-[0.7rem] text-gray-400">Siti Aminah (Istri)</span></td>
               <td>Budi Santoso</td>
               <td class="num">Rp 1.500.000</td>
-              <td class="num text-gray-400">&mdash;</td>
-              <td class="num text-gray-400">&mdash;</td>
+              <td class="num font-semibold text-gray-900">Rp 1.170.000</td>
+              <td class="num text-emerald-600">Sisa Rp 330.000</td>
               <td class="text-xs text-gray-500">29 Agu 2026</td>
-              <td><span class="status-badge pending">Menunggu Laporan</span></td>
-              <td class="text-right"><a href="lpm-realisasi-barzah.html" class="text-primary text-xs font-medium hover:underline">Input Realisasi</a></td>
+              <td><span class="status-badge review">Menunggu Persetujuan</span></td>
+              <td class="text-right"><button onclick="location.href='06-listing-realisasi-form-verifikasi.html?no=LMS-2026-000023&mode=verifikasi'" class="text-primary text-xs font-semibold hover:underline">Setujui</button></td>
             </tr>
 
             <!-- 3 — Selesai, ada sisa belum dikembalikan -->
-            <tr data-status="menunggu">
+            <tr data-status="verifikasi">
               <td class="font-mono text-xs">LMS-2026-000021</td>
               <td>Alm. Sumiati<span class="block text-[0.7rem] text-gray-400">Dedi Kurniawan (Anak)</span></td>
               <td>Dina Rahmawati</td>
@@ -299,8 +305,8 @@ body { font-family: 'Inter', sans-serif; }
               <td class="num font-semibold text-gray-900">Rp 1.910.000</td>
               <td class="num text-amber-600">Sisa Rp 90.000</td>
               <td class="text-xs text-gray-500">28 Agu 2026</td>
-              <td><span class="status-badge pending">Sisa Dikembalikan</span></td>
-              <td class="text-right"><a href="lpm-realisasi-barzah.html" class="text-primary text-xs font-medium hover:underline">Verifikasi</a></td>
+              <td><span class="status-badge review">Menunggu Persetujuan</span></td>
+              <td class="text-right"><button onclick="location.href='06-listing-realisasi-form-verifikasi.html?no=LMS-2026-000021&mode=verifikasi'" class="text-primary text-xs font-semibold hover:underline">Setujui</button></td>
             </tr>
 
             <!-- 4 — Realisasi melebihi muka (selisih lebih) -->
@@ -313,7 +319,7 @@ body { font-family: 'Inter', sans-serif; }
               <td class="num text-red-600">Lebih Rp 75.000</td>
               <td class="text-xs text-gray-500">30 Agu 2026</td>
               <td><span class="status-badge over">Perlu Verifikasi</span></td>
-              <td class="text-right"><a href="lpm-realisasi-barzah.html" class="text-primary text-xs font-medium hover:underline">Verifikasi</a></td>
+              <td class="text-right"><button onclick="location.href='06-listing-realisasi-form-verifikasi.html?no=LMS-2026-000024&mode=selisih'" class="text-primary text-xs font-semibold hover:underline">Setujui</button></td>
             </tr>
 
             <!-- 5 — Selesai, transaksi tercatat -->
@@ -326,7 +332,7 @@ body { font-family: 'Inter', sans-serif; }
               <td class="num text-emerald-600">Sisa Rp 2.000</td>
               <td class="text-xs text-gray-500">23 Agu 2026</td>
               <td><span class="status-badge completed">Tercatat</span></td>
-              <td class="text-right"><a href="lpm-realisasi-barzah.html" class="text-primary text-xs font-medium hover:underline">Lihat</a></td>
+              <td class="text-right"><button onclick="location.href='06-listing-realisasi-form-verifikasi.html?no=LMS-2026-000017&mode=selesai'" class="text-primary text-xs font-medium hover:underline">Lihat</button></td>
             </tr>
 
           </tbody>
@@ -338,11 +344,24 @@ body { font-family: 'Inter', sans-serif; }
     </div>
 
   </div>
+
+   </div>
 </main>
 
 </div>
 
 <script>
+var MUKA_VERIF = 1500000;
+var REALISASI_VERIF = 1170000;
+
+
+
+
+
+
+
+
+
 function showToast(message, type = 'info') {
   const container = document.getElementById('toastContainer');
   const toast = document.createElement('div');
